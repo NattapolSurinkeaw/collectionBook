@@ -27,7 +27,7 @@ const style = {
 
 export default function ModalEditCate({open, handleOpen, handleClose, cateData, setCateData, slcEdit}) {
   const ImageRef = useRef([]);
-  const [category, setCategory] = useState([]);
+  const [parentId, setParentId] = useState([]);
   const [imagePreview, setImagePreview] = useState("/image/no-image.png");
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -41,14 +41,14 @@ export default function ModalEditCate({open, handleOpen, handleClose, cateData, 
   const [metaH2, setMetaH2] = useState("");
   const [priority, setPriority] = useState(1);
   const [statusDisplay, setStatusDisplay] = useState(true);
-  const [parenId, setParenId] = useState();
-  const [selectedValue, setSelectedValue] = useState('');
+  const [position, setPosition] = useState(1);
+  // const [selectedValue, setSelectedValue] = useState('');
 
   useEffect(() => {
     svGetCateById(slcEdit).then((res) => {
       const resData = res.data.data
       console.log(resData)
-      setCategory(resData.parent_id)
+      setParentId(resData.parent_id)
       setImagePreview(resData.image)
       setTitle(resData.title)
       setDescription(resData.description)
@@ -62,14 +62,14 @@ export default function ModalEditCate({open, handleOpen, handleClose, cateData, 
       setMetaH2(resData.h2|| "")
       setPriority(resData.priority|| "")
       setStatusDisplay(Boolean(resData.status_display))
-      setParenId(resData.parent_id)
+      setParentId(resData.parent_id)
     }) 
   }, [])
 
   useEffect(() => {
-    console.log(parenId)
-    console.log(typeof(parenId))
-  }, [parenId])
+    console.log(parentId)
+    console.log(typeof(parentId))
+  }, [parentId])
   
   const handleFileChange = (e) => {
     const file = e.target.files[0];
@@ -79,8 +79,9 @@ export default function ModalEditCate({open, handleOpen, handleClose, cateData, 
     }
   };
 
-  const handleRadioChange = (event) => {
-    setParenId(event.target.value);
+  const handleRadioChange = (id, position) => {
+    setParentId([id]); // อัปเดต state ให้เป็น array ที่มีค่า selectedValue
+    setPosition(position);
   };
 
   const submit = () => {
@@ -91,7 +92,8 @@ export default function ModalEditCate({open, handleOpen, handleClose, cateData, 
     formData.append("keyword", keyword);
     formData.append("slug", slug);
     formData.append("link", link);
-    formData.append("cate", category);
+    formData.append("parent_id", parentId);
+    formData.append("position", position);
     formData.append("meta_title", metaTitle);
     formData.append("meta_description", metaDescription);
     formData.append("meta_keyword", metaKeyword);
@@ -134,25 +136,23 @@ export default function ModalEditCate({open, handleOpen, handleClose, cateData, 
               <h3 className="mb-4">All Category</h3>
               <RadioGroup
                 aria-labelledby="demo-radio-buttons-group-label"
+                defaultValue="category"
                 name="radio-buttons-group"
-                value={selectedValue}
-                onChange={handleRadioChange}
               >
-                {cateData.map((cate) => (
-                  <FormControlLabel 
-                    key={cate.id} 
-                    title={`parent ${cate.parent_id} | position ${cate.position}`} 
-                    value={cate.id}
-                    control={
-                      <Radio 
-                        data-position={cate.position}
-                        checked={cate.id.toString() == parenId}
-                      />
-                    } 
-                    label={`${cate.title}`}
-                    style={cate.position === 2 ? { marginLeft: '5px' } : {}}
-                  />
-                ))}
+                { 
+                  cateData.map((cate) => (
+                    <FormControlLabel 
+                      key={cate.id} 
+                      title={`parent ${cate.parent_id} | position ${cate.position}`} 
+                      value={cate.id}
+                      control={<Radio />} 
+                      label={`${cate.title}`}
+                      checked = {parentId == cate.id}
+                      style={cate.position === 2 ? { marginLeft: '5px' } : {}}
+                      onChange={() => handleRadioChange(cate.id, cate.position)}
+                    />
+                  ))
+                }
               </RadioGroup>
             </div>
             <div className="w-full flex flex-col gap-4">

@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react'
 import MainLayout from '@/Layouts/MainLayout'
 import { menuData } from '@/services/menu/menu.services'
 // import Modal from '@/Components/modalGlobal/Modal';
-import ModalAddCate from './ModalAddCate';
-import ModalEditCate from './ModalEditCate';
+import ModalAddCate from './components/ModalAddCate';
+import ModalEditCate from './components/ModalEditCate';
 import { svGetCate, svDeleteCate } from '@/services/menu/menu.services';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';

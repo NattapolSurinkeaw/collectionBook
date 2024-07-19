@@ -28,6 +28,8 @@ return new class extends Migration
             $table->string('meta_keywords')->nullable();
             $table->string('h1')->nullable();
             $table->string('h2')->nullable();
+            $table->boolean('is_menu')->default(false);
+            $table->boolean('is_footer')->default(false);
             $table->integer('priority');
             $table->boolean('status_display');
             $table->timestamps();
@@ -50,9 +52,10 @@ return new class extends Migration
                 'meta_keywords' => "",
                 'h1' => "",
                 'h2' => "",
+                'is_menu' => false,
+                'is_footer' => false,
                 'priority' => 1,
                 'status_display' => true,
-
             ]
         ]);
     }
