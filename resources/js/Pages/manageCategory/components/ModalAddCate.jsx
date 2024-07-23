@@ -26,13 +26,14 @@ const style = {
 };
 
 export default function ModalAddCate({open, handleOpen, handleClose, cateData, setCateData}) {
+  console.log(cateData)
   const ImageRef = useRef([]);
   const [parentId, setParentId] = useState([]);
   const [imagePreview, setImagePreview] = useState("/image/no-image.png");
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [keyword, setKeyword] = useState("");
-  const [slug, setSlug] = useState("");
+  const [cateUrl, setCateUrl] = useState("");
   const [link, setLink] = useState("");
   const [metaTitle, setMetaTitle] = useState("");
   const [metaDescription, setMetaDescription] = useState("");
@@ -62,7 +63,7 @@ export default function ModalAddCate({open, handleOpen, handleClose, cateData, s
     formData.append("title", title);
     formData.append("description", description);
     formData.append("keyword", keyword);
-    formData.append("slug", slug);
+    formData.append("cate_url", cateUrl);
     formData.append("link", link);
     formData.append("parent_id", parentId);
     formData.append("position", position);
@@ -114,12 +115,12 @@ export default function ModalAddCate({open, handleOpen, handleClose, cateData, s
                   cateData.map((cate) => (
                     <FormControlLabel 
                       key={cate.id} 
-                      title={`parent ${cate.parent_id} | position ${cate.position}`} 
+                      title={`parent ${cate.cate_parent_id} | position ${cate.cate_position}`} 
                       value={cate.id}
                       control={<Radio />} 
-                      label={`${cate.title}`}
-                      style={cate.position === 2 ? { marginLeft: '5px' } : {}}
-                      onChange={() => handleRadioChange(cate.id, cate.position)}
+                      label={`${cate.cate_title}`}
+                      style={cate.cate_position === 2 ? { marginLeft: '5px' } : {}}
+                      onChange={() => handleRadioChange(cate.id, cate.cate_position)}
                     />
                   ))
                 }
@@ -170,10 +171,10 @@ export default function ModalAddCate({open, handleOpen, handleClose, cateData, s
                   placeholder="Keyword" type="text" 
                 />
                 <input 
-                  value={slug}
-                  onChange={(e) => setSlug(e.target.value)}
+                  value={cateUrl}
+                  onChange={(e) => setCateUrl(e.target.value)}
                   className="w-full focus-none rounded-md" 
-                  placeholder="Slug" type="text" 
+                  placeholder="url" type="text" 
                 />
                 <input 
                   value={link}

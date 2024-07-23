@@ -32,7 +32,7 @@ export default function ModalEditCate({open, handleOpen, handleClose, cateData, 
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [keyword, setKeyword] = useState("");
-  const [slug, setSlug] = useState("");
+  const [cateUrl, setCateUrl] = useState("");
   const [link, setLink] = useState("");
   const [metaTitle, setMetaTitle] = useState("");
   const [metaDescription, setMetaDescription] = useState("");
@@ -42,27 +42,28 @@ export default function ModalEditCate({open, handleOpen, handleClose, cateData, 
   const [priority, setPriority] = useState(1);
   const [statusDisplay, setStatusDisplay] = useState(true);
   const [position, setPosition] = useState(1);
+  const [resData, setResData] = useState([]);
   // const [selectedValue, setSelectedValue] = useState('');
 
   useEffect(() => {
     svGetCateById(slcEdit).then((res) => {
-      const resData = res.data.data
-      console.log(resData)
-      setParentId(resData.parent_id)
-      setImagePreview(resData.image)
-      setTitle(resData.title)
-      setDescription(resData.description)
-      setKeyword(resData.keywords)
-      setSlug(resData.slug)
-      setLink(resData.link)
-      setMetaTitle(resData.meta_title || "")
-      setMetaDescription(resData.meta_description|| "")
-      setMetaKeyword(resData.meta_keyword|| "")
-      setMetaH1(resData.h1|| "")
-      setMetaH2(resData.h2|| "")
-      setPriority(resData.priority|| "")
-      setStatusDisplay(Boolean(resData.status_display))
-      setParentId(resData.parent_id)
+      console.log(res.data.data)
+      const responseData = res.data.data
+      setResData(responseData)
+      setParentId(responseData.cate_parent_id)
+      setImagePreview(responseData.cate_thumbnail)
+      setTitle(responseData.cate_title)
+      setDescription(responseData.cate_description)
+      setKeyword(responseData.cate_keywords)
+      setCateUrl(responseData.cate_url)
+      setLink(responseData.cate_link)
+      setMetaTitle(responseData.meta_title || "")
+      setMetaDescription(responseData.meta_description|| "")
+      setMetaKeyword(responseData.meta_keyword|| "")
+      setMetaH1(responseData.cate_h1|| "")
+      setMetaH2(responseData.cate_h2|| "")
+      setPriority(responseData.cate_priority|| "")
+      setStatusDisplay(Boolean(responseData.status_display))
     }) 
   }, [])
 
@@ -90,7 +91,7 @@ export default function ModalEditCate({open, handleOpen, handleClose, cateData, 
     formData.append("title", title);
     formData.append("description", description);
     formData.append("keyword", keyword);
-    formData.append("slug", slug);
+    formData.append("cate_url", cateUrl);
     formData.append("link", link);
     formData.append("parent_id", parentId);
     formData.append("position", position);
@@ -107,8 +108,8 @@ export default function ModalEditCate({open, handleOpen, handleClose, cateData, 
       console.log(key, " : ", value);
     });
 
-    return false;
-    svGetEditCate(formData).then((res) => {
+    // return false;
+    svGetEditCate(resData.id,formData).then((res) => {
       console.log(res.data.status)
       if(res.data.status == 'success') {
         setCateData(prevCateData => [...prevCateData, res.data.data]);
@@ -143,13 +144,13 @@ export default function ModalEditCate({open, handleOpen, handleClose, cateData, 
                   cateData.map((cate) => (
                     <FormControlLabel 
                       key={cate.id} 
-                      title={`parent ${cate.parent_id} | position ${cate.position}`} 
+                      title={`parent ${cate.cate_parent_id} | position ${cate.cate_position}`} 
                       value={cate.id}
                       control={<Radio />} 
-                      label={`${cate.title}`}
+                      label={`${cate.cate_title}`}
                       checked = {parentId == cate.id}
-                      style={cate.position === 2 ? { marginLeft: '5px' } : {}}
-                      onChange={() => handleRadioChange(cate.id, cate.position)}
+                      style={cate.cate_position === 2 ? { marginLeft: '5px' } : {}}
+                      onChange={() => handleRadioChange(cate.id, cate.cate_position)}
                     />
                   ))
                 }
@@ -200,10 +201,10 @@ export default function ModalEditCate({open, handleOpen, handleClose, cateData, 
                   placeholder="Keyword" type="text" 
                 />
                 <input 
-                  value={slug}
-                  onChange={(e) => setSlug(e.target.value)}
+                  value={cateUrl}
+                  onChange={(e) => setCateUrl(e.target.value)}
                   className="w-full focus-none rounded-md" 
-                  placeholder="Slug" type="text" 
+                  placeholder="url" type="text" 
                 />
                 <input 
                   value={link}

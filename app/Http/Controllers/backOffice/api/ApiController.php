@@ -27,20 +27,20 @@ class ApiController extends Controller
         $imageCate = (isset($param['imageCate'])) ? $this->uploadImage($newFolder, $param['imageCate'], "", "", time()) : "";
 
         $cate = Category::create([
-            'title' => $param['title'],
-            'description' => $param['description'],
-            'keywords' =>  $param['keyword'],
-            'slug' =>  $param['slug'],
-            'link' =>  $param['link'],
-            'image' =>  "/".$imageCate,
-            'parent_id' =>  $param['parent_id'],
-            'position' =>  ($param['parent_id'] == 1) ? $param['position'] : $param['position']+1  ,
+            'cate_title' => $param['title'],
+            'cate_description' => $param['description'],
+            'cate_keywords' =>  $param['keyword'],
+            'cate_url' =>  $param['cate_url'],
+            'cate_link' =>  $param['link'],
+            'cate_thumbnail' =>  "/".$imageCate,
+            'cate_parent_id' =>  $param['parent_id'],
+            'cate_position' =>  ($param['parent_id'] == 1) ? $param['position'] : $param['position']+1  ,
             'meta_title' =>  $param['meta_title'],
             'meta_description' =>  $param['meta_description'],
             'meta_keywords' =>  $param['meta_keyword'],
-            'h1' =>  $param['meta_h1'],
-            'h2' =>  $param['meta_h2'],
-            'priority' =>  $param['priority'],
+            'cate_h1' =>  $param['meta_h1'],
+            'cate_h2' =>  $param['meta_h2'],
+            'cate_priority' =>  $param['priority'],
             'status_display' =>  ($param['status_display'] == 'true')? 1 : 0,
         ]);
 
@@ -76,24 +76,27 @@ class ApiController extends Controller
             ], 404);
         }
 
-        $newFolder = "upload/" . date('Y') . "/" . date('m') . "/" . date('d') . "/";
-        $imageCate = (isset($param['imageCate'])) ? $this->uploadImage($newFolder, $param['imageCate'], "", "", time()) : "";
 
-        $cate = Category::create([
-            'title' => $param['title'],
-            'description' => $param['description'],
-            'keywords' =>  $param['keyword'],
-            'slug' =>  $param['slug'],
-            'link' =>  $param['link'],
-            'image' =>  "/".$imageCate,
-            'parent_id' =>  $param['cate'],
-            'position' =>  ($param['cate'] == 0) ? 0 : 1 ,
+        $newFolder = "upload/" . date('Y') . "/" . date('m') . "/" . date('d') . "/";
+        $imageCate = isset($param['imageCate']) && !empty($param['imageCate']) && $param['imageCate'] !== 'undefined' 
+            ? $this->uploadImage($newFolder, $param['imageCate'], "", "", time()) 
+            : $cate->cate_thumbnail;
+
+        $cate->update([
+            'cate_title' => $param['title'],
+            'cate_description' => $param['description'],
+            'cate_keywords' =>  $param['keyword'],
+            'cate_url' =>  $param['cate_url'],
+            'cate_link' =>  $param['link'],
+            'cate_thumbnail' =>  "/".$imageCate,
+            'cate_parent_id' =>  $param['parent_id'],
+            'cate_position' =>  ($param['parent_id'] == 1) ? $param['position'] : $param['position']+1  ,
             'meta_title' =>  $param['meta_title'],
             'meta_description' =>  $param['meta_description'],
             'meta_keywords' =>  $param['meta_keyword'],
-            'h1' =>  $param['meta_h1'],
-            'h2' =>  $param['meta_h2'],
-            'priority' =>  $param['priority'],
+            'cate_h1' =>  $param['meta_h1'],
+            'cate_h2' =>  $param['meta_h2'],
+            'cate_priority' =>  $param['priority'],
             'status_display' =>  ($param['status_display'] == 'true')? 1 : 0,
         ]);
 

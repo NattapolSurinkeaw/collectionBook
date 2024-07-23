@@ -54,15 +54,15 @@ export default function CategoryPage({auth}) {
           <div key={cate.id} className="p-4 border bg-[#f8f9fa] rounded-sm flex justify-between">
             <div className="flex gap-4">
               <div className="w-[150px] h-[122px] border p-1 hover:scale-[0.95] duration-300 cursor-pointer">
-                <img className="w-full h-full rounded-sm" src={cate.image} alt="" />
+                <img className="w-full h-full rounded-sm" src={cate.cate_thumbnail} alt="" />
               </div>
               <div>
                 <p className="text-red-500">[{cate.id}]</p>
                 <p>
                   <span>{cate.id}</span>
-                  <span>{cate.title}</span>
+                  <span> {cate.cate_title}</span>
                 </p>
-                <p className="text-slate-400 text-sm">priority {cate.priority}</p>
+                <p className="text-slate-400 text-sm">priority {cate.cate_priority}</p>
                 <p>
                   {
                     cate.status_display ? (

@@ -14,23 +14,26 @@ return new class extends Migration
     {
         Schema::create('categories', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
-            $table->string('description');
-            $table->string('keywords');
-            $table->string('slug');
-            $table->string('icon')->nullable();
-            $table->string('link')->nullable();
-            $table->string('image')->nullable();
-            $table->integer('parent_id');
-            $table->integer('position');
+            $table->string('cate_title');
+            $table->string('cate_description');
+            $table->string('cate_keywords');
+            $table->string('cate_url');
+            $table->string('cate_icon')->nullable();
+            $table->string('cate_link')->nullable();
+            $table->string('cate_thumbnail')->nullable();
+            $table->integer('cate_parent_id');
+            $table->integer('cate_position');
+            /* Web SEO */
             $table->string('meta_title')->nullable();
             $table->string('meta_description')->nullable();
             $table->string('meta_keywords')->nullable();
-            $table->string('h1')->nullable();
-            $table->string('h2')->nullable();
+            $table->string('cate_h1')->nullable();
+            $table->string('cate_h2')->nullable();
+            $table->string('cate_topic')->nullable();
+            /*End Web SEO */
             $table->boolean('is_menu')->default(false);
             $table->boolean('is_footer')->default(false);
-            $table->integer('priority');
+            $table->integer('cate_priority');
             $table->boolean('status_display');
             $table->timestamps();
         });
@@ -38,23 +41,23 @@ return new class extends Migration
         DB::table('categories')->insert([
             [
                 'id' => 1,
-                'title' => "หมวดหมู่หลัก",
-                'description' => "หมวดหมู่หลัก",
-                'keywords' => "หมวดหมู่หลัก",
-                'slug' => "หมวดหมู่หลัก",
-                'icon' => "",
-                'link' => "หมวดหมู่หลัก",
-                'image' => "",
-                'parent_id' => "1",
-                'position' => "1",
+                'cate_title' => "หมวดหมู่หลัก",
+                'cate_description' => "หมวดหมู่หลัก",
+                'cate_keywords' => "หมวดหมู่หลัก",
+                'cate_url' => "หมวดหมู่หลัก",
+                'cate_icon' => "",
+                'cate_link' => "หมวดหมู่หลัก",
+                'cate_thumbnail' => "",
+                'cate_parent_id' => "1",
+                'cate_position' => "1",
                 'meta_title' => "",
                 'meta_description' => "",
                 'meta_keywords' => "",
-                'h1' => "",
-                'h2' => "",
+                'cate_h1' => "",
+                'cate_h2' => "",
                 'is_menu' => false,
                 'is_footer' => false,
-                'priority' => 1,
+                'cate_priority' => 1,
                 'status_display' => true,
             ]
         ]);

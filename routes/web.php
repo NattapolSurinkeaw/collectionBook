@@ -31,6 +31,7 @@ Route::prefix('/backoffice')->middleware(['auth', 'verified'])->group(function (
     Route::get('/page', [BackOfficePagesController::class, 'managePage']);
     Route::get('/profile', [BackOfficePagesController::class, 'manageProfile']);
     Route::get('/category', [BackOfficePagesController::class, 'manageCategory']);
+    Route::get('/user', [BackOfficePagesController::class, 'manageUser']);
 });
 
 Route::middleware('auth')->group(function () {
@@ -44,7 +45,7 @@ Route::middleware('auth')->group(function () {
 Route::get('/getCate', [ApiController::class, 'getCatetegory']);
 Route::post('/postcate', [ApiController::class, 'createCatetegory']);
 Route::get('/getCateId/{id}', [ApiController::class, 'getCateById']);
-Route::get('/editCate/{id}', [ApiController::class, 'getEditCate']);
+Route::post('/editCate/{id}', [ApiController::class, 'getEditCate']);
 Route::delete('/deleteCate/{id}', [ApiController::class, 'deleteCategory']);
 
 require __DIR__.'/auth.php';

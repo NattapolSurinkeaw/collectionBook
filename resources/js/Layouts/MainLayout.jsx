@@ -18,7 +18,9 @@ export default function MainLayout({ children, auth }) {
   return (
     <div className="bg-[#f5f4f9] flex gap-5 h-screen">
         <div className={`bg-white ${handleNav ? 'w-[290px]': 'w-[0px]'} overflow-hidden duration-300 shadow-lg`}>
-            <h1 className="py-6 text-2xl font-bold text-green-500 text-center">PHP ADMIN </h1>
+            <div className="m-4 border bg-gray-300">
+                <h1 className="py-6 text-2xl font-bold text-green-500 text-center">PHP ADMIN </h1>
+            </div>
             <div className="">
                 {
                     menuData.map((menu) => (

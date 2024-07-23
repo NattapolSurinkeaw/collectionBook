@@ -32,4 +32,8 @@ class PagesController extends Controller
     public function manageCategory() {
         return Inertia::render('manageCategory/CategoryPage');
     }
+
+    public function manageUser() {
+        return Inertia::render('manageUser/UserPage');
+    }
 }

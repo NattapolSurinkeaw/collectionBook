@@ -63,10 +63,10 @@ export const menuData = [
     sub_menu : [
       {
         id: 4,
-        name: "ManageProfile",
+        name: "ManageUser",
         icon: <DashboardIcon />,
-        link: "/backoffice/profile",
-        status_display: false,
+        link: "/backoffice/user",
+        status_display: true,
       }
     ]
   },
