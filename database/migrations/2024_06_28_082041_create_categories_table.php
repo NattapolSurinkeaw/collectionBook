@@ -33,6 +33,7 @@ return new class extends Migration
             /*End Web SEO */
             $table->boolean('is_menu')->default(false);
             $table->boolean('is_footer')->default(false);
+            $table->integer('cate_type')->comment('back or front Office')->default(1);
             $table->integer('cate_priority');
             $table->boolean('status_display');
             $table->timestamps();
@@ -57,6 +58,7 @@ return new class extends Migration
                 'cate_h2' => "",
                 'is_menu' => false,
                 'is_footer' => false,
+                'cate_type' => 1,
                 'cate_priority' => 1,
                 'status_display' => true,
             ]

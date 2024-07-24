@@ -112,7 +112,13 @@ export default function ModalEditCate({open, handleOpen, handleClose, cateData, 
     svGetEditCate(resData.id,formData).then((res) => {
       console.log(res.data.status)
       if(res.data.status == 'success') {
-        setCateData(prevCateData => [...prevCateData, res.data.data]);
+        setCateData(prevCateData => 
+          // [...prevCateData, res.data.data]
+          // console.log(prevCateData)
+          prevCateData.map((cate) => 
+            cate.id === resData.id ? { ...cate, ...res.data.data} : cate
+          )
+        );
         handleClose()
       }
     })

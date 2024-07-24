@@ -79,16 +79,16 @@ class ApiController extends Controller
 
         $newFolder = "upload/" . date('Y') . "/" . date('m') . "/" . date('d') . "/";
         $imageCate = isset($param['imageCate']) && !empty($param['imageCate']) && $param['imageCate'] !== 'undefined' 
-            ? $this->uploadImage($newFolder, $param['imageCate'], "", "", time()) 
+            ? "/".$this->uploadImage($newFolder, $param['imageCate'], "", "", time()) 
             : $cate->cate_thumbnail;
-
+            
         $cate->update([
             'cate_title' => $param['title'],
             'cate_description' => $param['description'],
             'cate_keywords' =>  $param['keyword'],
             'cate_url' =>  $param['cate_url'],
             'cate_link' =>  $param['link'],
-            'cate_thumbnail' =>  "/".$imageCate,
+            'cate_thumbnail' =>  $imageCate,
             'cate_parent_id' =>  $param['parent_id'],
             'cate_position' =>  ($param['parent_id'] == 1) ? $param['position'] : $param['position']+1  ,
             'meta_title' =>  $param['meta_title'],
