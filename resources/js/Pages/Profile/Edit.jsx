@@ -5,9 +5,15 @@ import UpdatePasswordForm from './Partials/UpdatePasswordForm';
 import UpdateProfileInformationForm from './Partials/UpdateProfileInformationForm';
 import EditProfile from './Partials/EditProfile';
 import { Head } from '@inertiajs/react';
+import { useState } from 'react';
+import LoadingButton from '@mui/lab/LoadingButton';
 
 
 export default function Edit({ auth, mustVerifyEmail, status }) {
+    const [loading, setLoading] = useState(true);
+    function handleClick() {
+        setLoading(true);
+    }
     return (
         <MainLayout auth={auth}>
             <Head title="Profile" />

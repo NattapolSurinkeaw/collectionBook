@@ -4,7 +4,7 @@ import MainLayout from '@/Layouts/MainLayout'
 export default function UserPage({auth}) {
   return (
     <MainLayout auth={auth}>
-    User 
-  </MainLayout>
+      <h1 className="mb-4">Manage Users</h1>
+    </MainLayout>
   )
 }
