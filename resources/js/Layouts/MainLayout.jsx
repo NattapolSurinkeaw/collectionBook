@@ -31,12 +31,21 @@ export default function MainLayout({ children, auth }) {
             <div className="m-4 border-4 rounded-lg bg-white">
                 <h1 className="py-6 text-2xl font-bold text-green-500 text-center">PHP ADMIN </h1>
             </div>
+            {/* language */}
+            <div className="p-4 flex gap-1 justify-center">
+                <div className="dark:bg-white dark:text-black bg-black text-white p-1 rounded-sm cursor-pointer duration-300">
+                    TH
+                </div>
+                <div className="dark:bg-white dark:text-black bg-black text-white p-1 rounded-sm cursor-pointer duration-300 ">
+                    EN
+                </div>
+            </div>
             <div className="">
                 {
                     menuData.map((menu) => (
                         <div key={menu.id} className="flex flex-col gap-2 mb-4">
-                            <div className="flex gap-2 text-[#bcbfc1]">
-                                <div className="">=</div>
+                            <div className="flex items-center gap-2 text-[#bcbfc1]">
+                                <div className="h-[2px] w-3 bg-black"></div>
                                 <p className="">{menu.main_menu}</p>
                             </div>
                             {/* main menu  */}
@@ -75,7 +84,7 @@ export default function MainLayout({ children, auth }) {
             <div className="bg-white dark:bg-[#404040] h-[65px] rounded-[10px] px-4 flex justify-between items-center shadow-lg duration-300">
                 <div>
                     <button onClick={() => setHandleNav(!handleNav)}>
-                        <MenuIcon />
+                        <MenuIcon className="dark:text-white" />
                     </button>
                 </div>
                 <div className="flex gap-2 items-center relative">
