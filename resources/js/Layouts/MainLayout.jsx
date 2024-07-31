@@ -33,10 +33,10 @@ export default function MainLayout({ children, auth }) {
             </div>
             {/* language */}
             <div className="p-4 flex gap-1 justify-center">
-                <div className="dark:bg-white dark:text-black bg-black text-white p-1 rounded-sm cursor-pointer duration-300">
+                <div className="dark:bg-white dark:text-black bg-gray-500 text-white p-1 rounded-sm cursor-pointer duration-300">
                     TH
                 </div>
-                <div className="dark:bg-white dark:text-black bg-black text-white p-1 rounded-sm cursor-pointer duration-300 ">
+                <div className="dark:bg-white dark:text-black bg-gray-500 text-white p-1 rounded-sm cursor-pointer duration-300 ">
                     EN
                 </div>
             </div>
