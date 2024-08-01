@@ -17,14 +17,6 @@ class PagesController extends Controller
         return Inertia::render('managePage/Page');
     }
 
-    public function test() {
-        return Inertia::render('TestPage');
-    }
-
-    public function managePage() {
-        return Inertia::render('managePage/Page');
-    }
-
     public function manageProfile() {
         return Inertia::render('Profile/Edit');
     }
@@ -35,5 +27,9 @@ class PagesController extends Controller
 
     public function manageUser() {
         return Inertia::render('manageUser/UserPage');
+    }
+
+    public function manageRole() {
+        return Inertia::render('manageUser/RolePage');
     }
 }

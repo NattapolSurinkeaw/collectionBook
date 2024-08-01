@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('password');
             $table->string('profile_img')->nullable();
             $table->foreignId('role_id')->constrained('role_users')->onDelete('cascade');
+            $table->boolean('dark_mode')->default(0);
             $table->rememberToken();
             $table->timestamps();
         });
@@ -47,11 +48,35 @@ return new class extends Migration
                 'email_verified_at' => '2024-07-12 01:03:56',
                 'password' => '$2y$12$kQGyC7637zUJaYQn7rPe7.W8OsdzRzrUEhVhELpto4mFOYqA2WEQS',
                 'profile_img' => NULL,
+                'role_id' => 1,
+                'remember_token' => NULL,
+                'created_at' => '2024-07-12 01:03:44',
+                'updated_at' => '2024-07-12 01:03:56',
+            ],
+            [
+                'id' => 2,
+                'name' => 'nattapol suinkeaw',
+                'email' => 'nattapol.surinkeaw@gmail.com',
+                'email_verified_at' => '2024-07-12 01:03:56',
+                'password' => '$2y$12$kQGyC7637zUJaYQn7rPe7.W8OsdzRzrUEhVhELpto4mFOYqA2WEQS',
+                'profile_img' => NULL,
+                'role_id' => 2,
+                'remember_token' => NULL,
+                'created_at' => '2024-07-12 01:03:44',
+                'updated_at' => '2024-07-12 01:03:56',
+            ],
+            [
+                'id' => 3,
+                'name' => 'nattapol suinkeaw',
+                'email' => 'nattapolsu.ebook@gmail.com',
+                'email_verified_at' => '2024-07-12 01:03:56',
+                'password' => '$2y$12$kQGyC7637zUJaYQn7rPe7.W8OsdzRzrUEhVhELpto4mFOYqA2WEQS',
+                'profile_img' => NULL,
                 'role_id' => 3,
                 'remember_token' => NULL,
                 'created_at' => '2024-07-12 01:03:44',
                 'updated_at' => '2024-07-12 01:03:56',
-            ]
+            ],
         ]);
     }
 

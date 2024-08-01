@@ -39,4 +39,18 @@ abstract class Controller
         }
         return File::exists(public_path($path));
     }
+
+    public function responseData($data) {
+        if(!$data) {
+            return response()->json([
+                'status' => 'error', 
+                'message' => '$data'
+            ], 404);
+        }
+
+        return response()->json([
+            'status' => 'success', 
+            'data' => $data
+        ], 200);
+    }
 }

@@ -45,19 +45,6 @@ export const menuData = [
     ]
   },
   {
-    id: 2,
-    main_menu : "Content",
-    sub_menu : [
-      {
-        id: 3,
-        name: "ManageContent",
-        icon: <DashboardIcon />,
-        link: "/backoffice/page",
-        status_display: true,
-      }
-    ]
-  },
-  {
     id: 3,
     main_menu : "User",
     sub_menu : [
@@ -67,27 +54,34 @@ export const menuData = [
         icon: <DashboardIcon />,
         link: "/backoffice/user",
         status_display: true,
-      }
+      },
+      {
+        id: 5,
+        name: "ManageRole",
+        icon: <DashboardIcon />,
+        link: "/backoffice/role",
+        status_display: true,
+      },
     ]
   },
 ]
 
 export const svPostCate = (param) => {
-  return axios.post('/postcate', param).then((res) => res).catch((error) => error)
+  return axios.post('/api/postcate', param).then((res) => res).catch((error) => error)
 }
 
 export const svGetCate = () => {
-  return axios.get('/getCate').then((res) => res).catch((error) => error)
+  return axios.get('/api/getCate').then((res) => res).catch((error) => error)
 }
 
 export const svGetCateById = (id) => {
-  return axios.get(`/getCateId/${id}`).then((res) => res).catch((error) => error)
+  return axios.get(`/api/getCateId/${id}`).then((res) => res).catch((error) => error)
 }
 
 export const svGetEditCate = (id, param) => {
-  return axios.post(`/editCate/${id}`, param).then((res) => res).catch((error) => console.log(error))
+  return axios.post(`/api/editCate/${id}`, param).then((res) => res).catch((error) => console.log(error))
 }
 
 export const svDeleteCate = (id) => {
-  return axios.delete(`/deleteCate/${id}`).then((res) => res).catch((error) => error)
+  return axios.delete(`/api/deleteCate/${id}`).then((res) => res).catch((error) => error)
 }

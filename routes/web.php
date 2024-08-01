@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Http\Controllers\frontOffice\PagesController as FrontOfficePagesController;
 use App\Http\Controllers\backoffice\api\ApiController;
+use App\Http\Controllers\backoffice\api\UserController;
 
 Route::get('/', [FrontOfficePagesController::class, 'index']);
 
@@ -27,11 +28,10 @@ Route::prefix('/backoffice')->middleware(['auth', 'verified'])->group(function (
     Route::get('/', [BackOfficePagesController::class, 'index']);
     Route::get('/dashboard', [BackOfficePagesController::class, 'index'])->name('dashboard');
     Route::get('/home', [BackOfficePagesController::class, 'home']);
-    Route::get('/test', [BackOfficePagesController::class, 'test'])->name("test");
-    Route::get('/page', [BackOfficePagesController::class, 'managePage']);
     Route::get('/profile', [BackOfficePagesController::class, 'manageProfile']);
     Route::get('/category', [BackOfficePagesController::class, 'manageCategory']);
     Route::get('/user', [BackOfficePagesController::class, 'manageUser']);
+    Route::get('/role', [BackOfficePagesController::class, 'manageRole']);
 });
 
 Route::middleware('auth')->group(function () {
@@ -42,10 +42,15 @@ Route::middleware('auth')->group(function () {
 });
 
 // api
-Route::get('/getCate', [ApiController::class, 'getCatetegory']);
-Route::post('/postcate', [ApiController::class, 'createCatetegory']);
-Route::get('/getCateId/{id}', [ApiController::class, 'getCateById']);
-Route::post('/editCate/{id}', [ApiController::class, 'getEditCate']);
-Route::delete('/deleteCate/{id}', [ApiController::class, 'deleteCategory']);
+Route::prefix('/api')->group(function () {
+    Route::get('/getCate', [ApiController::class, 'getCatetegory']);
+    Route::post('/postcate', [ApiController::class, 'createCatetegory']);
+    Route::get('/getCateId/{id}', [ApiController::class, 'getCateById']);
+    Route::post('/editCate/{id}', [ApiController::class, 'getEditCate']);
+    Route::delete('/deleteCate/{id}', [ApiController::class, 'deleteCategory']);
+
+    Route::get('/getuser', [UserController::class, 'getUserAll']);
+});
+
 
 require __DIR__.'/auth.php';

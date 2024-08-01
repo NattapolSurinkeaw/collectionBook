@@ -1,87 +1,44 @@
 import React from 'react'
 import MainLayout from '@/Layouts/MainLayout'
 import PrimaryButton from '@/Components/PrimaryButton'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
+import { svGetUsers } from '@/services/user/user.services'
 
 export default function UserPage({auth}) {
   const [filterRole, setFilterRole] = useState(0);
-  const [rolemock, setRolemock] = useState([
-    {
-      id: 1,
-      title : "Superadmin"
-    },
-    {
-      id: 2,
-      title : "Admin"
-    },
-    {
-      id: 3,
-      title : "User"
-    },
-  ]);
-  const [users, setUser] = useState([
-    {
-      id : 1,
-      name : "nattaphol",
-      email : "nattapol.surinkeaw@gmail.com",
-      role : 1
-    },
-    {
-      id : 2,
-      name : "surinkeaw",
-      email : "nattapol.surinkeaw@gmail.com",
-      role : 2
-    },
-    {
-      id : 3,
-      name : "surinkeaw",
-      email : "nattapol.surinkeaw@gmail.com",
-      role : 3
-    },
-    {
-      id : 4,
-      name : "surinkeaw",
-      email : "nattapol.surinkeaw@gmail.com",
-      role : 3
-    },
-    {
-      id : 5,
-      name : "surinkeaw",
-      email : "nattapol.surinkeaw@gmail.com",
-      role : 3
-    },
-    {
-      id : 6,
-      name : "surinkeaw",
-      email : "nattapol.surinkeaw@gmail.com",
-      role : 3
-    },
-    {
-      id : 7,
-      name : "surinkeaw",
-      email : "nattapol.surinkeaw@gmail.com",
-      role : 3
-    },
-    {
-      id : 8,
-      name : "surinkeaw",
-      email : "nattapol.surinkeaw@gmail.com",
-      role : 3
-    }
-  ]);
+  const [role, setRole] = useState([]);
+  const [users, setUser] = useState([]);
+  const [usersFilter, setUserFilter] = useState([]); 
+
+  const handleRoleChange = (id) => {
+    setFilterRole(id);
+  };
 
   useEffect(() => {
-    const filterUser = (users) => {
-      return users.filter(user => user.role === filterRole);
-    };
-    
-    // เรียกใช้ filterUser และตั้งค่า setUser
-    setUser(filterUser(users));
-  }, [filterRole])
+    svGetUsers().then((res) => {
+      setUser(res.data.data['user'])
+      setUserFilter(res.data.data['user'])
+      setRole(res.data.data['role'])
+    })
+  }, [])
+
+  useEffect(() => {
+    if (filterRole === 0) {
+      setUserFilter(users);
+    } else {
+      setUserFilter(users.filter(user => user.role_id === filterRole));
+    }
+  }, [filterRole, users]);
+
+  // แปลง role_id เป็น ชื่อ role_name
+  const showRoleUser = (id) => {
+    const roleFound = role.find(r => r.id === id);
+    return roleFound ? roleFound.role_name : 'Role not found';
+  }
 
   return (
     <MainLayout auth={auth}>
-      <h1 className="mb-4">Manage Users {filterRole}</h1>
+      <h1 className="mb-4 text-2xl">Manage Users</h1>
       <div className="border rounded-md shadow-md">
         <div className="p-2">
           <PrimaryButton children="fetch" />
@@ -90,32 +47,34 @@ export default function UserPage({auth}) {
         <div className="py-2 px-10 flex gap-4">
           <ul className="border-r-4 p-4 flex flex-col gap-6 text-lg">
           <li
-            onClick={() => setFilterRole(0)}
+            onClick={() => handleRoleChange(0)}
             className={`${filterRole === 0 ? "border-b-2 border-blue-600" : ""}`}
           >
             <span className="p-4">All</span>
           </li>
             {
-              rolemock.map((role) => (
+              role.map((role) => (
                 <li
-                  onClick={() => setFilterRole(role.id)} 
+                  key={role.id}
+                  onClick={() => handleRoleChange(role.id)} 
                   className={`${filterRole === role.id ? "border-b-2 border-blue-600" : ""}`}
                   >
-                    <span className="p-4">{role.title}</span>
+                    <span className="p-4">{role.role_name}</span>
                 </li>
               ))
             }
           </ul>
           <div className="w-full flex flex-wrap gap-4 h-[600px] overflow-auto p-4">
             {
-              users.map((user) => (
+              usersFilter.map((user) => (
                 <div key={user.id} className="flex flex-col gap-2 border shadow-md w-[168px] h-[212px] rounded-md p-2 hover:scale-95 duration-200">
                   <div className="flex justify-center">
-                    <img src="/upload/profile/2024/07/26/1721965220.jpg" className="border p-1 rounded-full w-20 h-20" alt="" />
+                    <img src={`/${(user.profile_img)? user.profile_img : 'image/emptyProfile.jpg'}`} className="border p-1 rounded-full w-20 h-20" alt="" />
                   </div>
                   <div className="text-center">
                     <h3 className="font-semibold">{user.name}</h3>
                     <h3 className="w-full overflow-hidden">({user.email})</h3>
+                    <h3 className="">({showRoleUser(user.role_id)})</h3>
                   </div>
                 </div>
               ))
