@@ -48,6 +48,7 @@ Route::prefix('/api')->group(function () {
     Route::get('/getCateId/{id}', [ApiController::class, 'getCateById']);
     Route::post('/editCate/{id}', [ApiController::class, 'getEditCate']);
     Route::delete('/deleteCate/{id}', [ApiController::class, 'deleteCategory']);
+    Route::post('/set-mode', [ApiController::class, 'setMode']);
 
     Route::get('/getuser', [UserController::class, 'getUserAll']);
 });

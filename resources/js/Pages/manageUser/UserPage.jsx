@@ -4,7 +4,7 @@ import PrimaryButton from '@/Components/PrimaryButton'
 import { useState, useEffect, useMemo } from 'react'
 import { svGetUsers } from '@/services/user/user.services'
 
-export default function UserPage({auth}) {
+export default function UserPage() {
   const [filterRole, setFilterRole] = useState(0);
   const [role, setRole] = useState([]);
   const [users, setUser] = useState([]);
@@ -37,7 +37,7 @@ export default function UserPage({auth}) {
   }
 
   return (
-    <MainLayout auth={auth}>
+    <MainLayout>
       <h1 className="mb-4 text-2xl">Manage Users</h1>
       <div className="border rounded-md shadow-md">
         <div className="p-2">

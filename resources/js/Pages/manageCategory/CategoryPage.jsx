@@ -8,7 +8,7 @@ import { svGetCate, svDeleteCate } from '@/services/menu/menu.services';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 
-export default function CategoryPage({auth}) {
+export default function CategoryPage() {
   const [fillter, setFillter] = useState(1);
   const [handlemodal, setHandleModal] = useState(false);
   const [open, setOpen] = useState(false);
@@ -40,7 +40,7 @@ export default function CategoryPage({auth}) {
   }
 
   return (
-    <MainLayout auth={auth}>
+    <MainLayout>
       <h1 className="mb-4">Category {fillter}</h1>
       <div className="border-b-2 flex justify-between">
         <ul className="flex">

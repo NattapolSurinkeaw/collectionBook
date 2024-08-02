@@ -15,7 +15,7 @@ export default function Edit({ auth, mustVerifyEmail, status }) {
         setLoading(true);
     }
     return (
-        <MainLayout auth={auth}>
+        <MainLayout>
             <Head title="Profile" />
 
             <div className="">

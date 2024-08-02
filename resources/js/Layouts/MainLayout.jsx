@@ -1,28 +1,45 @@
 import React from 'react'
-import { Link } from '@inertiajs/react'
-import { useState } from 'react';
+import { Link, usePage } from '@inertiajs/react';
+import { useState, useEffect } from 'react';
 import { Delete as DeleteIcon, Add as AddIcon } from '@mui/icons-material';
 // import DashboardIcon from '@mui/icons-material/Dashboard';
 import HomeIcon from '@mui/icons-material/Home';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import GradeIcon from '@mui/icons-material/Grade';
-import { menuData } from '@/services/menu/menu.services';
+import { menuData, svChangeMode } from '@/services/menu/menu.services';
 import ModalProfile from '@/Components/modalProfile/ModalProfile';
 import MenuIcon from '@mui/icons-material/Menu';
 
-export default function MainLayout({ children, auth }) {
-    // console.log(menuData)
+
+export default function MainLayout({ children }) {
+    const { auth, categories } = usePage().props;
+    console.log(categories)
     const [modalProfile, setModalProfile] = useState(false);
     const [handleNav, setHandleNav] = useState(true);
-    // const [darkMode, setDarkMode] = useState(false);
+    const [darkMode, setDarkMode] = useState(false);
+    const htmlElement = document.querySelector('html');
+
+    useEffect(() => {
+        setDarkMode(auth.user.dark_mode);
+    }, [auth.user.dark_mode]);
+
+    useEffect(() => {
+        if (darkMode) {
+            // console.log("เพิ่ม Dark");
+            htmlElement.classList.add("dark");
+        } else {
+            // console.log("ลบ Dark");
+            htmlElement.classList.remove("dark");
+        }
+        const param = {
+            "user_id" : auth.user.id,
+            "dark_mode" : darkMode
+        }
+        svChangeMode(param)
+    }, [darkMode]);
 
     const fnSetDarkMode = () => {
-        const htmlElement = document.querySelector('html');
-        if (htmlElement.classList.contains('dark')) {
-            htmlElement.classList.remove("dark");
-        } else {
-            htmlElement.classList.add("dark");
-        }
+        setDarkMode(prevMode => !prevMode);
     }
 
   return (

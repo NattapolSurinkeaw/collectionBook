@@ -66,6 +66,10 @@ export const menuData = [
   },
 ]
 
+export const svChangeMode = (params) => {
+  return axios.post('/api/set-mode', params).then((res) => res).catch((err) => err)
+}
+
 export const svPostCate = (param) => {
   return axios.post('/api/postcate', param).then((res) => res).catch((error) => error)
 }

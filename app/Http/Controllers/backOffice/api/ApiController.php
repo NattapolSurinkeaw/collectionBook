@@ -5,6 +5,7 @@ namespace App\Http\Controllers\backoffice\api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Category;
+use App\Models\User;
 
 class ApiController extends Controller
 {
@@ -121,5 +122,14 @@ class ApiController extends Controller
             'status' => 'success',
             'message' => 'Category deleted successfully'
         ], 202);
+    }
+
+    public function setMode(Request $request) {
+        $params = $request->all();
+        $user = User::find($params['user_id']);
+        $user->update([
+            'dark_mode' => $params['dark_mode'] 
+        ]);
+
     }
 }
