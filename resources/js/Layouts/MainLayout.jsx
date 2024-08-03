@@ -9,11 +9,11 @@ import GradeIcon from '@mui/icons-material/Grade';
 import { menuData, svChangeMode } from '@/services/menu/menu.services';
 import ModalProfile from '@/Components/modalProfile/ModalProfile';
 import MenuIcon from '@mui/icons-material/Menu';
-
+import DashboardIcon from '@mui/icons-material/Dashboard';
 
 export default function MainLayout({ children }) {
     const { auth, categories } = usePage().props;
-    console.log(categories)
+    // console.log(categories)
     const [modalProfile, setModalProfile] = useState(false);
     const [handleNav, setHandleNav] = useState(true);
     const [darkMode, setDarkMode] = useState(false);
@@ -59,38 +59,31 @@ export default function MainLayout({ children }) {
             </div>
             <div className="">
                 {
-                    menuData.map((menu) => (
-                        <div key={menu.id} className="flex flex-col gap-2 mb-4">
-                            <div className="flex items-center gap-2 text-[#bcbfc1]">
-                                <div className="h-[2px] w-3 bg-black"></div>
-                                <p className="">{menu.main_menu}</p>
-                            </div>
-                            {/* main menu  */}
-                            { 
-                                menu.sub_menu?.map((submenu) => (
-                                submenu.status_display && (
-                                    <div key={submenu.id}>
-                                    <div className="px-4">
-                                        <Link href={submenu.link} className="flex items-center px-2 gap-2 h-[40px] hover:bg-[#e7e7ff] rounded-[10px] text-[#4338ca] dark:text-white font-bold">
-                                        {submenu.icon} {submenu.name}
-                                        {submenu.menu_list?.length > 0 && <KeyboardArrowRightIcon className="ml-auto" />}
-                                        </Link>
+                    categories.map((menu) => (
+                        <div key={menu.id}>
+                            {menu.cate_position === 1 && (
+                                <div className="flex flex-col gap-2 mb-4">
+                                    <div className="flex items-center gap-2 text-[#bcbfc1]">
+                                        <div className="h-[2px] w-3 bg-black"></div>
+                                        <p className="">{menu.cate_title}</p>
                                     </div>
-                                    {/* sub menu  */}
-                                    {submenu.menu_list?.length > 0 && (
-                                        <ul className="flex flex-col gap-1 pl-10">
-                                        {/* list sub menu  */}
-                                        {/* {submenu.menu_list.map((list) => (
-                                            <li key={list.id} className="flex gap-1 pl-4">
-                                            <GradeIcon /> {list.list_name}
-                                            </li>
-                                        ))} */}
-                                        </ul>
-                                    )}
-                                    </div>
-                                )
-                                ))
-                            }
+                                    {/* main menu */}
+                                    {categories.map((sub_menu) => (
+                                        sub_menu.cate_parent_id == menu.id && sub_menu.cate_position === 2 && (
+                                            <div key={sub_menu.id}>
+                                                {console.log(sub_menu.cate_url)}
+                                                <div className="px-4">
+                                                    <Link href={sub_menu.cate_url} className="flex items-center px-2 gap-2 h-[40px] hover:bg-[#e7e7ff] rounded-[10px] text-[#4338ca] dark:text-white font-bold">
+                                                        <DashboardIcon /> {sub_menu.cate_title}
+                                                        {/* {submenu.menu_list?.length > 0 && <KeyboardArrowRightIcon className="ml-auto" />} */}
+
+                                                    </Link>
+                                                </div>
+                                            </div>
+                                        )
+                                    ))}
+                                </div>
+                            )}
                         </div>
                     ))
                 }

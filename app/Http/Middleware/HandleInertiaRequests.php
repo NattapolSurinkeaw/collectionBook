@@ -35,7 +35,10 @@ class HandleInertiaRequests extends Middleware
             'auth' => [
                 'user' => $request->user(),
             ],
-            'categories' => Category::all(),
+            'categories' => Category::where('id','!=', 1)
+                ->where('status_display', true)
+                ->orderBy('cate_priority')
+                ->get(),
         ];
     }
 }
