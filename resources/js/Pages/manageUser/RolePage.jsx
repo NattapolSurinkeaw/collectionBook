@@ -2,39 +2,43 @@ import React from 'react'
 import MainLayout from '@/Layouts/MainLayout'
 import { useState, useEffect, useMemo } from 'react'
 import PrimaryButton from '@/Components/PrimaryButton'
-import { svGetUsers } from '@/services/user/user.services'
+import { svGetCateBackOffice } from '@/services/user/user.services'
+import Checkbox from '@/Components/Checkbox'
 
 export default function RolePage() {
   const [filterRole, setFilterRole] = useState(1);
   const [role, setRole] = useState([]);
-  const [users, setUser] = useState([]);
-  const [usersFilter, setUserFilter] = useState([]); 
+  const [categories, setCategories] = useState([])
+  const [selectedIds, setSelectedIds] = useState([]);
 
   const handleRoleChange = (id) => {
     setFilterRole(id);
   };
 
   useEffect(() => {
-    svGetUsers().then((res) => {
-      setUser(res.data.data['user'])
-      setUserFilter(res.data.data['user'])
+    svGetCateBackOffice().then((res) => {
+      console.log(res);
       setRole(res.data.data['role'])
+      setCategories(res.data.data['cate'])
     })
   }, [])
 
-  useEffect(() => {
-    if (filterRole === 0) {
-      setUserFilter(users);
-    } else {
-      setUserFilter(users.filter(user => user.role_id === filterRole));
-    }
-  }, [filterRole, users]);
+  const handleCheckboxChange = (id) => {
+    setSelectedIds(prevSelectedIds => {
+        if (prevSelectedIds.includes(id)) {
+            return prevSelectedIds.filter(item => item !== id);
+        } else {
+            return [...prevSelectedIds, id];
+        }
+    });
+  };
 
-  // แปลง role_id เป็น ชื่อ role_name
-  const showRoleUser = (id) => {
-    const roleFound = role.find(r => r.id === id);
-    return roleFound ? roleFound.role_name : 'Role not found';
-  }
+  const submitChange = () => {
+    console.log(filterRole);
+    console.log('Selected IDs:', selectedIds);
+    // ทำการส่ง selectedIds ไปยังเซิร์ฟเวอร์หรือทำการประมวลผลต่อไป
+  };
+
   return (
     <MainLayout>
       <h1 className="mb-4 text-2xl">RolePage</h1>
@@ -59,21 +63,34 @@ export default function RolePage() {
           </ul>
           <div className="w-full flex flex-wrap gap-4 h-[600px] overflow-auto p-4">
             {
-              usersFilter.map((user) => (
-                <div key={user.id} className="flex flex-col gap-2 border shadow-md w-[168px] h-[212px] rounded-md p-2 hover:scale-95 duration-200">
+              categories.map((cate) => (
+                <div key={cate.id} className="flex flex-col gap-2 border shadow-md w-[168px] h-[212px] rounded-md p-2">
                   <div className="flex justify-center">
-                    <img src={`/${(user.profile_img)? user.profile_img : 'image/emptyProfile.jpg'}`} className="border p-1 rounded-full w-20 h-20" alt="" />
+                    {console.log(cate.cate_thumbnail)}
+                    <img src={`${(cate.cate_thumbnail)? cate.cate_thumbnail : '/image/emptyProfile.jpg'}`} className="border p-1 rounded-lg w-full h-20" alt="" />
                   </div>
                   <div className="text-center">
-                    <h3 className="font-semibold">{user.name}</h3>
-                    <h3 className="w-full overflow-hidden">({user.email})</h3>
-                    <h3 className="">({showRoleUser(user.role_id)})</h3>
+                    <h3 className="font-semibold">{cate.cate_title}</h3>
+                    <h3 className="w-full overflow-hidden">({cate.id})</h3>
+                    <h3 className="">
+                      <input 
+                        type="checkbox" 
+                        checked={selectedIds.includes(cate.id)} 
+                        onChange={() => handleCheckboxChange(cate.id)} 
+                      />
+                    </h3>
                   </div>
                 </div>
               ))
             }
           </div>
         </div>
+      </div>
+      <div className="flex justify-end mt-2">
+        <button 
+          className="p-1 bg-blue-600 text-white rounded-md"
+          onClick={submitChange}
+        >บันทึก</button>
       </div>
     </MainLayout>
   )

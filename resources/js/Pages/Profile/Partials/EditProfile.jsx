@@ -11,7 +11,7 @@ export default function EditProfile({auth}) {
     setLoading(true);
     submitProfile();
   }
-  console.log(auth)
+  // console.log(auth)
   const onImageChange = (event) => {
     if (event.target.files && event.target.files[0]) {
       setImgProfile(URL.createObjectURL(event.target.files[0]));

@@ -24,6 +24,25 @@ export default function MainLayout({ children }) {
     }, [auth.user.dark_mode]);
 
     useEffect(() => {
+        // if (darkMode) {
+        //    // console.log("เพิ่ม Dark");
+        //     htmlElement.classList.add("dark");
+        // } else {
+        //     // console.log("ลบ Dark");
+        //     htmlElement.classList.remove("dark");
+        // } 
+        const param = {
+            "user_id" : auth.user.id,
+            "dark_mode" : darkMode
+        }
+        // console.log(param);
+        svChangeMode(param).then((res) => {
+            // console.log(res);
+        })
+    }, [darkMode]);
+
+    const fnSetDarkMode = () => {
+        setDarkMode(prevMode => !prevMode);
         if (darkMode) {
             // console.log("เพิ่ม Dark");
             htmlElement.classList.add("dark");
@@ -31,15 +50,6 @@ export default function MainLayout({ children }) {
             // console.log("ลบ Dark");
             htmlElement.classList.remove("dark");
         }
-        const param = {
-            "user_id" : auth.user.id,
-            "dark_mode" : darkMode
-        }
-        svChangeMode(param)
-    }, [darkMode]);
-
-    const fnSetDarkMode = () => {
-        setDarkMode(prevMode => !prevMode);
     }
 
   return (
@@ -71,7 +81,7 @@ export default function MainLayout({ children }) {
                                     {categories.map((sub_menu) => (
                                         sub_menu.cate_parent_id == menu.id && sub_menu.cate_position === 2 && (
                                             <div key={sub_menu.id}>
-                                                {console.log(sub_menu.cate_url)}
+                                                {/* {console.log(sub_menu.cate_url)} */}
                                                 <div className="px-4">
                                                     <Link href={sub_menu.cate_url} className="flex items-center px-2 gap-2 h-[40px] hover:bg-[#e7e7ff] rounded-[10px] text-[#4338ca] dark:text-white font-bold">
                                                         <DashboardIcon /> {sub_menu.cate_title}

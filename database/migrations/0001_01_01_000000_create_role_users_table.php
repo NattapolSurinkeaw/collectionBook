@@ -15,6 +15,7 @@ return new class extends Migration
         Schema::create('role_users', function (Blueprint $table) {
             $table->id();
             $table->string("role_name");
+            $table->string("cate_id")->nullable();
             $table->integer("priority");
             $table->boolean("status_display");
             $table->timestamps();
