@@ -30,15 +30,21 @@ class HandleInertiaRequests extends Middleware
      */
     public function share(Request $request): array
     {
+        $user = $request->user();
+        $roleUser = $user ? $user->roleUser : null;
+        $cate = [];
+
+        if ($roleUser) {
+            $cate = Category::whereIn('id', explode(',', $roleUser->cate_id))->get();
+        }
+
         return [
+            
             ...parent::share($request),
             'auth' => [
-                'user' => $request->user(),
+                'user' => $user,
             ],
-            'categories' => Category::where('id','!=', 1)
-                ->where('status_display', true)
-                ->orderBy('cate_priority')
-                ->get(),
+            'categories' => $cate
         ];
     }
 }

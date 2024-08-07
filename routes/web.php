@@ -52,6 +52,7 @@ Route::prefix('/api')->group(function () {
 
     Route::get('/getuser', [UserController::class, 'getUserAll']);
     Route::get('/getcatebackoffice', [UserController::class, 'getcatebackoffice']);
+    Route::post('/savechangecate', [UserController::class, 'savechangecate']);
 });
 
 
