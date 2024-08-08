@@ -35,7 +35,10 @@ class HandleInertiaRequests extends Middleware
         $cate = [];
 
         if ($roleUser) {
-            $cate = Category::whereIn('id', explode(',', $roleUser->cate_id))->get();
+            $cate = Category::whereIn('id', explode(',', $roleUser->cate_id))
+            ->where('cate_type', 1)
+            ->where('status_display', true)
+            ->get();
         }
 
         return [

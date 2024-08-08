@@ -25,18 +25,21 @@ return new class extends Migration
             [
                 'id' => 1,
                 'role_name' => 'superadmin',
+                'cate_id' => '2,3,4,5,6,7,8,9',
                 'priority' => 1,
                 'status_display' => true
             ],
             [
                 'id' => 2,
                 'role_name' => 'admin',
+                'cate_id' => '',
                 'priority' => 2,
                 'status_display' => true
             ],
             [
                 'id' => 3,
                 'role_name' => 'user',
+                'cate_id' => '',
                 'priority' => 3,
                 'status_display' => true
             ],

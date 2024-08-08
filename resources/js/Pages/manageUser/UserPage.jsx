@@ -3,13 +3,16 @@ import MainLayout from '@/Layouts/MainLayout'
 import PrimaryButton from '@/Components/PrimaryButton'
 import { useState, useEffect, useMemo } from 'react'
 import { svGetUsers } from '@/services/user/user.services'
+import ModalEditUser from './components/ModalEditUser'
 
-export default function UserPage() {
+export default function UserPage({auth}) {
   const [filterRole, setFilterRole] = useState(0);
   const [role, setRole] = useState([]);
   const [users, setUser] = useState([]);
   const [usersFilter, setUserFilter] = useState([]); 
-
+  const [userSelect, setUserSelect] = useState([]);
+  const [openEdit, setOpenEdit] = useState(false);
+  const handleCloseEdit = () => setOpenEdit(false);
   const handleRoleChange = (id) => {
     setFilterRole(id);
   };
@@ -35,6 +38,16 @@ export default function UserPage() {
     const roleFound = role.find(r => r.id === id);
     return roleFound ? roleFound.role_name : 'Role not found';
   }
+
+  const handleEditUser = (id) => {
+    console.log(id)
+    setUserSelect(users.filter(user => user.id === id))
+    setOpenEdit(true)
+  }
+
+  useEffect(() => {
+    console.log(userSelect)
+  }, [userSelect])
 
   return (
     <MainLayout>
@@ -75,11 +88,27 @@ export default function UserPage() {
                     <h3 className="font-semibold">{user.name}</h3>
                     <h3 className="w-full overflow-hidden">({user.email})</h3>
                     <h3 className="">({showRoleUser(user.role_id)})</h3>
+                    <div className="flex justify-center gap-2"> 
+                      <button 
+                        onClick={() => handleEditUser(user.id)}
+                        className="bg-blue-500 text-white w-14 rounded-md">แก้ไข</button>
+                      <button className="bg-pink-500 text-white w-14 rounded-md">ลบ</button>
+                    </div>
                   </div>
                 </div>
               ))
             }
           </div>
+          {
+            openEdit && (
+              <ModalEditUser 
+              open={openEdit} 
+              handleClose={handleCloseEdit}
+              roleData={role}
+              userSelect={userSelect}
+              />
+            )
+          }
         </div>
       </div>
     </MainLayout>

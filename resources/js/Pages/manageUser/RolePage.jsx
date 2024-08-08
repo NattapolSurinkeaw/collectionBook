@@ -18,7 +18,6 @@ export default function RolePage() {
     if (filtered.length > 0) {
       const dataId = filtered[0].cate_id.split(',').map(Number);
       setSelectedIds(dataId);
-      console.log(dataId);
     } else {
       setSelectedIds([]);
     }
@@ -27,7 +26,6 @@ export default function RolePage() {
   useEffect(() => {
     const fetchData = async () => {
       const res = await svGetCateBackOffice();
-      console.log(res);
       setRoles(res.data.data['role']);
       setCategories(res.data.data['cate']);
     };
@@ -47,9 +45,9 @@ export default function RolePage() {
   //   handleRoleChange(filterRole); // สามารถเปลี่ยน ID ได้ตามที่ต้องการ
   // }, []);
 
-  useEffect(() => {
-    console.log(selectedIds);
-  }, [selectedIds])
+  // useEffect(() => {
+  //   console.log(selectedIds);
+  // }, [selectedIds])
 
   const handleCheckboxChange = (id) => {
     setSelectedIds(prevSelectedIds => {

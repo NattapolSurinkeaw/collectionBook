@@ -10,6 +10,7 @@ import { menuData, svChangeMode } from '@/services/menu/menu.services';
 import ModalProfile from '@/Components/modalProfile/ModalProfile';
 import MenuIcon from '@mui/icons-material/Menu';
 import DashboardIcon from '@mui/icons-material/Dashboard';
+import DarkMode from '@/Components/darkMode/DarkMode';
 
 export default function MainLayout({ children }) {
     const { auth, categories } = usePage().props;
@@ -108,10 +109,11 @@ export default function MainLayout({ children }) {
                     </button>
                 </div>
                 <div className="flex gap-2 items-center relative">
-                    <button 
+                    {/* <button 
                         className="p-1 bg-black text-white rounded-lg dark:bg-white dark:text-black"
                         onClick={() => fnSetDarkMode()}
-                    >dark</button>
+                    >dark</button> */}
+                    <DarkMode auth={auth} />
                     <p>{auth?.user.name}</p>
                     <ModalProfile modalProfile={modalProfile} auth={auth} />
                     <img src={`/${(auth?.user.profile_img)?auth?.user.profile_img : "image/emptyProfile.jpg"}`} className='w-10 h-10 rounded-full cursor-pointer' alt="" onClick={() => setModalProfile(!modalProfile)} />

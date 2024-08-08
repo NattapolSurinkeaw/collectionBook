@@ -32,4 +32,8 @@ class PagesController extends Controller
     public function manageRole() {
         return Inertia::render('manageUser/RolePage');
     }
+
+    public function webcontent() {
+        return Inertia::render('manageContent/WebContent');
+    }
 }
