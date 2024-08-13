@@ -36,4 +36,8 @@ class PagesController extends Controller
     public function webcontent() {
         return Inertia::render('manageContent/WebContent');
     }
+
+    public function bookPage() {
+        return Inertia::render('manageBook/Book');
+    }
 }
