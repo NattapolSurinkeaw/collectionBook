@@ -35,6 +35,7 @@ class UserController extends Controller
             'role_id' => $params['role_id'],
         ]);
 
+        
         return response()->json([
             'status' => 'success',
             'data' =>  $user
