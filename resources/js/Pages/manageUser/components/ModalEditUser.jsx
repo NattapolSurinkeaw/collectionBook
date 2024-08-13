@@ -3,6 +3,7 @@ import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
 import TextInput from '@/Components/TextInput';
 import { useState } from 'react';
+import { svUpdateUser } from '@/services/user/user.services';
 
 const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
 const style = {
@@ -21,6 +22,7 @@ export default function ModalEditUser({open, handleClose, roleData, userSelect})
   console.log("openModal")
 
   const [formData, setFormData] = useState({
+    id: userSelect[0].id,
     name: userSelect[0].name,
     email: userSelect[0].email,
     password: '',
@@ -54,7 +56,21 @@ export default function ModalEditUser({open, handleClose, roleData, userSelect})
   };
 
   const submit = () => {
+    const formDataObj = new FormData();
+
     console.log(formData)
+    // เพิ่มข้อมูลจาก state formData เข้าไปใน FormData object
+    formDataObj.append('id', formData.id);
+    formDataObj.append('name', formData.name);
+    formDataObj.append('email', formData.email);
+    formDataObj.append('password', formData.password);
+    formDataObj.append('role_id', formData.role_id);
+    if (formData.profileImage) {
+      formDataObj.append('profileImage', formData.profileImage);
+    }
+    svUpdateUser(formDataObj).then((res) => {
+      console.log(res)
+    })
     // const formData = new FormData();
     // formData.append("profile_img", )
   }
@@ -116,7 +132,8 @@ export default function ModalEditUser({open, handleClose, roleData, userSelect})
                 className="w-full"
                 name="password" 
                 value={formData.password} 
-                onChange={handleChange}   
+                onChange={handleChange} 
+                disabled  
               />
             </div>
             <div className="">

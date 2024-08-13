@@ -11,3 +11,7 @@ export const svGetCateBackOffice = () => {
 export const svSaveChangeCate = (params) => {
   return axios.post('/api/savechangecate', params).then((res) => res).catch((err) => err)
 }
+
+export const svUpdateUser = (params) => {
+  return axios.post('/api/updateuser', params).then((res) => res).catch((err) => err)
+}

@@ -8,7 +8,7 @@ export const handleLogOut = () => {
   return axios.post('/logout').then((res) => {
     console.log(res.status)
     if(res.status) {
-      location.href = "http://localhost:8000/login"
+      location.reload()
     }
   }).catch((err) => {
     console.log(err);

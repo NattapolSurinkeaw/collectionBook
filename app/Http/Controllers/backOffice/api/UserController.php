@@ -21,6 +21,26 @@ class UserController extends Controller
         return $this->responseData($data);
     }
 
+    public function updateuser(Request $request) {
+        $params = $request->all();
+        $user = User::find($params['id']);
+        $newFolder = "upload/" . date('Y') . "/" . date('m') . "/" . date('d') . "/";
+        $profileImg = isset($params['profileImage']) && !empty($params['profileImage']) && $params['profileImage'] !== 'undefined' 
+        ? "/".$this->uploadImage($newFolder, $params['profileImage'], "", "", time()) 
+        : $user->profile_img;
+        
+        $user->update([
+            'name' => $params['name'],
+            'profile_img' => $profileImg,
+            'role_id' => $params['role_id'],
+        ]);
+
+        return response()->json([
+            'status' => 'success',
+            'data' =>  $user
+        ], 200);
+    }
+
     public function getcatebackoffice() {
         $role_user = RoleUser::all();
         $cate = Category::where('cate_type', 1)

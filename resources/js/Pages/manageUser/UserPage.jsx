@@ -45,9 +45,9 @@ export default function UserPage({auth}) {
     setOpenEdit(true)
   }
 
-  useEffect(() => {
-    console.log(userSelect)
-  }, [userSelect])
+  // useEffect(() => {
+  //   console.log(userSelect)
+  // }, [userSelect])
 
   return (
     <MainLayout>
