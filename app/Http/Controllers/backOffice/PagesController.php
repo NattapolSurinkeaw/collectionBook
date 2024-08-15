@@ -40,4 +40,12 @@ class PagesController extends Controller
     public function bookPage() {
         return Inertia::render('manageBook/Book');
     }
+
+    public function bookDetailPage($id) {
+        // $book = Book::find($id);
+        // dd($id);
+        return Inertia::render('manageBook/BookDetail', [
+            'id' => $id
+        ]);
+    }
 }
