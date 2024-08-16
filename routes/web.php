@@ -8,6 +8,7 @@ use Inertia\Inertia;
 use App\Http\Controllers\frontOffice\PagesController as FrontOfficePagesController;
 use App\Http\Controllers\backoffice\api\ApiController;
 use App\Http\Controllers\backoffice\api\UserController;
+use App\Http\Controllers\backoffice\api\BookController;
 
 Route::get('/', [FrontOfficePagesController::class, 'index']);
 
@@ -57,6 +58,12 @@ Route::prefix('/api')->group(function () {
     Route::post('/updateuser', [UserController::class, 'updateuser']);
     Route::get('/getcatebackoffice', [UserController::class, 'getcatebackoffice']);
     Route::post('/savechangecate', [UserController::class, 'savechangecate']);
+
+    Route::get('/bookall', [BookController::class, 'getBookAll']);
+    Route::get('/writers', [BookController::class, 'getWriterAll']);
+    Route::get('/illustrators', [BookController::class, 'getIllustAll']);
+    Route::get('/categories-book', [BookController::class, 'getCategoryAll']);
+    Route::get('/publishers', [BookController::class, 'getPublisherAll']);
 });
 
 

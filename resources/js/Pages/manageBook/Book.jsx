@@ -1,34 +1,58 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import MainLayout from '@/Layouts/MainLayout'
 // import { Inertia } from '@inertiajs/inertia';
 import { Link } from '@inertiajs/react';
-
+import { svGetBookAll, svGetIllustrator, svGetWriters, svGetCategories, svGetPublisher } from '@/services/book/book.services';
+import PrimaryButton from '@/Components/PrimaryButton';
+import ModalAddBook from './components/ModalAddBook';
 
 export default function Book() {
-  const [dataBook, setDataBook] = useState([
-    {
-      "id" : 1,
-      "title_TH" : "คุณชายวิปริตกับเมดสาวรอบจัด คุณชายวิปริตกับเมดสาวรอบจัด",
-      "title_EN" : "Shinigami Bocchan to Kuro Maid",
-      "title_Another" : "fdf",
-      "thumbnail" : "https://pbs.twimg.com/media/E5MJQ2TVcAENAnw.jpg",
-    },
-    {
-      "id" : 2,
-      "title_TH" : "คุณชายวิปริตกับเมดสาวรอบจัด คุณชายวิปริตกับเมดสาวรอบจัด",
-      "title_EN" : "Shinigami Bocchan to Kuro Maid",
-      "title_Another" : "",
-      "thumbnail" : "https://pbs.twimg.com/media/E5MJQ2TVcAENAnw.jpg",
-    },
-  ])
+  const [dataBook, setDataBook] = useState([])
+  const [open, setOpen] = useState(false);
+  const handleClose = () => setOpen(false);
+  const [dataWriter, setDataWriter] = useState([]);
+  const [dataIllustrator, setDataIllustrator] = useState([]);
+  const [dataPublisher, setDataPublisher] = useState([]);
+  const [dataCategory, setDataCategory] = useState([]);
 
-  const handleClick = (bookId) => {
-    Inertia.visit(`/backoffice/bookdetail`);
-  };
-
+  useEffect(() => {
+    svGetBookAll().then((res) => {
+      console.log(res)
+      setDataBook(res.data.data)
+    })
+    svGetIllustrator().then((res) => {
+          // console.log(res)
+      setDataIllustrator(res.data.data)
+    })
+    svGetWriters().then((res) => {
+      // console.log(res)      
+      setDataWriter(res.data.data)
+    })
+    svGetPublisher().then((res) => {
+      setDataPublisher(res.data.data)
+    })
+    svGetCategories().then((res) => {
+      // console.log(res)
+      setDataCategory(res.data.data)
+    })
+  }, [])
   return (
     <MainLayout>
-      <h1>Book</h1>
+      <div className="flex items-center justify-between mb-2">
+        <h1 className="text-xl">Book</h1>
+        <PrimaryButton 
+          children="create" 
+          onClick={() => setOpen(true)}
+        />
+        <ModalAddBook 
+          open={open}
+          handleClose={handleClose}
+          dataWriter={dataWriter}
+          dataIllustrator={dataIllustrator}
+          dataPublisher={dataPublisher}
+          dataCategory={dataCategory}
+        /> 
+      </div>
       <hr />
       <div id="box-container" className="py-4 flex flex-wrap gap-4">
         { dataBook.map((book) => (
