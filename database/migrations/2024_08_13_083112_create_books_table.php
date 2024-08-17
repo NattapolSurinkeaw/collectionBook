@@ -15,14 +15,14 @@ return new class extends Migration
             $table->id();
             $table->text("title_TH");
             $table->text("title_EN");
-            $table->text("title_Another");
-            $table->text("description");
+            $table->text("title_Another")->nullable();
+            $table->text("description")->nullable();
             $table->date("lc_release_date");
-            $table->string("thumbnail");
+            $table->string("thumbnail")->nullable();
             $table->string("cate_id");
             $table->foreignId('writer_id')->constrained('writers')->onDelete('cascade');
             $table->foreignId('ilust_id')->constrained('illustrators')->onDelete('cascade');
-            $table->foreignId('publis_id')->constrained('publishers')->onDelete('cascade');
+            $table->foreignId('publish_id')->constrained('publishers')->onDelete('cascade');
             $table->string("volume_book")->nullable();
             $table->timestamps();
         });

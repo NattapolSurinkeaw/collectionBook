@@ -19,3 +19,12 @@ export const svGetPublisher = () => {
 export const svGetCategories = () => {
   return axios.get('/api/categories-book').then((res) => res).catch((err) => err)
 }
+
+
+export const svAddNewBook = (params) => {
+  return axios.post('/api/addnewbook', params).then((res) => res).catch((err) => err)
+}
+
+export const svGetVolumeBook = (params) => {
+  return axios.post(`/api/volume-book`, params).then((res) => res).catch((err) => err)
+}

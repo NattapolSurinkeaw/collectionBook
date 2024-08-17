@@ -9,6 +9,7 @@ use App\Http\Controllers\frontOffice\PagesController as FrontOfficePagesControll
 use App\Http\Controllers\backoffice\api\ApiController;
 use App\Http\Controllers\backoffice\api\UserController;
 use App\Http\Controllers\backoffice\api\BookController;
+use App\Models\BookCategory;
 
 Route::get('/', [FrontOfficePagesController::class, 'index']);
 
@@ -64,6 +65,10 @@ Route::prefix('/api')->group(function () {
     Route::get('/illustrators', [BookController::class, 'getIllustAll']);
     Route::get('/categories-book', [BookController::class, 'getCategoryAll']);
     Route::get('/publishers', [BookController::class, 'getPublisherAll']);
+    Route::post('/volume-book', [BookController::class, 'getVolumeBook']);
+
+    Route::post('/addnewbook', [BookController::class, 'addNewBook']);
+
 });
 
 

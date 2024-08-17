@@ -5,6 +5,7 @@ namespace App\Http\Controllers\backOffice;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use App\Models\Book;
 
 class PagesController extends Controller
 {
@@ -42,10 +43,10 @@ class PagesController extends Controller
     }
 
     public function bookDetailPage($id) {
-        // $book = Book::find($id);
-        // dd($id);
+        $book = Book::find($id);
+        // dd($book);
         return Inertia::render('manageBook/BookDetail', [
-            'id' => $id
+            'dataBook' => $book
         ]);
     }
 }

@@ -4,6 +4,7 @@ import Box from '@mui/material/Box';
 import { useState } from 'react';
 import TextInput from '@/Components/TextInput';
 import Checkbox from '@/Components/Checkbox';
+import { svAddNewBook } from '@/services/book/book.services';
 
 const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
 const style = {
@@ -27,6 +28,17 @@ export default function ModalAddBook({open, handleClose, dataWriter, dataIllustr
   const [slcWriter, setSlcWriter] = useState(1);
   const [slcIllust, setSlcIllust] = useState(1);
   const [slcPublish, setSlcPublish] = useState(1);
+  const [slcCategories, setSlcCategories] = useState([]);
+
+  const handleCheckboxChange = (id) => {
+    setSlcCategories(prevSelectedIds => {
+        if (prevSelectedIds.includes(id)) {
+            return prevSelectedIds.filter(item => item !== id);
+        } else {
+            return [...prevSelectedIds, id];
+        }
+    });
+  };
 
   const handleSubmit = () => {
     const formData = new FormData();
@@ -36,10 +48,18 @@ export default function ModalAddBook({open, handleClose, dataWriter, dataIllustr
     formData.append("description", description);
     formData.append("lcDate", lcDate);
     formData.append("slcPublish", slcPublish);
+    formData.append("slcWriter", slcWriter);
+    formData.append("slcIllust", slcIllust);
+    formData.append("slcCategories", slcCategories);
+
+    // console.log(slcCategories)
 
     formData.forEach((value, key) => {
       console.log(key, " : ", value);
     });
+    svAddNewBook(formData).then((res) => {
+      console.log(res)
+    })
   }
   return (
     <>
@@ -85,7 +105,8 @@ export default function ModalAddBook({open, handleClose, dataWriter, dataIllustr
             <textarea 
               name="" className="w-full rounded-md border-gray-300" id=""
               onChange={(e) => setDescription(e.target.value)}
-            >{description}</textarea>
+              defaultValue={description}
+            ></textarea>
           </div>
           <div className='p-3 flex max-lg:flex-col gap-4 '>
             <div className="flex flex-col gap-2">
@@ -113,8 +134,13 @@ export default function ModalAddBook({open, handleClose, dataWriter, dataIllustr
               </select>
             </div>
             <div className="flex flex-col gap-2">
-              <label htmlFor="">Publisher</label>
-              <select name="" id="" className="rounded-md border-gray-300">
+              <label htmlFor="">Writer</label>
+              <select 
+                name="" id="" 
+                className="rounded-md border-gray-300"
+                value={slcWriter}
+                onChange={(e) => setSlcWriter(e.target.value)}
+              >
                 {
                   dataWriter.map((writer) => (
                     <option key={writer.id} value={writer.id}>{writer.writer_name}</option>
@@ -123,8 +149,13 @@ export default function ModalAddBook({open, handleClose, dataWriter, dataIllustr
               </select>
             </div>
             <div className="flex flex-col gap-2">
-              <label htmlFor="">Publisher</label>
-              <select name="" id="" className="rounded-md border-gray-300">
+              <label htmlFor="">Illustrator</label>
+              <select 
+                name="" id="" 
+                className="rounded-md border-gray-300"
+                value={slcIllust}
+                onChange={(e) => setSlcIllust(e.target.value)}
+              >
                 {
                   dataIllustrator.map((illust) => (
                     <option key={illust.id} value={illust.id}>{illust.illust_name}</option>
@@ -141,7 +172,12 @@ export default function ModalAddBook({open, handleClose, dataWriter, dataIllustr
             {
               dataCategory.map((cate) => (
                 <div key={cate.id} className='flex items-center gap-1'>
-                  <Checkbox />
+                  <input 
+                    type="checkbox"
+                    className="rounded" 
+                    checked={slcCategories.includes(cate.id)} 
+                    onChange={() => handleCheckboxChange(cate.id)} 
+                  />
                   <label htmlFor="">{cate.title_cate}</label>
                 </div>
               ))
