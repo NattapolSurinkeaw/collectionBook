@@ -22,7 +22,8 @@ export default function BookDetail({dataBook}) {
     }
     console.log(dataBook.volume_book);
     svGetVolumeBook(param).then((res) => {
-      console.log(res);
+      console.log(res.data.data);
+      setDataVolume(res.data.data);
     })
   }, [dataBook.volume_book]);
   return (
@@ -35,7 +36,11 @@ export default function BookDetail({dataBook}) {
         />
         {
           open && (
-            <ModalAddVolume open={open} handleClose={handleClose} />
+            <ModalAddVolume 
+              open={open} 
+              handleClose={handleClose} 
+              dataBook={dataBook}
+            />
           )
         }
       </div>
@@ -54,11 +59,15 @@ export default function BookDetail({dataBook}) {
           <div className="flex gap-4">
             <p>volume</p>
             <div className="flex gap-4">
+              {
+                dataVolume.map((vol) => (
+                  <button key={vol.id} className="w-14 bg-red-200">{vol.title_volumes}</button>
+                ))
+              }
+              {/* <button className="w-10 bg-red-200">1</button>
               <button className="w-10 bg-red-200">1</button>
               <button className="w-10 bg-red-200">1</button>
-              <button className="w-10 bg-red-200">1</button>
-              <button className="w-10 bg-red-200">1</button>
-              <button className="w-10 bg-red-200">1</button>
+              <button className="w-10 bg-red-200">1</button> */}
             </div>
           </div>
         </div>

@@ -9,6 +9,7 @@ use App\Models\BookCategory;
 use App\Models\Illustrator;
 use App\Models\Publisher;
 use App\Models\Writer;
+use App\Models\BookVolume;
 
 class BookController extends Controller
 {
@@ -57,6 +58,9 @@ class BookController extends Controller
     }
 
     public function getVolumeBook(Request $request) {
-        dd($request->all());
+        // dd(explode(',', $request->volume_id));
+        $volume = BookVolume::whereIn('id', explode(',', $request->volume_id))->get();
+        // dd($volume);
+        return $this->responseData($volume);
     }
 }

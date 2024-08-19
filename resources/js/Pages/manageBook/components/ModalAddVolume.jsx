@@ -17,6 +17,10 @@ const style = {
 };
 
 export default function ModalAddVolume({open, handleClose}) {
+
+  const handleSubmit = () => {
+    const formData = new FormData();
+  }
   return (
     <>
     <Modal
@@ -42,7 +46,7 @@ export default function ModalAddVolume({open, handleClose}) {
         <div className="mt-4 flex justify-end gap-3">
           <button 
             className="bg-green-600 text-white p-2 rounded-md"
-            // onClick={submit}
+            onClick={handleSubmit}
           >บันทึก</button>
           <button 
             className="bg-red-500 text-white p-2 rounded-md"
