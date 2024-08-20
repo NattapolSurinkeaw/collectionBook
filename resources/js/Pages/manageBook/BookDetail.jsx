@@ -20,9 +20,9 @@ export default function BookDetail({dataBook}) {
     const param = {
       volume_id : dataBook.volume_book
     }
-    console.log(dataBook.volume_book);
+    // console.log(dataBook.volume_book);
     svGetVolumeBook(param).then((res) => {
-      console.log(res.data.data);
+      // console.log(res.data.data);
       setDataVolume(res.data.data);
     })
   }, [dataBook.volume_book]);

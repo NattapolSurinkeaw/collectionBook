@@ -63,4 +63,8 @@ class BookController extends Controller
         // dd($volume);
         return $this->responseData($volume);
     }
+
+    public function addNewVolume(Request $request) {
+        dd($request->all());
+    }
 }
