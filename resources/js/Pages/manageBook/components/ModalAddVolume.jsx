@@ -59,7 +59,10 @@ export default function ModalAddVolume({open, handleClose, dataBook}) {
       console.log(key, " : ", value);
     });
     svAddNewVolume(formData).then((res) => {
-      console.log(res)
+      if(res.data.status == 'success') {
+        console.log(res.data)
+        handleClose()
+      }
     })
   }
   return (

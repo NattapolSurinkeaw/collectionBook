@@ -13,7 +13,8 @@ export default function BookDetail({dataBook}) {
   const [open, setOpen] = useState(false);
   const [dataVolume, setDataVolume] = useState([]);
   const handleClose = () => setOpen(false);
-
+  const [slcVolume, setSlcVolume] = useState([]);
+  const [previewImage, setPreviewImage] = useState();
 
   useEffect(() => {
     // console.log()
@@ -26,6 +27,16 @@ export default function BookDetail({dataBook}) {
       setDataVolume(res.data.data);
     })
   }, [dataBook.volume_book]);
+
+  const handleVol = (param) => {
+    console.log(param);
+    setSlcVolume(param)
+  }
+
+  const handlePreviewImage = (param) => {
+    setPreviewImage(param)
+  }
+
   return (
     <MainLayout>
       <div className="flex items-center justify-between mb-2">
@@ -47,11 +58,23 @@ export default function BookDetail({dataBook}) {
       <hr />
       <div className="flex gap-4 my-4">
         <div className="flex flex-col gap-3">
-          <img className="w-[350px] h-[450px]" src="https://www.phanpha.com/sites/default/files/imagecache/product_full/images01/9786168341056-90.JPG" alt="" />
+          <img className="w-[350px] h-[450px]" src={`/${previewImage}`} alt="" />
           <div className='flex justify-center gap-2'>
-            <img className="w-[50px] h-[65px]" src="https://www.phanpha.com/sites/default/files/imagecache/product_full/images01/9786168341056-90.JPG" alt="" />
-            <img className="w-[50px] h-[65px]" src="https://www.phanpha.com/sites/default/files/imagecache/product_full/images01/9786168341056-90.JPG" alt="" />
-            <img className="w-[50px] h-[65px]" src="https://www.phanpha.com/sites/default/files/imagecache/product_full/images01/9786168341056-90.JPG" alt="" />
+            <img 
+              className="w-[50px] h-[65px]" 
+              src={`/${slcVolume.front_cover}`} alt="" 
+              onClick={() => handlePreviewImage(slcVolume.front_cover)}
+            />
+            <img 
+              className="w-[50px] h-[65px]" 
+              src={`/${slcVolume.book_spine}`} alt="" 
+              onClick={() => handlePreviewImage(slcVolume.book_spine)}
+            />
+            <img 
+              className="w-[50px] h-[65px]" 
+              src={`/${slcVolume.back_cover}`} alt="" 
+              onClick={() => handlePreviewImage(slcVolume.back_cover)}
+            />
           </div>
 
         </div>
@@ -61,7 +84,10 @@ export default function BookDetail({dataBook}) {
             <div className="flex gap-4">
               {
                 dataVolume.map((vol) => (
-                  <button key={vol.id} className="w-14 bg-red-200">{vol.title_volumes}</button>
+                  <button 
+                    key={vol.id} className="w-14 bg-red-200"
+                    onClick={() => handleVol(vol)}
+                  >{vol.title_volumes}</button>
                 ))
               }
               {/* <button className="w-10 bg-red-200">1</button>
