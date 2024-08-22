@@ -18,7 +18,7 @@ const style = {
   borderRadius: 1,
 };
 
-export default function ModalAddVolume({open, handleClose, dataBook}) {
+export default function ModalAddVolume({open, handleClose, dataBook, setDataVolume}) {
   const [frontImage, setFrontImage] = useState(null);
   const [spineImage, setSpineImage] = useState(null);
   const [backImage, setBackImage] = useState(null);
@@ -36,7 +36,7 @@ export default function ModalAddVolume({open, handleClose, dataBook}) {
     }
   };
 
-  console.log(dataBook)
+  // console.log(dataBook)
   const handleSubmit = () => {
     const formData = new FormData();
     formData.append('book_id', dataBook.id)
@@ -55,12 +55,13 @@ export default function ModalAddVolume({open, handleClose, dataBook}) {
     if (spineFile) formData.append('spineImage', spineFile);
     if (backFile) formData.append('backImage', backFile);
 
-    formData.forEach((value, key) => {
-      console.log(key, " : ", value);
-    });
+    // formData.forEach((value, key) => {
+    //   console.log(key, " : ", value);
+    // });
     svAddNewVolume(formData).then((res) => {
       if(res.data.status == 'success') {
-        console.log(res.data)
+        console.log(res.data.data)
+        setDataVolume(prev => [...prev, res.data.data]);
         handleClose()
       }
     })

@@ -10,13 +10,38 @@ use App\Models\Illustrator;
 use App\Models\Publisher;
 use App\Models\Writer;
 use App\Models\BookVolume;
+use Illuminate\Support\Facades\DB;
 
 class BookController extends Controller
 {
     //
     public function getBookAll() {
-        $book = Book::all();
-        return $this->responseData($book);
+        // $books = Book::all();
+        // foreach ($books as $book) {
+        //     // แยกค่า volume_book และดึงค่าหลังสุด
+        //     $volumes = explode(',', $book->volume_book);
+        //     $lastVolume = end($volumes);
+    
+        //     // Query หาข้อมูลจากตาราง book_volumes ตามค่า lastVolume
+        //     $bookVolume = BookVolume::where('id', $lastVolume)->first();
+    
+        //     // เพิ่มข้อมูลที่ได้จาก bookVolume เข้าไปในผลลัพธ์
+        //     $book->last_volume_data = $bookVolume;
+        // }
+
+        // $books = Book::with(['book_volumes' => function($query) {
+        //     $query->whereIn('id', function($query) {
+        //         $query->select(DB::raw('SUBSTRING_INDEX(volume_book, ",", -1)'))
+        //               ->from('books');
+        //     });
+        // }])->get();
+        $books = Book::select('*', DB::raw('(
+                SELECT front_cover 
+                FROM book_volumes 
+                WHERE book_volumes.id = SUBSTRING_INDEX(books.volume_book, ",", -1)
+            ) AS frontCover'))
+            ->get();
+        return $this->responseData($books);
     }
 
     public function getIllustAll() {
@@ -105,6 +130,6 @@ class BookController extends Controller
         $book->update([
             'volume_book' => $book->volume_book.','.$bookVol->id
         ]);
-        return $this->responseData($book);
+        return $this->responseData($bookVol);
     }
 }

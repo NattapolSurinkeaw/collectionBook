@@ -17,19 +17,24 @@ export default function BookDetail({dataBook}) {
   const [previewImage, setPreviewImage] = useState();
 
   useEffect(() => {
-    // console.log()
     const param = {
       volume_id : dataBook.volume_book
     }
-    // console.log(dataBook.volume_book);
+
     svGetVolumeBook(param).then((res) => {
-      // console.log(res.data.data);
+      console.log(res.data.data[0].front_cover);
       setDataVolume(res.data.data);
+      setSlcVolume(res.data.data[0])
+      setPreviewImage(res.data.data[0].front_cover)
     })
   }, [dataBook.volume_book]);
 
-  const handleVol = (param) => {
-    console.log(param);
+  // useEffect(() => {
+  //   console.log(dataVolume)
+  // }, [dataVolume])
+
+  const handleSlcVolume = (param) => {
+    // console.log(param);
     setSlcVolume(param)
   }
 
@@ -40,7 +45,7 @@ export default function BookDetail({dataBook}) {
   return (
     <MainLayout>
       <div className="flex items-center justify-between mb-2">
-        <h1 className="text-xl">BookDetail {dataBook.title_TH}</h1>
+        <h1 className="text-xl">BookDetail {dataBook.id}</h1>
         <PrimaryButton 
           children='Add Volume'
           onClick={() => setOpen(true)}
@@ -51,6 +56,7 @@ export default function BookDetail({dataBook}) {
               open={open} 
               handleClose={handleClose} 
               dataBook={dataBook}
+              setDataVolume={setDataVolume}
             />
           )
         }
@@ -79,21 +85,65 @@ export default function BookDetail({dataBook}) {
 
         </div>
         <div>
-          <div className="flex gap-4">
-            <p>volume</p>
+          <div className="flex gap-2 mb-4">
+            <p>volume : </p>
             <div className="flex gap-4">
               {
                 dataVolume.map((vol) => (
                   <button 
                     key={vol.id} className="w-14 bg-red-200"
-                    onClick={() => handleVol(vol)}
+                    onClick={() => handleSlcVolume(vol)}
                   >{vol.title_volumes}</button>
                 ))
               }
-              {/* <button className="w-10 bg-red-200">1</button>
-              <button className="w-10 bg-red-200">1</button>
-              <button className="w-10 bg-red-200">1</button>
-              <button className="w-10 bg-red-200">1</button> */}
+            </div>
+          </div>
+          <div className="flex gap-2 mb-4">
+            <p>title_TH : </p>
+            <div className="flex gap-4">
+              {dataBook.title_TH}
+            </div>
+          </div>
+          <div className="flex gap-2 mb-4">
+            <p>title_TH : </p>
+            <div className="flex gap-4">
+              {dataBook.title_EN}
+            </div>
+          </div>
+          <div className="flex gap-2 mb-4">
+            <p>title_TH : </p>
+            <div className="flex gap-4">
+              {dataBook.title_Another}
+            </div>
+          </div>
+          <div className="flex gap-2 mb-4">
+            <p>Description : </p>
+            <div className="flex gap-4">
+              {dataBook.description}
+            </div>
+          </div>
+          <div className="flex gap-2 mb-4">
+            <p>ilustrator : </p>
+            <div className="flex gap-4">
+              {dataBook.ilust_id}
+            </div>
+          </div>
+          <div className="flex gap-2 mb-4">
+            <p>publisher : </p>
+            <div className="flex gap-4">
+              {dataBook.publis_id}
+            </div>
+          </div>
+          <div className="flex gap-2 mb-4">
+            <p>Category : </p>
+            <div className="flex gap-4">
+              {dataBook.cate_id}
+            </div>
+          </div>
+          <div className="flex gap-2 mb-4">
+            <p>Publish_LC_Release : </p>
+            <div className="flex gap-4">
+              {dataBook.lc_release_date}
             </div>
           </div>
         </div>
