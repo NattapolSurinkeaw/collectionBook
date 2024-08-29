@@ -51,7 +51,7 @@ class BookController extends Controller
             'cate_id' => $params['slcCategories'],
             'writer_id' => $params['slcWriter'],
             'ilust_id' => $params['slcIllust'],
-            'publis_id' => $params['slcWriter'],
+            'publish_id' => $params['slcWriter'],
         ]);
 
         return $this->responseData($book);

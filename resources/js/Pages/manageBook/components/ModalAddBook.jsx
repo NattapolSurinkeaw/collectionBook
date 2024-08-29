@@ -59,6 +59,9 @@ export default function ModalAddBook({open, handleClose, dataWriter, dataIllustr
     });
     svAddNewBook(formData).then((res) => {
       console.log(res)
+      if(res.data.status == "success") {
+        handleClose()
+      }
     })
   }
   return (
