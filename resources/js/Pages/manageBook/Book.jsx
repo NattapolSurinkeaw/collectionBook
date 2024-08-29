@@ -62,7 +62,7 @@ export default function Book() {
             // onClick={() => handleClick(book.id)}
             >
             <div className="w-[250px] h-[350px] mx-auto bg-red-300">
-              <img className="w-full h-full" src={book.thumbnail} alt="" />
+              <img className="w-full h-full" src={`/${book.frontCover}`} alt="" />
             </div>
             <div>
               <p>nameTH : {book.title_TH}</p>

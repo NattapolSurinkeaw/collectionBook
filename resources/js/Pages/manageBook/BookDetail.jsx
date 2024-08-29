@@ -13,23 +13,39 @@ export default function BookDetail({dataBook}) {
   const [open, setOpen] = useState(false);
   const [dataVolume, setDataVolume] = useState([]);
   const handleClose = () => setOpen(false);
-
+  const [slcVolume, setSlcVolume] = useState([]);
+  const [previewImage, setPreviewImage] = useState();
 
   useEffect(() => {
-    // console.log()
     const param = {
       volume_id : dataBook.volume_book
     }
-    console.log(dataBook.volume_book);
+
     svGetVolumeBook(param).then((res) => {
-      console.log(res.data.data);
+      console.log(res.data.data[0].front_cover);
       setDataVolume(res.data.data);
+      setSlcVolume(res.data.data[0])
+      setPreviewImage(res.data.data[0].front_cover)
     })
   }, [dataBook.volume_book]);
+
+  // useEffect(() => {
+  //   console.log(dataVolume)
+  // }, [dataVolume])
+
+  const handleSlcVolume = (param) => {
+    // console.log(param);
+    setSlcVolume(param)
+  }
+
+  const handlePreviewImage = (param) => {
+    setPreviewImage(param)
+  }
+
   return (
     <MainLayout>
       <div className="flex items-center justify-between mb-2">
-        <h1 className="text-xl">BookDetail {dataBook.title_TH}</h1>
+        <h1 className="text-xl">BookDetail {dataBook.id}</h1>
         <PrimaryButton 
           children='Add Volume'
           onClick={() => setOpen(true)}
@@ -40,6 +56,7 @@ export default function BookDetail({dataBook}) {
               open={open} 
               handleClose={handleClose} 
               dataBook={dataBook}
+              setDataVolume={setDataVolume}
             />
           )
         }
@@ -47,27 +64,86 @@ export default function BookDetail({dataBook}) {
       <hr />
       <div className="flex gap-4 my-4">
         <div className="flex flex-col gap-3">
-          <img className="w-[350px] h-[450px]" src="https://www.phanpha.com/sites/default/files/imagecache/product_full/images01/9786168341056-90.JPG" alt="" />
+          <img className="w-[350px] h-[450px]" src={`/${previewImage}`} alt="" />
           <div className='flex justify-center gap-2'>
-            <img className="w-[50px] h-[65px]" src="https://www.phanpha.com/sites/default/files/imagecache/product_full/images01/9786168341056-90.JPG" alt="" />
-            <img className="w-[50px] h-[65px]" src="https://www.phanpha.com/sites/default/files/imagecache/product_full/images01/9786168341056-90.JPG" alt="" />
-            <img className="w-[50px] h-[65px]" src="https://www.phanpha.com/sites/default/files/imagecache/product_full/images01/9786168341056-90.JPG" alt="" />
+            <img 
+              className="w-[50px] h-[65px]" 
+              src={`/${slcVolume.front_cover}`} alt="" 
+              onClick={() => handlePreviewImage(slcVolume.front_cover)}
+            />
+            <img 
+              className="w-[50px] h-[65px]" 
+              src={`/${slcVolume.book_spine}`} alt="" 
+              onClick={() => handlePreviewImage(slcVolume.book_spine)}
+            />
+            <img 
+              className="w-[50px] h-[65px]" 
+              src={`/${slcVolume.back_cover}`} alt="" 
+              onClick={() => handlePreviewImage(slcVolume.back_cover)}
+            />
           </div>
 
         </div>
         <div>
-          <div className="flex gap-4">
-            <p>volume</p>
+          <div className="flex gap-2 mb-4">
+            <p>volume : </p>
             <div className="flex gap-4">
               {
                 dataVolume.map((vol) => (
-                  <button key={vol.id} className="w-14 bg-red-200">{vol.title_volumes}</button>
+                  <button 
+                    key={vol.id} className="w-14 bg-red-200"
+                    onClick={() => handleSlcVolume(vol)}
+                  >{vol.title_volumes}</button>
                 ))
               }
-              {/* <button className="w-10 bg-red-200">1</button>
-              <button className="w-10 bg-red-200">1</button>
-              <button className="w-10 bg-red-200">1</button>
-              <button className="w-10 bg-red-200">1</button> */}
+            </div>
+          </div>
+          <div className="flex gap-2 mb-4">
+            <p>title_TH : </p>
+            <div className="flex gap-4">
+              {dataBook.title_TH}
+            </div>
+          </div>
+          <div className="flex gap-2 mb-4">
+            <p>title_TH : </p>
+            <div className="flex gap-4">
+              {dataBook.title_EN}
+            </div>
+          </div>
+          <div className="flex gap-2 mb-4">
+            <p>title_TH : </p>
+            <div className="flex gap-4">
+              {dataBook.title_Another}
+            </div>
+          </div>
+          <div className="flex gap-2 mb-4">
+            <p>Description : </p>
+            <div className="flex gap-4">
+              {dataBook.description}
+            </div>
+          </div>
+          <div className="flex gap-2 mb-4">
+            <p>ilustrator : </p>
+            <div className="flex gap-4">
+              {dataBook.ilust_id}
+            </div>
+          </div>
+          <div className="flex gap-2 mb-4">
+            <p>publisher : </p>
+            <div className="flex gap-4">
+              {dataBook.publis_id}
+            </div>
+          </div>
+          <div className="flex gap-2 mb-4">
+            <p>Category : </p>
+            <div className="flex gap-4">
+              {dataBook.cate_id}
+            </div>
+          </div>
+          <div className="flex gap-2 mb-4">
+            <p>Publish_LC_Release : </p>
+            <div className="flex gap-4">
+              {dataBook.lc_release_date}
             </div>
           </div>
         </div>

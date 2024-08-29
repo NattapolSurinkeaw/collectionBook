@@ -68,7 +68,7 @@ Route::prefix('/api')->group(function () {
     Route::post('/volume-book', [BookController::class, 'getVolumeBook']);
 
     Route::post('/addnewbook', [BookController::class, 'addNewBook']);
-
+    Route::post('/addnewvolume', [BookController::class, 'addNewVolume']);
 });
 
 
