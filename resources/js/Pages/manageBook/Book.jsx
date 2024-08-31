@@ -17,7 +17,7 @@ export default function Book() {
 
   useEffect(() => {
     svGetBookAll().then((res) => {
-      console.log(res)
+      // console.log(res)
       setDataBook(res.data.data)
     })
     svGetIllustrator().then((res) => {
