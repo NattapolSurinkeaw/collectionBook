@@ -37,6 +37,8 @@ Route::prefix('/backoffice')->middleware(['auth', 'verified'])->group(function (
     Route::get('/webcontent', [BackOfficePagesController::class, 'webcontent']);
     Route::get('/book', [BackOfficePagesController::class, 'bookPage']);
     Route::get('/bookdetail/{id}', [BackOfficePagesController::class, 'bookDetailPage']);
+    Route::get('/bill', [BackOfficePagesController::class, 'billPage']);
+    Route::get('/tobuy', [BackOfficePagesController::class, 'toBuyPage']);
 });
 
 Route::middleware('auth')->group(function () {

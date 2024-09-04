@@ -23,9 +23,11 @@ export default function BookDetail({dataBook}) {
 
     svGetVolumeBook(param).then((res) => {
       // console.log(res.data.data[0].front_cover);
-      setDataVolume(res.data.data);
-      setSlcVolume(res.data.data[0])
-      setPreviewImage(res.data.data[0].front_cover)
+      if(res.data.data && res.data.data.length > 0) {
+        setDataVolume(res.data.data);
+        setSlcVolume(res.data.data[0])
+        setPreviewImage(res.data.data[0].front_cover)
+      }
     })
   }, [dataBook.volume_book]);
 
