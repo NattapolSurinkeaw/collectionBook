@@ -67,6 +67,7 @@ class BookController extends Controller
     public function addNewBook(Request $request) {
         // dd($request->all());
         $params = $request->all();
+        // dd($params['slcCategories']);
         $book = Book::create([
             'title_TH' => $params['nameTH'],
             'title_EN' => $params['nameEN'],
@@ -76,7 +77,7 @@ class BookController extends Controller
             'cate_id' => $params['slcCategories'],
             'writer_id' => $params['slcWriter'],
             'ilust_id' => $params['slcIllust'],
-            'publish_id' => $params['slcWriter'],
+            'publish_id' => $params['slcPublish'],
         ]);
 
         return $this->responseData($book);
@@ -106,13 +107,13 @@ class BookController extends Controller
         $spineBook = "";
         $newFolder = "upload/" . date('Y') . "/" . date('m') . "/" . date('d') . "/";
         // dd($params);
-        if($params['frontImage']) {
+        if(isset($params['frontImage']) && $params['frontImage']) {
             $frontCover = (isset($params['frontImage'])) ? $this->uploadImage($newFolder, $params['frontImage'], "", "", 'front_'.time()) : "";
         }
-        if($params['backImage']) {
+        if(isset($params['backImage']) && $params['backImage']) {
             $backCover = (isset($params['backImage'])) ? $this->uploadImage($newFolder, $params['backImage'], "", "", 'back_'.time()) : "";
         }
-        if($params['spineImage']) {
+        if(isset($params['spineImage']) && $params['spineImage']) {
             $spineBook = (isset($params['spineImage'])) ? $this->uploadImage($newFolder, $params['spineImage'], "", "", 'spine_'.time()) : "";
         }
         // dd($frontCover, $backCover, $spineBook);

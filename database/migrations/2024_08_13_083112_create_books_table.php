@@ -19,7 +19,7 @@ return new class extends Migration
             $table->text("description")->nullable();
             $table->date("lc_release_date");
             $table->string("thumbnail")->nullable();
-            $table->string("cate_id");
+            $table->string("cate_id")->nullable();
             $table->foreignId('writer_id')->constrained('writers')->onDelete('cascade');
             $table->foreignId('ilust_id')->constrained('illustrators')->onDelete('cascade');
             $table->foreignId('publish_id')->constrained('publishers')->onDelete('cascade');

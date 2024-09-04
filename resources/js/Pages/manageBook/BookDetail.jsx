@@ -22,10 +22,12 @@ export default function BookDetail({dataBook}) {
     }
 
     svGetVolumeBook(param).then((res) => {
-      console.log(res.data.data[0].front_cover);
-      setDataVolume(res.data.data);
-      setSlcVolume(res.data.data[0])
-      setPreviewImage(res.data.data[0].front_cover)
+      // console.log(res.data.data[0].front_cover);
+      if(res.data.data && res.data.data.length > 0) {
+        setDataVolume(res.data.data);
+        setSlcVolume(res.data.data[0])
+        setPreviewImage(res.data.data[0].front_cover)
+      }
     })
   }, [dataBook.volume_book]);
 
@@ -36,6 +38,7 @@ export default function BookDetail({dataBook}) {
   const handleSlcVolume = (param) => {
     // console.log(param);
     setSlcVolume(param)
+    setPreviewImage(param.front_cover)
   }
 
   const handlePreviewImage = (param) => {
@@ -90,10 +93,18 @@ export default function BookDetail({dataBook}) {
             <div className="flex gap-4">
               {
                 dataVolume.map((vol) => (
-                  <button 
-                    key={vol.id} className="w-14 bg-red-200"
+                  <div key={vol.id} 
+                    className='relative border'
                     onClick={() => handleSlcVolume(vol)}
-                  >{vol.title_volumes}</button>
+                  >
+                    <img 
+                      src={`/${vol.front_cover}`} 
+                      className="w-20 h-24" 
+                    />
+                    <div className="absolute bottom-0 bg-gray-200 w-full">
+                      <p className='text-center'>{vol.title_volumes}</p>
+                    </div>
+                  </div>
                 ))
               }
             </div>

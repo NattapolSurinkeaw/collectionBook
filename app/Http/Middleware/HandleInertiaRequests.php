@@ -38,6 +38,7 @@ class HandleInertiaRequests extends Middleware
             $cate = Category::whereIn('id', explode(',', $roleUser->cate_id))
             ->where('cate_type', 1)
             ->where('status_display', true)
+            ->orderBy('cate_priority')
             ->get();
         }
 

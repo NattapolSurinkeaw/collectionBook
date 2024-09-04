@@ -49,4 +49,12 @@ class PagesController extends Controller
             'dataBook' => $book
         ]);
     }
+
+    public function billPage() {
+        return Inertia::render('manageBook/Book');
+    }
+
+    public function toBuyPage() {
+        return Inertia::render('manageBook/Book');
+    }
 }
