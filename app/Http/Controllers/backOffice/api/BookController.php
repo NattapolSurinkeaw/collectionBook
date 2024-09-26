@@ -107,15 +107,15 @@ class BookController extends Controller
         $spineBook = "";
         $newFolder = "upload/" . date('Y') . "/" . date('m') . "/" . date('d') . "/";
         // dd($params);
-        if(isset($params['frontImage']) && $params['frontImage']) {
+        // if(isset($params['frontImage']) && $params['frontImage']) {
             $frontCover = (isset($params['frontImage'])) ? $this->uploadImage($newFolder, $params['frontImage'], "", "", 'front_'.time()) : "";
-        }
-        if(isset($params['backImage']) && $params['backImage']) {
+        // }
+        // if(isset($params['backImage']) && $params['backImage']) {
             $backCover = (isset($params['backImage'])) ? $this->uploadImage($newFolder, $params['backImage'], "", "", 'back_'.time()) : "";
-        }
-        if(isset($params['spineImage']) && $params['spineImage']) {
+        // }
+        // if(isset($params['spineImage']) && $params['spineImage']) {
             $spineBook = (isset($params['spineImage'])) ? $this->uploadImage($newFolder, $params['spineImage'], "", "", 'spine_'.time()) : "";
-        }
+        // }
         // dd($frontCover, $backCover, $spineBook);
         $bookVol = BookVolume::create([
             'title_volumes' => $params['title_volumes'],
