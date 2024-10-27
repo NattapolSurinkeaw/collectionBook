@@ -11,11 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('publishers', function (Blueprint $table) {
+        Schema::create('bill_book_purchase_receipts', function (Blueprint $table) {
             $table->id();
-            $table->string("name_TH");
-            $table->string("name_EN")->nullable();
-            $table->string("thumbnail")->nullable();
+            $table->string('store_sell')->nullable();
+            $table->decimal('price', 8,2);
+            $table->string('transport')->comment('ขนส่ง')->nullable();
+            $table->string('parcel_number')->comment('เลขพัสดุ')->nullable();
             $table->timestamps();
         });
     }
@@ -25,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('publishers');
+        Schema::dropIfExists('bill_book_purchase_receipts');
     }
 };
