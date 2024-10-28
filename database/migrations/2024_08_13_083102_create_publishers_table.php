@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\DB;
 
 return new class extends Migration
 {
@@ -18,6 +19,10 @@ return new class extends Migration
             $table->string("thumbnail")->nullable();
             $table->timestamps();
         });
+
+        DB::table('publishers')->insert([
+            'name_TH' => "nattapol"
+        ]);
     }
 
     /**

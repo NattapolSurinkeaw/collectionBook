@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\DB;
 
 return new class extends Migration
 {
@@ -19,6 +20,13 @@ return new class extends Migration
             $table->boolean("status_display")->default(true);
             $table->timestamps();
         });
+
+        DB::table('book_categories')->insert([
+            'title_cate' => "love comedy",
+            'description_cate' => "love comedy",
+            'priority' => 1,
+            'status_display' => true,
+        ]);
     }
 
     /**

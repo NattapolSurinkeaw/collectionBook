@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\backoffice\api;
 
 use App\Http\Controllers\Controller;
+use App\Models\BillBookPurchaseReceipt;
 use Illuminate\Http\Request;
 use App\Models\Book;
 use App\Models\BookCategory;
@@ -11,6 +12,7 @@ use App\Models\Publisher;
 use App\Models\Writer;
 use App\Models\BookVolume;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class BookController extends Controller
 {
@@ -132,5 +134,11 @@ class BookController extends Controller
             'volume_book' => $book->volume_book.','.$bookVol->id
         ]);
         return $this->responseData($bookVol);
+    }
+
+    public function getBillAll() {
+        $user = Auth::user();
+        $bill = BillBookPurchaseReceipt::where('user_id', $user->id)->get();
+        return $this->responseData($bill);
     }
 }

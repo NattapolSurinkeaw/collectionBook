@@ -14,7 +14,7 @@ import DarkMode from '@/Components/darkMode/DarkMode';
 
 export default function MainLayout({ children }) {
     const { auth, categories } = usePage().props;
-    console.log(categories)
+    // console.log(categories)
     const [modalProfile, setModalProfile] = useState(false);
     const [handleNav, setHandleNav] = useState(true);
     const [darkMode, setDarkMode] = useState(false);

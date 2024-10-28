@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use App\Models\Book;
+use App\Models\BillBookPurchaseReceipt;
 
 class PagesController extends Controller
 {
@@ -51,10 +52,19 @@ class PagesController extends Controller
     }
 
     public function billPage() {
-        return Inertia::render('manageBook/Book');
+        return Inertia::render('manageBill/Bill');
+    }
+
+    public function billDetailPage($id) {
+        $bill = BillBookPurchaseReceipt::find($id);
+        return Inertia::render('manageBill/BillDetail', [
+            'data' => $bill
+        ]);
     }
 
     public function toBuyPage() {
         return Inertia::render('manageBook/Book');
     }
+
+    // ตั้งค่า
 }

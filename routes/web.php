@@ -10,6 +10,7 @@ use App\Http\Controllers\backoffice\api\ApiController;
 use App\Http\Controllers\backoffice\api\UserController;
 use App\Http\Controllers\backoffice\api\BookController;
 use App\Models\BookCategory;
+use Illuminate\Http\Request;
 
 Route::get('/', [FrontOfficePagesController::class, 'index']);
 
@@ -22,9 +23,10 @@ Route::get('/', [FrontOfficePagesController::class, 'index']);
 //     ]);
 // });
 
-// Route::get('/dashboard', function () {
-    //     return Inertia::render('Dashboard');
-    // })->name('dashboard');
+Route::get('getip', function (Request $request) {
+    $publicIp = $request->ip();
+    return $publicIp;
+});
 
 Route::prefix('/backoffice')->middleware(['auth', 'verified'])->group(function () {
     Route::get('/', [BackOfficePagesController::class, 'index']);
@@ -38,6 +40,7 @@ Route::prefix('/backoffice')->middleware(['auth', 'verified'])->group(function (
     Route::get('/book', [BackOfficePagesController::class, 'bookPage']);
     Route::get('/bookdetail/{id}', [BackOfficePagesController::class, 'bookDetailPage']);
     Route::get('/bill', [BackOfficePagesController::class, 'billPage']);
+    Route::get('/billdetail/{id}', [BackOfficePagesController::class, 'billDetailPage']);
     Route::get('/tobuy', [BackOfficePagesController::class, 'toBuyPage']);
 });
 
@@ -68,6 +71,7 @@ Route::prefix('/api')->group(function () {
     Route::get('/categories-book', [BookController::class, 'getCategoryAll']);
     Route::get('/publishers', [BookController::class, 'getPublisherAll']);
     Route::post('/volume-book', [BookController::class, 'getVolumeBook']);
+    Route::get('/bill', [BookController::class, 'getBillAll']);
 
     Route::post('/addnewbook', [BookController::class, 'addNewBook']);
     Route::post('/addnewvolume', [BookController::class, 'addNewVolume']);

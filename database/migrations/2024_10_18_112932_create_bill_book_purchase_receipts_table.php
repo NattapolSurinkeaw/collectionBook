@@ -13,10 +13,14 @@ return new class extends Migration
     {
         Schema::create('bill_book_purchase_receipts', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
+            $table->string('volume_book');
+            $table->integer('quantity')->default(1);
             $table->string('store_sell')->nullable();
             $table->decimal('price', 8,2);
             $table->string('transport')->comment('ขนส่ง')->nullable();
             $table->string('parcel_number')->comment('เลขพัสดุ')->nullable();
+            $table->string('image_slip')->nullable();
             $table->timestamps();
         });
     }

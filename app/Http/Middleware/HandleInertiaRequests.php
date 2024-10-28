@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Inertia\Middleware;
 use App\Models\Category;
 
+use function PHPUnit\Framework\isEmpty;
+
 class HandleInertiaRequests extends Middleware
 {
     /**
@@ -32,6 +34,11 @@ class HandleInertiaRequests extends Middleware
     {
         $user = $request->user();
         $roleUser = $user ? $user->roleUser : null;
+        $roleName = $user ? $user->role->role_name : null;
+        if($roleName) {
+            $user->role_name = $roleName;
+        }
+        
         $cate = [];
 
         if ($roleUser) {
