@@ -19,9 +19,9 @@ export default function UserPage({auth}) {
 
   useEffect(() => {
     svGetUsers().then((res) => {
-      setUser(res.data.data['user'])
-      setUserFilter(res.data.data['user'])
-      setRole(res.data.data['role'])
+      setUser(res.user)
+      setUserFilter(res.user)
+      setRole(res.roles)
     })
   }, [])
 
@@ -65,7 +65,15 @@ export default function UserPage({auth}) {
           >
             <span className="p-4">All</span>
           </li>
-            {
+            { role.length === 0 ? (
+              <>
+                <div role='status' class='max-w-sm animate-pulse'>
+                  <div className="h-2.5 bg-gray-200 rounded-full dark:bg-gray-700 w-32 mb-8"></div>
+                  <div className="h-2.5 bg-gray-200 rounded-full dark:bg-gray-700 w-32 mb-8"></div>
+                  <div className="h-2.5 bg-gray-200 rounded-full dark:bg-gray-700 w-32"></div>
+                </div>
+              </>
+            ) : (
               role.map((role) => (
                 <li
                   key={role.id}
@@ -74,7 +82,7 @@ export default function UserPage({auth}) {
                   >
                     <span className="p-4">{role.role_name}</span>
                 </li>
-              ))
+              )))
             }
           </ul>
           <div className="w-full flex flex-wrap gap-4 h-[600px] overflow-auto p-4">
