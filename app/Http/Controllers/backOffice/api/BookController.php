@@ -120,6 +120,7 @@ class BookController extends Controller
         // }
         // dd($frontCover, $backCover, $spineBook);
         $bookVol = BookVolume::create([
+            'book_id' => $params['book_id'],
             'title_volumes' => $params['title_volumes'],
             'description' => $params['description'],
             'isbn_code' => $params['isbn_code'],
@@ -136,8 +137,8 @@ class BookController extends Controller
         return $this->responseData($bookVol);
     }
 
-    public function getBillAll() {
-        $user = Auth::user();
+    public function getBillAll(Request $request) {
+        $user = $request->user(); 
         $bill = BillBookPurchaseReceipt::where('user_id', $user->id)->get();
         return $this->responseData($bill);
     }

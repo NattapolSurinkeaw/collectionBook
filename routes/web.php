@@ -9,10 +9,13 @@ use App\Http\Controllers\frontOffice\PagesController as FrontOfficePagesControll
 use App\Http\Controllers\backoffice\api\ApiController;
 use App\Http\Controllers\backoffice\api\UserController;
 use App\Http\Controllers\backoffice\api\BookController;
+use App\Http\Controllers\backoffice\api\RoleController;
 use App\Models\BookCategory;
 use Illuminate\Http\Request;
 
 Route::get('/', [FrontOfficePagesController::class, 'index']);
+Route::get('/manga', [FrontOfficePagesController::class, 'mangaPage']);
+Route::get('/lightnovel', [FrontOfficePagesController::class, 'lightnovelPage']);
 
 // Route::get('/backoffice', function () {
 //     return Inertia::render('Welcome', [
@@ -59,9 +62,10 @@ Route::prefix('/api')->group(function () {
     Route::post('/editCate/{id}', [ApiController::class, 'getEditCate']);
     Route::delete('/deleteCate/{id}', [ApiController::class, 'deleteCategory']);
     Route::post('/set-mode', [ApiController::class, 'setMode']);
-
+    
     Route::get('/getuser', [UserController::class, 'getUserAll']);
     Route::post('/updateuser', [UserController::class, 'updateuser']);
+    Route::post('/createnewcate', [RoleController::class, 'createNewcate']);
     Route::get('/getcatebackoffice', [UserController::class, 'getcatebackoffice']);
     Route::post('/savechangecate', [UserController::class, 'savechangecate']);
 
