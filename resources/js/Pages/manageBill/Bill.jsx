@@ -13,6 +13,7 @@ export default function Bill() {
     { field: 'quantity', headerName: 'จำนวน', width: 100 },
     { field: 'transport', headerName: 'ขนส่ง', width: 100 },
     { field: 'parcel_number', headerName: 'หมายเลขพัสดุ', width: 150 },
+    { field: 'created_at', headerName: 'วันที่ซื้อ', width: 150 },
     {
       field: 'details',
       headerName: 'Actions',
@@ -73,7 +74,7 @@ export default function Bill() {
           filter
         </div>
 
-        <div>
+        <div className="bg-green-500 text-white p-1 rounded cursor-pointer">
           create
         </div>
       </div>
