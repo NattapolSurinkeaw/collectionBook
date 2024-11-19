@@ -29,7 +29,7 @@ return new class extends Migration
             $table->string('language');
             $table->boolean('defaults')->default(false);
             $table->timestamp('created_at')->useCurrent();
-            $table->timestamp('updated_at')->useCurrent();
+            $table->timestamp('updated_at')->nullable();
             $table->unique(['language', 'info_param']);
         });
 
@@ -50,7 +50,9 @@ return new class extends Migration
                  'info_value' => '',
                  'info_link' => '',
                  'info_iframe' => '',
-                 'info_attribute' => ''
+                 'info_attribute' => '',
+                 'created_at' => now(), // กำหนดวันที่สร้าง
+                'updated_at' => now(), // กำหนดวันที่อัปเดต
             ],
             [
                 'info_id' => 2,
@@ -65,7 +67,9 @@ return new class extends Migration
                  'info_value' => '',
                  'info_link' => '',
                  'info_iframe' => '',
-                 'info_attribute' => ''
+                 'info_attribute' => '',
+                 'created_at' => now(), // กำหนดวันที่สร้าง
+                    'updated_at' => now(), // กำหนดวันที่อัปเดต
             ],
             [
                 'info_id' => 3,
@@ -80,7 +84,9 @@ return new class extends Migration
                  'info_value' => '',
                  'info_link' => '',
                  'info_iframe' => '',
-                 'info_attribute' => ''
+                 'info_attribute' => '',
+                 'created_at' => now(), // กำหนดวันที่สร้าง
+                'updated_at' => now(), // กำหนดวันที่อัปเดต
             ],
             [
                 'info_id' => 4,
@@ -95,7 +101,9 @@ return new class extends Migration
                  'info_value' => '',
                  'info_link' => '',
                  'info_iframe' => '',
-                 'info_attribute' => ''
+                 'info_attribute' => '',
+                 'created_at' => now(), // กำหนดวันที่สร้าง
+                'updated_at' => now(), // กำหนดวันที่อัปเดต
             ],
             [
                 'info_id' => 5,
@@ -110,7 +118,9 @@ return new class extends Migration
                  'info_value' => '',
                  'info_link' => '',
                  'info_iframe' => '',
-                 'info_attribute' => ''
+                 'info_attribute' => '',
+                 'created_at' => now(), // กำหนดวันที่สร้าง
+                'updated_at' => now(), // กำหนดวันที่อัปเดต
             ],
             [
                 'info_id' => 6,
@@ -125,7 +135,9 @@ return new class extends Migration
                  'info_value' => '',
                  'info_link' => '',
                  'info_iframe' => '',
-                 'info_attribute' => ''
+                 'info_attribute' => '',
+                 'created_at' => now(), // กำหนดวันที่สร้าง
+                'updated_at' => now(), // กำหนดวันที่อัปเดต
             ],
             [
                 'info_id' => 7,
@@ -140,7 +152,9 @@ return new class extends Migration
                  'info_value' => '',
                  'info_link' => '',
                  'info_iframe' => '',
-                 'info_attribute' => ''
+                 'info_attribute' => '',
+                 'created_at' => now(), // กำหนดวันที่สร้าง
+                'updated_at' => now(), // กำหนดวันที่อัปเดต
             ],
             [
                 'info_id' => 8,
@@ -155,7 +169,9 @@ return new class extends Migration
                  'info_value' => '',
                  'info_link' => '',
                  'info_iframe' => '',
-                 'info_attribute' => ''
+                 'info_attribute' => '',
+                 'created_at' => now(), // กำหนดวันที่สร้าง
+                'updated_at' => now(), // กำหนดวันที่อัปเดต
             ],
             [
                 'info_id' => 9,
@@ -170,7 +186,9 @@ return new class extends Migration
                  'info_value' => 'nutaponza123456@gmail.com',
                  'info_link' => '/icons/email.png',
                  'info_iframe' => '',
-                 'info_attribute' => ''
+                 'info_attribute' => '',
+                 'created_at' => now(), // กำหนดวันที่สร้าง
+                'updated_at' => now(), // กำหนดวันที่อัปเดต
             ],
             [
                 'info_id' => 10,
@@ -185,7 +203,9 @@ return new class extends Migration
                  'info_value' => 'Tamarind Thai Restaurant 33',
                  'info_link' => '/icons/Our-location.png',
                  'info_iframe' => '',
-                 'info_attribute' => 'Our location'
+                 'info_attribute' => 'Our location',
+                 'created_at' => now(), // กำหนดวันที่สร้าง
+                'updated_at' => now(), // กำหนดวันที่อัปเดต
             ],
             [
                 'info_id' => 11,
@@ -200,7 +220,9 @@ return new class extends Migration
                  'info_value' => 'rue François Miron',
                  'info_link' => '',
                  'info_iframe' => '',
-                 'info_attribute' => ''
+                 'info_attribute' => '',
+                 'created_at' => now(), // กำหนดวันที่สร้าง
+                'updated_at' => now(), // กำหนดวันที่อัปเดต
             ],
             [
                 'info_id' => 12,
@@ -215,7 +237,9 @@ return new class extends Migration
                  'info_value' => '',
                  'info_link' => '',
                  'info_iframe' => '',
-                 'info_attribute' => ''
+                 'info_attribute' => '',
+                 'created_at' => now(), // กำหนดวันที่สร้าง
+                'updated_at' => now(), // กำหนดวันที่อัปเดต
             ],
             [
                 'info_id' => 13,
@@ -230,7 +254,9 @@ return new class extends Migration
                  'info_value' => 'Paris.',
                  'info_link' => '',
                  'info_iframe' => '',
-                 'info_attribute' => ''
+                 'info_attribute' => '',
+                 'created_at' => now(), // กำหนดวันที่สร้าง
+                'updated_at' => now(), // กำหนดวันที่อัปเดต
             ],
             [
                 'info_id' => 14,
@@ -245,7 +271,9 @@ return new class extends Migration
                  'info_value' => '75004',
                  'info_link' => '',
                  'info_iframe' => '',
-                 'info_attribute' => ''
+                 'info_attribute' => '',
+                 'created_at' => now(), // กำหนดวันที่สร้าง
+                'updated_at' => now(), // กำหนดวันที่อัปเดต
             ],
             [
                 'info_id' => 15,
@@ -260,7 +288,9 @@ return new class extends Migration
                  'info_value' => '',
                  'info_link' => '',
                  'info_iframe' => '<iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d15303.065993585626!2d102.835101!3d16.487357!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31228ae99b598b43%3A0x56b4538d2ace7037!2sWYNNSOFT%20SOLUTION%20CO%2CLTD.!5e0!3m2!1sth!2sth!4v1663915321775!5m2!1sth!2sth" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>',
-                 'info_attribute' => ''
+                 'info_attribute' => '',
+                 'created_at' => now(), // กำหนดวันที่สร้าง
+                'updated_at' => now(), // กำหนดวันที่อัปเดต
             ],
             [
                 'info_id' => 16,
@@ -275,7 +305,9 @@ return new class extends Migration
                  'info_value' => '',
                  'info_link' => 'https://www.facebook.com',
                  'info_iframe' => '',
-                 'info_attribute' => ''
+                 'info_attribute' => '',
+                 'created_at' => now(), // กำหนดวันที่สร้าง
+                'updated_at' => now(), // กำหนดวันที่อัปเดต
             ],
             [
                 'info_id' => 17,
@@ -290,7 +322,9 @@ return new class extends Migration
                  'info_value' => '',
                  'info_link' => 'https://www.twitter.com',
                  'info_iframe' => '',
-                 'info_attribute' => ''
+                 'info_attribute' => '',
+                 'created_at' => now(), // กำหนดวันที่สร้าง
+                'updated_at' => now(), // กำหนดวันที่อัปเดต
             ],
             [
                 'info_id' => 18,
@@ -305,7 +339,9 @@ return new class extends Migration
                  'info_value' => '',
                  'info_link' => 'https://www.instagram.com',
                  'info_iframe' => '',
-                 'info_attribute' => ''
+                 'info_attribute' => '',
+                 'created_at' => now(), // กำหนดวันที่สร้าง
+                'updated_at' => now(), // กำหนดวันที่อัปเดต
             ],
             [
                 'info_id' => 19,
@@ -320,7 +356,9 @@ return new class extends Migration
                  'info_value' => '01 48 87 34 20',
                  'info_link' => '/icons/Call-online.png',
                  'info_iframe' => '',
-                 'info_attribute' => 'Call online'
+                 'info_attribute' => 'Call online',
+                 'created_at' => now(), // กำหนดวันที่สร้าง
+                'updated_at' => now(), // กำหนดวันที่อัปเดต
             ],
             [
                 'info_id' => 20,
@@ -335,7 +373,9 @@ return new class extends Migration
                  'info_value' => '',
                  'info_link' => '',
                  'info_iframe' => '',
-                 'info_attribute' => ''
+                 'info_attribute' => '',
+                 'created_at' => now(), // กำหนดวันที่สร้าง
+                'updated_at' => now(), // กำหนดวันที่อัปเดต
             ],
             [
                 'info_id' => 21,
@@ -350,7 +390,9 @@ return new class extends Migration
                  'info_value' => '',
                  'info_link' => '',
                  'info_iframe' => '',
-                 'info_attribute' => ''
+                 'info_attribute' => '',
+                 'created_at' => now(), // กำหนดวันที่สร้าง
+                'updated_at' => now(), // กำหนดวันที่อัปเดต
             ],
             [
                 'info_id' => 22,
@@ -365,7 +407,9 @@ return new class extends Migration
                  'info_value' => '© made in 2024 nattapol',
                  'info_link' => '',
                  'info_iframe' => '',
-                 'info_attribute' => ''
+                 'info_attribute' => '',
+                 'created_at' => now(), // กำหนดวันที่สร้าง
+                'updated_at' => now(), // กำหนดวันที่อัปเดต
             ],
             [
                 'info_id' => 23,
@@ -380,7 +424,9 @@ return new class extends Migration
                  'info_value' => 'Tuesday – Saturday 12 am – 2.30 pm / 7 pm – 11 pm Sunday 7 pm – 10.30 pm',
                  'info_link' => '/icons/Working-hours.png',
                  'info_iframe' => '',
-                 'info_attribute' => 'Working hours'
+                 'info_attribute' => 'Working hours',
+                 'created_at' => now(), // กำหนดวันที่สร้าง
+                'updated_at' => now(), // กำหนดวันที่อัปเดต
             ],
             [
                 'info_id' => 24,
@@ -395,7 +441,9 @@ return new class extends Migration
                  'info_value' => 'menu',
                  'info_link' => '',
                  'info_iframe' => '',
-                 'info_attribute' => ''
+                 'info_attribute' => '',
+                 'created_at' => now(), // กำหนดวันที่สร้าง
+                'updated_at' => now(), // กำหนดวันที่อัปเดต
             ],
             [
                 'info_id' => 25,
@@ -410,7 +458,9 @@ return new class extends Migration
                  'info_value' => 'more info',
                  'info_link' => '',
                  'info_iframe' => '',
-                 'info_attribute' => ''
+                 'info_attribute' => '',
+                 'created_at' => now(), // กำหนดวันที่สร้าง
+                'updated_at' => now(), // กำหนดวันที่อัปเดต
             ],
             [
                 'info_id' => 26,
@@ -425,7 +475,9 @@ return new class extends Migration
                  'info_value' => 'term privacy',
                  'info_link' => '',
                  'info_iframe' => '',
-                 'info_attribute' => ''
+                 'info_attribute' => '',
+                 'created_at' => now(), // กำหนดวันที่สร้าง
+                'updated_at' => now(), // กำหนดวันที่อัปเดต
             ],
             [
                 'info_id' => 27,
@@ -440,7 +492,9 @@ return new class extends Migration
                  'info_value' => 'social',
                  'info_link' => '',
                  'info_iframe' => '',
-                 'info_attribute' => ''
+                 'info_attribute' => '',
+                 'created_at' => now(), // กำหนดวันที่สร้าง
+                'updated_at' => now(), // กำหนดวันที่อัปเดต
             ],
         ]);
     }

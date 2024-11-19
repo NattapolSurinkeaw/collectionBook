@@ -83,7 +83,9 @@ export default function ModalAddBook({open, handleClose, dataWriter, dataIllustr
         
         <div className="w-full h-[480px] overflow-auto border">
           <div className='p-3 flex max-lg:flex-col gap-4 '>
-            <label htmlFor="">nameTH</label>
+            <label htmlFor="">nameTH
+              <span className="text-red-600">*</span>
+            </label>
             <TextInput 
               className="w-full" 
               value={nameTH}
@@ -117,7 +119,9 @@ export default function ModalAddBook({open, handleClose, dataWriter, dataIllustr
           {/* <CKcomponent value={content} onChange={setContent} /> */}
           <div className='p-3 flex max-lg:flex-col gap-4 '>
             <div className="flex flex-col gap-2">
-              <label htmlFor="">LC Release Date</label>
+              <label htmlFor="">LC Release Date
+                <span className="text-red-600">*</span>
+              </label>
               <input 
                 type="date" 
                 className="rounded-md border-gray-300" name="" id="" 
@@ -126,7 +130,9 @@ export default function ModalAddBook({open, handleClose, dataWriter, dataIllustr
               />
             </div>
             <div className="flex flex-col gap-2">
-              <label htmlFor="">Publisher</label>
+              <label htmlFor="">Publisher
+                <span className="text-red-600">*</span>
+              </label>
               <select 
                 name="" id="" 
                 className="rounded-md border-gray-300"
@@ -141,7 +147,9 @@ export default function ModalAddBook({open, handleClose, dataWriter, dataIllustr
               </select>
             </div>
             <div className="flex flex-col gap-2">
-              <label htmlFor="">Writer</label>
+              <label htmlFor="">Writer
+                <span className="text-red-600">*</span>
+              </label>
               <select 
                 name="" id="" 
                 className="rounded-md border-gray-300"
@@ -156,7 +164,9 @@ export default function ModalAddBook({open, handleClose, dataWriter, dataIllustr
               </select>
             </div>
             <div className="flex flex-col gap-2">
-              <label htmlFor="">Illustrator</label>
+              <label htmlFor="">Illustrator
+                <span className="text-red-600">*</span>
+              </label>
               <select 
                 name="" id="" 
                 className="rounded-md border-gray-300"

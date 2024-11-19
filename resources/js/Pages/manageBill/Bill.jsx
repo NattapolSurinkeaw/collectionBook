@@ -4,6 +4,7 @@ import { DataGrid } from '@mui/x-data-grid';
 import { Link } from '@inertiajs/react';
 import { Inertia } from '@inertiajs/inertia';
 import { svGetBillAll } from '@/services/bill/bill.services';
+import ModalAddBill from './components/ModalAddBill';
 
 export default function Bill() {
   const columns = [
@@ -41,6 +42,8 @@ export default function Bill() {
   ];
 
   const [billData, setBillData] = useState([])
+  const [open, setOpen] = useState(false);
+  const handleClose = () => setOpen(false);
 
   useEffect(() => {
     svGetBillAll().then((res) => {
@@ -74,9 +77,20 @@ export default function Bill() {
           filter
         </div>
 
-        <div className="bg-green-500 text-white p-1 rounded cursor-pointer">
+        <div 
+          className="bg-green-500 text-white p-1 rounded cursor-pointer"
+          onClick={() => setOpen(true)}
+        >
           create
         </div>
+        {
+          open && (
+            <ModalAddBill 
+              open={open}  
+              handleClose={handleClose}
+            />
+          )
+        }
       </div>
 
       {/* data grid */}

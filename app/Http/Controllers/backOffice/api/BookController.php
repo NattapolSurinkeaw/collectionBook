@@ -142,4 +142,25 @@ class BookController extends Controller
         $bill = BillBookPurchaseReceipt::where('user_id', $user->id)->get();
         return $this->responseData($bill);
     }
+
+    public function createBill(Request $request) {
+        $user = $request->user();
+
+        $params = $request->all();
+        $newFolder = "upload/" . date('Y') . "/" . date('m') . "/" . date('d') . "/";
+        $imageSlip = (isset($params['image_slip'])) ? $this->uploadImage($newFolder, $params['image_slip'], "", "", time()) : "";
+
+        $bill = BillBookPurchaseReceipt::create([
+            'user_id' => $user->id,
+            'volume_book' => "1,2",
+            'quantity' => 1,
+            'store_sell' => $params['store_sell'],
+            'price' => $params['price'],
+            'transport' => $params['transport'],
+            'parcel_number' => $params['parcel_number'],
+            'image_slip' => $imageSlip,
+        ]);
+
+        return $this->responseData($bill);
+    }
 }

@@ -8,3 +8,10 @@ export const svGetBillAll = () => {
     }
   ).catch((err) => err)
 } 
+
+export const svCreateBill = (formData) => {
+  return axios.post('/api/createBill', formData)
+  .then((res) => {
+    return { status: res.data.status, bill: res.data.data}
+  })
+}

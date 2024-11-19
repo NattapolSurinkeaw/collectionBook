@@ -32,3 +32,9 @@ export const svGetVolumeBook = (params) => {
 export const svAddNewVolume = (params) => {
   return axios.post('/api/addnewvolume', params).then((res) => res).catch((err) => err)
 }
+
+export const svSearchBookByName = (param) => {
+  return axios.get('/api/search-book', param),then((res) => {
+    return { status: res.status}
+  })
+}

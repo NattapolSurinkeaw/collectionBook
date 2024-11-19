@@ -3,7 +3,6 @@ import React, { useState } from 'react'
 import { Link } from '@inertiajs/react';
 
 export default function BillDetail(data) {
-
   const [bill, setBill] = useState((data.data)? data.data : null)
   const [showDisplay, setShowDisplay] = useState(true);
   const [dataBook, setDataBook] = useState([
@@ -42,7 +41,6 @@ export default function BillDetail(data) {
       "frontCover": "upload/2024/10/29/front_1730186214.png"
     }
   ])
-  console.log(bill)
   return (
     <MainLayout>
       <h2 className="text-2xl">BillDetail {bill.id}</h2>
@@ -69,7 +67,7 @@ export default function BillDetail(data) {
                 <div className="flex gap-4">
                   <div>
                     <p>รูปสลิป</p>
-                    <img className="w-[250px] h-[300px]" src="" alt="" />
+                    <img className="w-[250px] h-[300px]" src={`/${bill.image_slip}`} alt="" />
                   </div>
                   <div>
                     <div className="flex gap-4">

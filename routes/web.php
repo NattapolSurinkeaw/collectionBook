@@ -76,6 +76,7 @@ Route::prefix('/api')->group(function () {
     Route::get('/publishers', [BookController::class, 'getPublisherAll']);
     Route::post('/volume-book', [BookController::class, 'getVolumeBook']);
     Route::get('/bill', [BookController::class, 'getBillAll']);
+    Route::post('/createBill', [BookController::class, 'createBill']);
 
     Route::post('/addnewbook', [BookController::class, 'addNewBook']);
     Route::post('/addnewvolume', [BookController::class, 'addNewVolume']);
