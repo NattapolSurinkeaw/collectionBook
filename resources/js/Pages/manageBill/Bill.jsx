@@ -5,6 +5,7 @@ import { Link } from '@inertiajs/react';
 import { Inertia } from '@inertiajs/inertia';
 import { svGetBillAll } from '@/services/bill/bill.services';
 import ModalAddBill from './components/ModalAddBill';
+import { svGetBookAll } from '@/services/book/book.services';
 
 export default function Bill() {
   const columns = [
@@ -44,25 +45,30 @@ export default function Bill() {
   const [billData, setBillData] = useState([])
   const [open, setOpen] = useState(false);
   const handleClose = () => setOpen(false);
+  const [dataBookAll, setDataBookAll] = useState([]);
 
   useEffect(() => {
     svGetBillAll().then((res) => {
       // console.log(res.bill);
       setBillData(res.bill);
     })
+    svGetBookAll().then((res) => {
+      console.log(res.book)
+      setDataBookAll(res.book);
+    })
   }, [])
 
-  const totalPrice = billData.reduce((sum, item) => sum + item.price, 0);
+  const totalPrice = billData.reduce((sum, item) => sum + parseFloat(item.price || 0), 0);
   const totalBooks = billData.reduce((sum, item) => sum + item.quantity, 0);
 
   return (
     <MainLayout>
-      <h2 className="text-2xl">Bill</h2>
+      {/* <h2 className="text-2xl">Bill</h2> */}
 
       <div className='mb-4 bg-gradient-to-r from-white to-[#e9d5ff] p-4 flex justify-around rounded-md shadow-[0_2px_8px_0_#63636333]'>
         <div className="text-center flex gap-2 flex-col bg-white rounded-md p-4">
           <p className="text-gray-500 text-xl">ราคาที่ซื้อทั้งหมด</p>
-          <p className="text-2xl font-bold">{totalPrice}</p>
+          <p className="text-2xl font-bold">{totalPrice.toLocaleString('en-US')}</p>
           <p className="text-gray-500 text-xl">บาท</p>
         </div>
         <div className="text-center flex gap-2 flex-col bg-white rounded-md p-4">
@@ -88,6 +94,7 @@ export default function Bill() {
             <ModalAddBill 
               open={open}  
               handleClose={handleClose}
+              dataBookAll={dataBookAll}
             />
           )
         }

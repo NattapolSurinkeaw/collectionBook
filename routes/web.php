@@ -70,6 +70,7 @@ Route::prefix('/api')->group(function () {
     Route::post('/savechangecate', [UserController::class, 'savechangecate']);
 
     Route::get('/bookall', [BookController::class, 'getBookAll']);
+    Route::get('/searchVolumeBook', [BookController::class, 'searchVolumeBook']);
     Route::get('/writers', [BookController::class, 'getWriterAll']);
     Route::get('/illustrators', [BookController::class, 'getIllustAll']);
     Route::get('/categories-book', [BookController::class, 'getCategoryAll']);

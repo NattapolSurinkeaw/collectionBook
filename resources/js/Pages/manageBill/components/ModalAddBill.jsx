@@ -1,9 +1,8 @@
 import React from 'react'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Modal from '@mui/material/Modal';
 import Box from '@mui/material/Box';
 import { svCreateBill } from '@/services/bill/bill.services';
-import { svSearchBookByName } from '@/services/book/book.services';
 
 const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
 const style = {
@@ -19,36 +18,16 @@ const style = {
 };
 
 
-export default function ModalAddBill({open, handleClose}) {
+export default function ModalAddBill({open, handleClose, dataBookAll}) {
   const [preview, setPreview] = useState(null);
-  const [slcBook, setSlcBook] = useState([
-    {
-      id : 1,
-      image: "https://storage.naiin.com/system/application/bookstore/resource/product/202405/611861/1000271990_front_XXL.jpg?imgname=-%E0%B9%80%E0%B8%A3%E0%B8%B7%E0%B8%AD%E0%B8%AA%E0%B8%B3%E0%B8%A3%E0%B8%B2%E0%B8%8D%E0%B8%95%E0%B9%88%E0%B8%B2%E0%B8%87%E0%B9%82%E0%B8%A5%E0%B8%81!!-%E0%B9%84%E0%B8%94%E0%B9%89%E0%B8%AA%E0%B8%81%E0%B8%B4%E0%B8%A5%E0%B8%AD%E0%B8%B1%E0%B8%8D%E0%B9%80%E0%B8%8A%E0%B8%B4%E0%B8%8D%E0%B9%80%E0%B8%A3%E0%B8%B7%E0%B8%AD%E0%B8%A1%E0%B8%B2%E0%B8%97%E0%B8%B1%E0%B9%89%E0%B8%87%E0%B8%97%E0%B8%B5%E0%B8%88%E0%B8%B0%E0%B9%83%E0%B8%8A%E0%B9%89%E0%B8%8A%E0%B8%B5%E0%B8%A7%E0%B8%B4%E0%B8%95%E0%B8%A1%E0%B8%B1%E0%B9%88%E0%B8%87%E0%B8%A1%E0%B8%B5%E0%B9%83%E0%B8%99%E0%B8%95%E0%B9%88%E0%B8%B2%E0%B8%87%E0%B9%82%E0%B8%A5%E0%B8%81-%E0%B9%80%E0%B8%A5%E0%B9%88%E0%B8%A1-1"
-    },
-    {
-      id : 2,
-      image: "https://cdn-local.mebmarket.com/meb/server1/320606/Thumbnail/book_detail_large.gif?2"
-    },
-    {
-      id : 3,
-      image: "https://cdn-local.mebmarket.com/meb/server1/320606/Thumbnail/book_detail_large.gif?2"
-    },
-    {
-      id : 4,
-      image: "https://cdn-local.mebmarket.com/meb/server1/320606/Thumbnail/book_detail_large.gif?2"
-    },
-    {
-      id : 5,
-      image: "https://cdn-local.mebmarket.com/meb/server1/320606/Thumbnail/book_detail_large.gif?2"
-    },
-  ]);
+  const [slcBook, setSlcBook] = useState([]);
   const [storeBuy, setStoreBuy] = useState(null);
   const [buyPrice, setBuyPrice] = useState(null);
   const [transport, setTransport] = useState(null);
   const [parcelNumber, setParcelNumber] = useState(null);
   const [slipfile, setSlipFile] = useState(null);
-
+  const [inputSearch, setInputSearch] = useState(null);
+  const [searchBook, setSearchBook] = useState(dataBookAll);
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
@@ -59,6 +38,7 @@ export default function ModalAddBill({open, handleClose}) {
     }
   };
 
+  // console.log(dataBookAll)
   const submit = () => {
     const formData = new FormData();
     formData.append("image_slip", slipfile)
@@ -73,6 +53,10 @@ export default function ModalAddBill({open, handleClose}) {
 
     svCreateBill(formData).then((res) => {
       console.log(res)
+      console.log(res.status)
+      if(res.status === "success") {
+        handleClose()
+      }
     })
   }
   
@@ -149,8 +133,21 @@ export default function ModalAddBill({open, handleClose}) {
             <div className="border w-[250px] p-2 rounded-md w-full">
               <div className="">
                 <label htmlFor="" className="w-20">ค้นหาหนังสือ</label>
-                <input type="text" className="w-full" />
+                <input type="text" className="w-full"
+                  value={inputSearch} 
+                  onChange={(e) => setInputSearch(e.target.value)}
+                />
               </div>
+              <div className="flex gap-4 py-4 overflow-auto">
+                {
+                  searchBook.map((book) => (
+                  <div key={book.id} className="w-[200px] h-[300px]">
+                    <img src={`/${book.frontCover}`} alt="" />
+                  </div>
+                  ))
+                }
+              </div>
+
               <div className="flex flex-wrap gap-4 py-4">
                 {
                   slcBook.map((book) => (

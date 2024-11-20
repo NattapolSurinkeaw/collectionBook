@@ -1,7 +1,10 @@
 import axios from "axios";
 
 export const svGetBookAll = () => {
-  return axios.get('/api/bookall').then((res) => res).catch((err) => err)
+  return axios.get('/api/bookall').then((res) => {
+    return { status: res.data.status, book: res.data.data}
+  })
+  .catch((err) => err)
 }
 
 export const svGetWriters = () => {
@@ -33,8 +36,9 @@ export const svAddNewVolume = (params) => {
   return axios.post('/api/addnewvolume', params).then((res) => res).catch((err) => err)
 }
 
-export const svSearchBookByName = (param) => {
-  return axios.get('/api/search-book', param),then((res) => {
+// search books for a volume
+export const svSearchVolBookByName = (param) => {
+  return axios.get('/api/searchVolumeBook', param),then((res) => {
     return { status: res.status}
   })
 }
