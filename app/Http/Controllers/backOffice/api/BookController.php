@@ -37,12 +37,7 @@ class BookController extends Controller
         //               ->from('books');
         //     });
         // }])->get();
-        $books = Book::select('*', DB::raw('(
-                SELECT front_cover 
-                FROM book_volumes 
-                WHERE book_volumes.id = SUBSTRING_INDEX(books.volume_book, ",", -1)
-            ) AS frontCover'))
-            ->get();
+        $books = Book::all();
         return $this->responseData($books);
     }
 
@@ -86,9 +81,10 @@ class BookController extends Controller
     }
 
     public function getVolumeBook(Request $request) {
-        // dd(explode(',', $request->volume_id));
-        $volume = BookVolume::whereIn('id', explode(',', $request->volume_id))->get();
-        // dd($volume);
+        // dd($request->all());
+        $volume = Book::where('id', $request->input('book_id'))
+            ->with('volumes')
+            ->first();
         return $this->responseData($volume);
     }
 
@@ -132,7 +128,7 @@ class BookController extends Controller
             'release_date' => $params['release_date'],
         ]);
         $book->update([
-            'volume_book' => $book->volume_book.','.$bookVol->id
+            'thumbnail' => $frontCover
         ]);
         return $this->responseData($bookVol);
     }

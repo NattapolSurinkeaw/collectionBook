@@ -23,7 +23,7 @@ return new class extends Migration
             $table->foreignId('writer_id')->constrained('writers')->onDelete('cascade');
             $table->foreignId('ilust_id')->constrained('illustrators')->onDelete('cascade');
             $table->foreignId('publish_id')->constrained('publishers')->onDelete('cascade');
-            $table->string("volume_book")->nullable();
+            // $table->string("volume_book")->nullable();
             $table->timestamps();
         });
     }

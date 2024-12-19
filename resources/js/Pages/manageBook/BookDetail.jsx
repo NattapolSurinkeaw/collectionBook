@@ -1,6 +1,5 @@
 import React from 'react'
 import MainLayout from '@/Layouts/MainLayout'
-import { usePage } from '@inertiajs/react';
 import PrimaryButton from '@/Components/PrimaryButton';
 import { useState, useEffect } from 'react';
 import ModalAddVolume from './components/ModalAddVolume';
@@ -8,8 +7,6 @@ import { svGetVolumeBook } from '@/services/book/book.services';
 
 
 export default function BookDetail({dataBook}) {
-  // const { props } = usePage();
-  // const bookId = props.id;
   const [open, setOpen] = useState(false);
   const [dataVolume, setDataVolume] = useState([]);
   const handleClose = () => setOpen(false);
@@ -18,22 +15,17 @@ export default function BookDetail({dataBook}) {
 
   useEffect(() => {
     const param = {
-      volume_id : dataBook.volume_book
+      book_id : dataBook.id
     }
 
     svGetVolumeBook(param).then((res) => {
-      // console.log(res.data.data[0].front_cover);
-      if(res.data.data && res.data.data.length > 0) {
-        setDataVolume(res.data.data);
-        setSlcVolume(res.data.data[0])
-        setPreviewImage(res.data.data[0].front_cover)
+      if(res.data.data) {
+        setDataVolume(res.data.data['volumes']);
+        setSlcVolume(res.data.data['volumes'][0])
+        setPreviewImage(res.data.data['volumes'][0].front_cover)
       }
     })
   }, [dataBook.volume_book]);
-
-  // useEffect(() => {
-  //   console.log(dataVolume)
-  // }, [dataVolume])
 
   const handleSlcVolume = (param) => {
     // console.log(param);

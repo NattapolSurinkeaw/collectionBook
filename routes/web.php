@@ -13,9 +13,10 @@ use App\Http\Controllers\backoffice\api\RoleController;
 use App\Models\BookCategory;
 use Illuminate\Http\Request;
 
-Route::get('/', [FrontOfficePagesController::class, 'index']);
-Route::get('/manga', [FrontOfficePagesController::class, 'mangaPage']);
-Route::get('/lightnovel', [FrontOfficePagesController::class, 'lightnovelPage']);
+// Route::get('/', [FrontOfficePagesController::class, 'index']);
+Route::get('/', [BackOfficePagesController::class, 'redirectLogin']);
+// Route::get('/manga', [FrontOfficePagesController::class, 'mangaPage']);
+// Route::get('/lightnovel', [FrontOfficePagesController::class, 'lightnovelPage']);
 
 // Route::get('/backoffice', function () {
 //     return Inertia::render('Welcome', [

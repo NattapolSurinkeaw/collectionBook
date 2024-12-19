@@ -5,7 +5,6 @@ import { useState } from 'react';
 import TextInput from '@/Components/TextInput';
 import Checkbox from '@/Components/Checkbox';
 import { svAddNewBook } from '@/services/book/book.services';
-import CKcomponent from '@/Components/CKcomponent/CKcomponent';
 
 const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
 const style = {
@@ -116,7 +115,6 @@ export default function ModalAddBook({open, handleClose, dataWriter, dataIllustr
               defaultValue={description}
             ></textarea>
           </div>
-          {/* <CKcomponent value={content} onChange={setContent} /> */}
           <div className='p-3 flex max-lg:flex-col gap-4 '>
             <div className="flex flex-col gap-2">
               <label htmlFor="">LC Release Date

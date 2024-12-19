@@ -11,6 +11,10 @@ use App\Models\BillBookPurchaseReceipt;
 class PagesController extends Controller
 {
     //
+    public function redirectLogin() {
+        return redirect('login');
+    }
+
     public function index() {
         return Inertia::render('Dashboard');
     }

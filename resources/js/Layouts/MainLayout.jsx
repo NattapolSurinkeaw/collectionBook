@@ -75,7 +75,7 @@ export default function MainLayout({ children }) {
                             {menu.cate_position === 1 && (
                                 <div className="flex flex-col gap-2 mb-4">
                                     <div className="flex items-center gap-2 text-[#bcbfc1]">
-                                        <div className="h-[2px] w-3 bg-black"></div>
+                                        <div className="h-[1px] w-3 bg-black"></div>
                                         <p className="">{menu.cate_title}</p>
                                     </div>
                                     {/* main menu */}
