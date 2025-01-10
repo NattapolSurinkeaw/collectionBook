@@ -5,7 +5,8 @@ import { Link } from '@inertiajs/react';
 import { Inertia } from '@inertiajs/inertia';
 import { svGetBillAll } from '@/services/bill/bill.services';
 import ModalAddBill from './components/ModalAddBill';
-import { svGetBookAll } from '@/services/book/book.services';
+// import { svGetBookAndVol } from '@/services/book/book.services';
+import { svGetBookAndVol } from '@/services/book/book.services';
 
 export default function Bill() {
   const columns = [
@@ -52,7 +53,7 @@ export default function Bill() {
       // console.log(res.bill);
       setBillData(res.bill);
     })
-    svGetBookAll().then((res) => {
+    svGetBookAndVol().then((res) => {
       console.log(res.book)
       setDataBookAll(res.book);
     })

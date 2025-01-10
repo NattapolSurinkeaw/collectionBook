@@ -4,6 +4,8 @@ namespace App\Http\Controllers\backoffice\api;
 
 use App\Http\Controllers\Controller;
 use App\Models\BillBookPurchaseReceipt;
+use App\Models\BillItem;
+use App\Models\UserBookVolume;
 use Illuminate\Http\Request;
 use App\Models\Book;
 use App\Models\BookCategory;
@@ -11,6 +13,7 @@ use App\Models\Illustrator;
 use App\Models\Publisher;
 use App\Models\Writer;
 use App\Models\BookVolume;
+
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
@@ -18,25 +21,6 @@ class BookController extends Controller
 {
     //
     public function getBookAll() {
-        // $books = Book::all();
-        // foreach ($books as $book) {
-        //     // แยกค่า volume_book และดึงค่าหลังสุด
-        //     $volumes = explode(',', $book->volume_book);
-        //     $lastVolume = end($volumes);
-    
-        //     // Query หาข้อมูลจากตาราง book_volumes ตามค่า lastVolume
-        //     $bookVolume = BookVolume::where('id', $lastVolume)->first();
-    
-        //     // เพิ่มข้อมูลที่ได้จาก bookVolume เข้าไปในผลลัพธ์
-        //     $book->last_volume_data = $bookVolume;
-        // }
-
-        // $books = Book::with(['book_volumes' => function($query) {
-        //     $query->whereIn('id', function($query) {
-        //         $query->select(DB::raw('SUBSTRING_INDEX(volume_book, ",", -1)'))
-        //               ->from('books');
-        //     });
-        // }])->get();
         $books = Book::all();
         return $this->responseData($books);
     }
@@ -148,7 +132,6 @@ class BookController extends Controller
 
         $bill = BillBookPurchaseReceipt::create([
             'user_id' => $user->id,
-            'volume_book' => "1,2",
             'quantity' => 1,
             'store_sell' => $params['store_sell'],
             'price' => $params['price'],
@@ -157,6 +140,64 @@ class BookController extends Controller
             'image_slip' => $imageSlip,
         ]);
 
+        $dataInsertBillItems = [];
+        $dataInsertUserBooks = [];
+        $decodeVolId = json_decode($params['vol_ids']);
+        // dd($decodeVolId);
+        foreach ($decodeVolId as $vol) {
+            $dataInsertBillItems[] = [
+                'bill_id' => $bill->id,
+                'book_vol_id' => $vol,
+                'quantity' => 1,
+                'price_per_unit' => 111,
+                'discount_per_unit' => 0,
+            ];
+
+            $dataInsertUserBooks[] = [
+                'user_id' => $user->id,
+                'book_vol_id' => $vol
+            ];
+
+        }
+        BillItem::insert($dataInsertBillItems);
+        
+        foreach ($dataInsertUserBooks as $data) {
+            $existingRecord = DB::table('user_book_volumes')
+                ->where('user_id', $data['user_id'])
+                ->where('book_vol_id', $data['book_vol_id'])
+                ->first();
+        
+            if ($existingRecord) {
+                DB::table('user_book_volumes')
+                    ->where('id', $existingRecord->id)
+                    ->update([
+                        'quantity' => $existingRecord->quantity + 1
+                    ]);
+            } else {
+                DB::table('user_book_volumes')->insert([
+                    'user_id' => $data['user_id'],
+                    'book_vol_id' => $data['book_vol_id'],
+                    'quantity' => 1,
+                ]);
+            }
+        }
+
+
         return $this->responseData($bill);
     }
+
+    public function getBookAndVolume() {
+        $books = DB::table('book_volumes')
+            ->join('books', 'book_volumes.book_id', '=', 'books.id')
+            ->select('books.*',
+                'book_volumes.id as vol_id',
+                'book_volumes.title_volumes as title_vol',
+                'book_volumes.front_cover as front_cover',
+                'book_volumes.price as vol_price'
+            )
+            ->get();
+        return $this->responseData($books);
+    }
 }
+
+

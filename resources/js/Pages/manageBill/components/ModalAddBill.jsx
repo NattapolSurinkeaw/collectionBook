@@ -26,8 +26,8 @@ export default function ModalAddBill({open, handleClose, dataBookAll}) {
   const [transport, setTransport] = useState(null);
   const [parcelNumber, setParcelNumber] = useState(null);
   const [slipfile, setSlipFile] = useState(null);
-  const [inputSearch, setInputSearch] = useState(null);
-  const [searchBook, setSearchBook] = useState(dataBookAll);
+  const [inputSearch, setInputSearch] = useState("");
+  const [dataBook, setDataBook] = useState(dataBookAll);
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
@@ -38,22 +38,56 @@ export default function ModalAddBill({open, handleClose, dataBookAll}) {
     }
   };
 
+  const addSlcBook = (book) => {
+    setSlcBook((prevBooks) => {
+      const isDuplicate = prevBooks.some((b) => b.vol_id === book.vol_id);
+  
+      if (!isDuplicate) {
+        return [...prevBooks, book];
+      }
+  
+      return prevBooks;
+    });
+  };
+
+  useEffect(() => {
+    console.log(slcBook)
+  })
+
+  const filteredData = inputSearch
+  ? dataBook.filter((book) => {
+      return (
+        book.title_TH?.toLowerCase().includes(inputSearch.toLowerCase()) ||
+        book.title_EN?.toLowerCase().includes(inputSearch.toLowerCase()) ||
+        book.title_Another?.toLowerCase().includes(inputSearch.toLowerCase())
+      );
+    })
+  : dataBook; // แสดงข้อมูลทั้งหมดหากไม่มีคำค้นหา
+
+  // useEffect(() => {
+  //   console.log(filteredData)
+  // }, [filteredData])
+
+
   // console.log(dataBookAll)
   const submit = () => {
+
+    const volIds = slcBook.map((book) => book.vol_id);
+
     const formData = new FormData();
     formData.append("image_slip", slipfile)
     formData.append("store_sell", storeBuy)
     formData.append("price", buyPrice)
     formData.append("transport", transport)
     formData.append("parcel_number", parcelNumber)
+    formData.append("vol_ids", JSON.stringify(volIds));
 
-    formData.forEach((value, key) => {
-      console.log(key, " : ", value);
-    });
+    // formData.forEach((value, key) => {
+    //   console.log(key, " : ", value);
+    // });
+    // return false;
 
     svCreateBill(formData).then((res) => {
-      console.log(res)
-      console.log(res.status)
       if(res.status === "success") {
         handleClose()
       }
@@ -101,29 +135,29 @@ export default function ModalAddBill({open, handleClose, dataBookAll}) {
                     <label htmlFor="" className="w-20">ราคา
                       <span className="text-red-600">*</span>
                     </label>
-                    <input type="text" className="w-full"
-                      value={buyPrice}
+                    <input type="number" className="w-full"
+                      value={(buyPrice) ? buyPrice : ""}
                       onChange={(e) => setBuyPrice(e.target.value)}
                     />
                   </div>
                   <div className="flex gap-2">
                     <label htmlFor="" className="w-20">ร้านที่ซื้อ</label>
                     <input type="text" className="w-full" 
-                      value={storeBuy}
+                      value={(storeBuy) ? storeBuy : ""}
                       onChange={(e) => setStoreBuy(e.target.value)}
                     />
                   </div>
                   <div className="flex gap-2">
                     <label htmlFor="" className="w-20">ขนส่ง</label>
                     <input type="text" className="w-full" 
-                      value={transport}
+                      value={(transport) ? transport : ""}
                       onChange={(e) => setTransport(e.target.value)}
                     />
                   </div>
                   <div className="flex gap-2">
                     <label htmlFor="" className="w-20">เลขพัสดุ</label>
                     <input type="text" className="w-full" 
-                      value={parcelNumber}
+                      value={(parcelNumber)? parcelNumber : ""}
                       onChange={(e) => setParcelNumber(e.target.value)}
                     />
                   </div>
@@ -134,28 +168,41 @@ export default function ModalAddBill({open, handleClose, dataBookAll}) {
               <div className="">
                 <label htmlFor="" className="w-20">ค้นหาหนังสือ</label>
                 <input type="text" className="w-full"
-                  value={inputSearch} 
+                  value={(inputSearch)? inputSearch : ""}  
                   onChange={(e) => setInputSearch(e.target.value)}
                 />
               </div>
-              <div className="flex gap-4 py-4 overflow-auto">
-                {
-                  searchBook.map((book) => (
-                  <div key={book.id} className="w-[200px] h-[300px]">
-                    <img src={`/${book.frontCover}`} alt="" />
+              <div className="flex gap-4 py-4 overflow-x-auto">
+                {filteredData.map((book) => (
+                  <div
+                    key={book.vol_id}
+                    className="shrink-0 w-[130px] h-[180px] cursor-pointer relative"
+                    onClick={() => addSlcBook(book)}
+                  >
+                    <img
+                      className="w-full h-full"
+                      src={`/${book.front_cover}`}
+                      alt={book.title_vol}
+                    />
+                    <div className="absolute bottom-0 bg-white opacity-80 w-full">
+                      <p>{book.title_vol}</p>
+                    </div>
                   </div>
-                  ))
-                }
+                ))}
               </div>
 
-              <div className="flex flex-wrap gap-4 py-4">
-                {
-                  slcBook.map((book) => (
-                  <div key={book.id} className="w-[200px] h-[300px]">
-                    <img src={book.image} alt="" />
-                  </div>
-                  ))
-                }
+              <div className="border p-4">
+                <p>เล่มที่ซื้อ</p>
+                <div className="">
+                  {
+                    slcBook.map((book) => (
+                      
+                    <div key={book.vol_id} className="w-full h-[300px] mb-4 border">
+                      <img className="w-[200px] h-full" src={`/${book.front_cover}`} alt="" />
+                    </div>
+                    ))
+                  }
+                </div>
               </div>
             </div>
           </div>

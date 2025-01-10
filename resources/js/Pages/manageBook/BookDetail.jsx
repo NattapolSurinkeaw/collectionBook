@@ -10,7 +10,7 @@ export default function BookDetail({dataBook}) {
   const [open, setOpen] = useState(false);
   const [dataVolume, setDataVolume] = useState([]);
   const handleClose = () => setOpen(false);
-  const [slcVolume, setSlcVolume] = useState([]);
+  const [slcVolume, setSlcVolume] = useState(null);
   const [previewImage, setPreviewImage] = useState();
 
   useEffect(() => {
@@ -63,17 +63,17 @@ export default function BookDetail({dataBook}) {
           <div className='flex justify-center gap-2'>
             <img 
               className="w-[50px] h-[65px]" 
-              src={`/${slcVolume.front_cover}`} alt="" 
+              src={slcVolume ? `/${slcVolume.front_cover}` : ""} 
               onClick={() => handlePreviewImage(slcVolume.front_cover)}
             />
             <img 
               className="w-[50px] h-[65px]" 
-              src={`/${slcVolume.book_spine}`} alt="" 
+              src={slcVolume ? `/${slcVolume.book_spine}` : ""}
               onClick={() => handlePreviewImage(slcVolume.book_spine)}
             />
             <img 
               className="w-[50px] h-[65px]" 
-              src={`/${slcVolume.back_cover}`} alt="" 
+              src={slcVolume ? `/${slcVolume.back_cover}` : ""}
               onClick={() => handlePreviewImage(slcVolume.back_cover)}
             />
           </div>

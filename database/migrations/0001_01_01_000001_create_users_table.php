@@ -60,7 +60,7 @@ return new class extends Migration
                 'email_verified_at' => '2024-07-12 01:03:56',
                 'password' => '$2y$12$kQGyC7637zUJaYQn7rPe7.W8OsdzRzrUEhVhELpto4mFOYqA2WEQS',
                 'profile_img' => NULL,
-                'role_id' => 2,
+                'role_id' => 1,
                 'remember_token' => NULL,
                 'created_at' => '2024-07-12 01:03:44',
                 'updated_at' => '2024-07-12 01:03:56',

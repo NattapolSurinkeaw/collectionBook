@@ -56,7 +56,7 @@ Route::middleware('auth')->group(function () {
 });
 
 // api
-Route::prefix('/api')->group(function () {
+Route::prefix('/api')->middleware('auth')->group(function () {
     Route::get('/getCate', [ApiController::class, 'getCatetegory']);
     Route::post('/postcate', [ApiController::class, 'createCatetegory']);
     Route::get('/getCateId/{id}', [ApiController::class, 'getCateById']);
@@ -71,7 +71,7 @@ Route::prefix('/api')->group(function () {
     Route::post('/savechangecate', [UserController::class, 'savechangecate']);
 
     Route::get('/bookall', [BookController::class, 'getBookAll']);
-    Route::get('/searchVolumeBook', [BookController::class, 'searchVolumeBook']);
+    Route::get('/get-bookandvolume', [BookController::class, 'getBookAndVolume']);
     Route::get('/writers', [BookController::class, 'getWriterAll']);
     Route::get('/illustrators', [BookController::class, 'getIllustAll']);
     Route::get('/categories-book', [BookController::class, 'getCategoryAll']);

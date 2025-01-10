@@ -11,15 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('bill_book_purchase_receipts', function (Blueprint $table) {
+        Schema::create('user_book_volumes', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
+            $table->foreignId('book_vol_id')->constrained('book_volumes')->onDelete('cascade');
             $table->integer('quantity')->default(1);
-            $table->string('store_sell')->nullable();
-            $table->decimal('price', 8,2);
-            $table->string('transport')->comment('ขนส่ง')->nullable();
-            $table->string('parcel_number')->comment('เลขพัสดุ')->nullable();
-            $table->string('image_slip')->nullable();
             $table->timestamps();
         });
     }
@@ -29,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('bill_book_purchase_receipts');
+        Schema::dropIfExists('user_book_volumes');
     }
 };
