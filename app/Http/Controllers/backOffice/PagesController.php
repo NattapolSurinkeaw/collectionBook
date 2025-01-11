@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Inertia\Inertia;
 use App\Models\Book;
 use App\Models\BillBookPurchaseReceipt;
+use App\Models\BillItem;
 
 class PagesController extends Controller
 {
@@ -61,8 +62,13 @@ class PagesController extends Controller
 
     public function billDetailPage($id) {
         $bill = BillBookPurchaseReceipt::find($id);
+        $bookItem = BillItem::where('bill_id', $bill->id)
+        ->join('book_volumes', 'bill_items.book_vol_id', '=', 'book_volumes.id')
+        ->join('books', 'book_volumes.book_id', '=', 'books.id')
+        ->get();
         return Inertia::render('manageBill/BillDetail', [
-            'data' => $bill
+            'bill' => $bill,
+            'bookItem' => $bookItem
         ]);
     }
 

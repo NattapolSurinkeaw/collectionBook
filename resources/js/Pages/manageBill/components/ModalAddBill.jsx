@@ -18,7 +18,7 @@ const style = {
 };
 
 
-export default function ModalAddBill({open, handleClose, dataBookAll}) {
+export default function ModalAddBill({open, handleClose, dataBookAll, setBillData}) {
   const [preview, setPreview] = useState(null);
   const [slcBook, setSlcBook] = useState([]);
   const [storeBuy, setStoreBuy] = useState(null);
@@ -28,6 +28,7 @@ export default function ModalAddBill({open, handleClose, dataBookAll}) {
   const [slipfile, setSlipFile] = useState(null);
   const [inputSearch, setInputSearch] = useState("");
   const [dataBook, setDataBook] = useState(dataBookAll);
+  const [checkSlip, setCheckSlip] = useState(false);
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
@@ -39,6 +40,9 @@ export default function ModalAddBill({open, handleClose, dataBookAll}) {
   };
 
   const addSlcBook = (book) => {
+    // console.log(book);
+    book.price = null;
+    book.discount = null;
     setSlcBook((prevBooks) => {
       const isDuplicate = prevBooks.some((b) => b.vol_id === book.vol_id);
   
@@ -50,9 +54,9 @@ export default function ModalAddBill({open, handleClose, dataBookAll}) {
     });
   };
 
-  useEffect(() => {
-    console.log(slcBook)
-  })
+  // useEffect(() => {
+  //   console.log(slcBook)
+  // })
 
   const filteredData = inputSearch
   ? dataBook.filter((book) => {
@@ -64,15 +68,31 @@ export default function ModalAddBill({open, handleClose, dataBookAll}) {
     })
   : dataBook; // แสดงข้อมูลทั้งหมดหากไม่มีคำค้นหา
 
-  // useEffect(() => {
-  //   console.log(filteredData)
-  // }, [filteredData])
+  const handleInputChange = (vol_id, field, value) => {
+    setSlcBook((prevBooks) =>
+      prevBooks.map((book) =>
+        book.vol_id === vol_id
+          ? { ...book, [field]: value } // อัปเดต field ที่เปลี่ยนแปลง
+          : book
+      )
+    );
+  };
 
-
-  // console.log(dataBookAll)
   const submit = () => {
+    
+    const filteredValues = slcBook.map((book) => ({
+      vol_id: book.vol_id,
+      price: book.price,
+      discount: book.discount,
+    }));
 
-    const volIds = slcBook.map((book) => book.vol_id);
+    if(!slipfile) {
+      console.log("ไม่มีสลิป ออก")
+      setCheckSlip(true);
+      return false;
+    } else {
+      setCheckSlip(false);
+    }
 
     const formData = new FormData();
     formData.append("image_slip", slipfile)
@@ -80,15 +100,17 @@ export default function ModalAddBill({open, handleClose, dataBookAll}) {
     formData.append("price", buyPrice)
     formData.append("transport", transport)
     formData.append("parcel_number", parcelNumber)
-    formData.append("vol_ids", JSON.stringify(volIds));
+    formData.append("vol_ids", JSON.stringify(filteredValues));
 
-    // formData.forEach((value, key) => {
-    //   console.log(key, " : ", value);
-    // });
-    // return false;
+    formData.forEach((value, key) => {
+      console.log(key, " : ", value);
+    });
+    return false;
 
     svCreateBill(formData).then((res) => {
       if(res.status === "success") {
+        // console.log(res)
+        setBillData(prevBill => [...prevBill, res.bill]);
         handleClose()
       }
     })
@@ -113,10 +135,10 @@ export default function ModalAddBill({open, handleClose, dataBookAll}) {
             <div className="border w-[250px] p-2 rounded-md w-full">
               <h3 className="mb-4">รูปสลิปการจ่ายเงิน</h3>
               <div className="flex gap-4">
-                <div>
+                <div className={`${(checkSlip) && ('border-2 border-red-600')} p-1`}>
                   <label htmlFor="payslip">
                     <img
-                      className="w-[200px] h-[250px] object-cover"
+                      className="w-[250px] h-[300px] object-cover"
                       src={preview || "https://static.vecteezy.com/system/resources/previews/004/141/669/non_2x/no-photo-or-blank-image-icon-loading-images-or-missing-image-mark-image-not-available-or-image-coming-soon-sign-simple-nature-silhouette-in-frame-isolated-illustration-vector.jpg"}
                       alt="Payslip Preview"
                       id="payslip-preview"
@@ -197,8 +219,22 @@ export default function ModalAddBill({open, handleClose, dataBookAll}) {
                   {
                     slcBook.map((book) => (
                       
-                    <div key={book.vol_id} className="w-full h-[300px] mb-4 border">
+                    <div key={book.vol_id} className="w-full h-[300px] flex gap-4 p-4 mb-4 border">
                       <img className="w-[200px] h-full" src={`/${book.front_cover}`} alt="" />
+                      <div className='flex flex-col gap-4'>
+                        <input 
+                          type="text" 
+                          value={book.price}
+                          onChange={(e) => handleInputChange(book.vol_id, "price", e.target.value)}
+                          placeholder='ราคา' 
+                        />
+                        <input 
+                          type="text" 
+                          value={book.discount}
+                          onChange={(e) => handleInputChange(book.vol_id, "discount", e.target.value)}
+                          placeholder='ส่วนลด' 
+                        />
+                      </div>
                     </div>
                     ))
                   }

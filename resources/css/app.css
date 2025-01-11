@@ -1,3 +1,13 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.custom-popup-image {
+  width: 50%; /* ปรับ container ของ SweetAlert */
+  max-width: 90vw; /* จำกัดความกว้าง */
+}
+
+.custom-image-modal {
+  width: 35%;
+  height: auto;
+}

@@ -5,17 +5,33 @@ import { Link } from '@inertiajs/react';
 import { Inertia } from '@inertiajs/inertia';
 import { svGetBillAll } from '@/services/bill/bill.services';
 import ModalAddBill from './components/ModalAddBill';
-// import { svGetBookAndVol } from '@/services/book/book.services';
 import { svGetBookAndVol } from '@/services/book/book.services';
+import ImageModal from '@/Components/ImageModal/ImageModal';
 
 export default function Bill() {
+  const handleShowImage = (image) => {
+    ImageModal(image)
+  }
   const columns = [
     { field: 'id', headerName: 'ID', width: 90 },
     { field: 'store_sell', headerName: 'ผู้ขาย', width: 150 },
     { field: 'price', headerName: 'ราคา', width: 100 },
     { field: 'quantity', headerName: 'จำนวน', width: 100 },
-    { field: 'transport', headerName: 'ขนส่ง', width: 100 },
-    { field: 'parcel_number', headerName: 'หมายเลขพัสดุ', width: 150 },
+    { field: 'image_slip', 
+      headerName: 'รูปสลิปการโอน', 
+      width: 150,
+      height: 150,
+      renderCell: (params) => (
+        <div className="w-full h-full flex justify-center">
+          <img 
+            onClick={() => handleShowImage('/'+params.row.image_slip)}
+            className="h-full" src={`/${params.row.image_slip}`} alt="" 
+            />
+        </div>
+      )
+    },
+    // { field: 'transport', headerName: 'ขนส่ง', width: 100 },
+    // { field: 'parcel_number', headerName: 'หมายเลขพัสดุ', width: 150 },
     { field: 'created_at', headerName: 'วันที่ซื้อ', width: 150 },
     {
       field: 'details',
@@ -54,7 +70,7 @@ export default function Bill() {
       setBillData(res.bill);
     })
     svGetBookAndVol().then((res) => {
-      console.log(res.book)
+      // console.log(res.book)
       setDataBookAll(res.book);
     })
   }, [])
@@ -81,7 +97,7 @@ export default function Bill() {
       {/* filter /วันที่/ปี/สำนักพิม/ */}
       <div className="p-4 flex justify-between gap-4">
         <div>
-          filter
+          Filter
         </div>
 
         <div 
@@ -96,6 +112,7 @@ export default function Bill() {
               open={open}  
               handleClose={handleClose}
               dataBookAll={dataBookAll}
+              setBillData={setBillData}
             />
           )
         }

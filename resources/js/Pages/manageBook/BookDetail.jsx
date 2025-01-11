@@ -4,7 +4,7 @@ import PrimaryButton from '@/Components/PrimaryButton';
 import { useState, useEffect } from 'react';
 import ModalAddVolume from './components/ModalAddVolume';
 import { svGetVolumeBook } from '@/services/book/book.services';
-
+import ImageModal from '@/Components/ImageModal/ImageModal';
 
 export default function BookDetail({dataBook}) {
   const [open, setOpen] = useState(false);
@@ -59,7 +59,11 @@ export default function BookDetail({dataBook}) {
       <hr />
       <div className="flex gap-4 my-4">
         <div className="flex flex-col gap-3">
-          <img className="w-[350px] h-[450px]" src={`/${previewImage}`} alt="" />
+          <img 
+            className="w-[350px] h-[450px]"
+            src={`/${previewImage}`} alt="" 
+            onClick={() => ImageModal(`/${previewImage}`)}
+          />
           <div className='flex justify-center gap-2'>
             <img 
               className="w-[50px] h-[65px]" 

@@ -10,6 +10,7 @@ use App\Http\Controllers\backoffice\api\ApiController;
 use App\Http\Controllers\backoffice\api\UserController;
 use App\Http\Controllers\backoffice\api\BookController;
 use App\Http\Controllers\backoffice\api\RoleController;
+use App\Http\Controllers\backoffice\api\BillController;
 use App\Models\BookCategory;
 use Illuminate\Http\Request;
 
@@ -77,8 +78,8 @@ Route::prefix('/api')->middleware('auth')->group(function () {
     Route::get('/categories-book', [BookController::class, 'getCategoryAll']);
     Route::get('/publishers', [BookController::class, 'getPublisherAll']);
     Route::post('/volume-book', [BookController::class, 'getVolumeBook']);
-    Route::get('/bill', [BookController::class, 'getBillAll']);
-    Route::post('/createBill', [BookController::class, 'createBill']);
+    Route::get('/bill', [BillController::class, 'getBillAll']);
+    Route::post('/createBill', [BillController::class, 'createBill']);
 
     Route::post('/addnewbook', [BookController::class, 'addNewBook']);
     Route::post('/addnewvolume', [BookController::class, 'addNewVolume']);
