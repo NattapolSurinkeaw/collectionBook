@@ -2,7 +2,10 @@ import React, { useState, useEffect } from 'react'
 import MainLayout from '@/Layouts/MainLayout'
 // import { Inertia } from '@inertiajs/inertia';
 import { Link } from '@inertiajs/react';
-import { svGetBookAll, svGetIllustrator, svGetWriters, svGetCategories, svGetPublisher } from '@/services/book/book.services';
+import { svGetBookAll, svGetCategories } from '@/services/book/book.services';
+import { svGetIllustrator } from '@/services/author_publisher_illust/illust.service';
+import { svGetAuthor } from '@/services/author_publisher_illust/author.service';
+import { svGetPublisher } from '@/services/author_publisher_illust/publisher.service';
 import PrimaryButton from '@/Components/PrimaryButton';
 import ModalAddBook from './components/ModalAddBook';
 
@@ -10,7 +13,7 @@ export default function Book() {
   const [dataBook, setDataBook] = useState([])
   const [open, setOpen] = useState(false);
   const handleClose = () => setOpen(false);
-  const [dataWriter, setDataWriter] = useState([]);
+  const [dataAuthor, setDataAuthor] = useState([]);
   const [dataIllustrator, setDataIllustrator] = useState([]);
   const [dataPublisher, setDataPublisher] = useState([]);
   const [dataCategory, setDataCategory] = useState([]);
@@ -22,14 +25,14 @@ export default function Book() {
     })
     svGetIllustrator().then((res) => {
           // console.log(res)
-      setDataIllustrator(res.data.data)
+      setDataIllustrator(res.illust)
     })
-    svGetWriters().then((res) => {
+    svGetAuthor().then((res) => {
       // console.log(res)      
-      setDataWriter(res.data.data)
+      setDataAuthor(res.author)
     })
     svGetPublisher().then((res) => {
-      setDataPublisher(res.data.data)
+      setDataPublisher(res.publisher)
     })
     svGetCategories().then((res) => {
       // console.log(res)
@@ -47,7 +50,7 @@ export default function Book() {
         <ModalAddBook 
           open={open}
           handleClose={handleClose}
-          dataWriter={dataWriter}
+          dataAuthor={dataAuthor}
           dataIllustrator={dataIllustrator}
           dataPublisher={dataPublisher}
           dataCategory={dataCategory}

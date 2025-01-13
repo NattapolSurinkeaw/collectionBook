@@ -56,6 +56,18 @@ class PagesController extends Controller
         ]);
     }
 
+    public function authorPage() {
+        return Inertia::render('manageAuthor/AuthorPage');
+    }
+
+    public function illustPage() {
+        return Inertia::render('manageIllustrator/IllustratorPage');
+    }
+
+    public function publisherPage() {
+        return Inertia::render('managePublisher/PublisherPage');
+    }
+
     public function billPage() {
         return Inertia::render('manageBill/Bill');
     }

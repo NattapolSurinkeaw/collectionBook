@@ -19,7 +19,7 @@ const style = {
   borderRadius: 1,
 };
 
-export default function ModalAddBook({open, handleClose, dataWriter, dataIllustrator, dataPublisher, dataCategory}) {
+export default function ModalAddBook({open, handleClose, dataAuthor, dataIllustrator, dataPublisher, dataCategory}) {
   const [nameTH, setNameTH] = useState("");
   const [nameEN, setNameEN] = useState("");
   const [nameAT, setNameAT] = useState("");
@@ -145,7 +145,7 @@ export default function ModalAddBook({open, handleClose, dataWriter, dataIllustr
               </select>
             </div>
             <div className="flex flex-col gap-2">
-              <label htmlFor="">Writer
+              <label htmlFor="">Author
                 <span className="text-red-600">*</span>
               </label>
               <select 
@@ -155,8 +155,8 @@ export default function ModalAddBook({open, handleClose, dataWriter, dataIllustr
                 onChange={(e) => setSlcWriter(e.target.value)}
               >
                 {
-                  dataWriter.map((writer) => (
-                    <option key={writer.id} value={writer.id}>{writer.writer_name}</option>
+                  dataAuthor.map((author) => (
+                    <option key={author.id} value={author.id}>{author.author_name}</option>
                   ))
                 }
               </select>

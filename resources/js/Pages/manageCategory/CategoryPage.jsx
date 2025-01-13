@@ -54,7 +54,7 @@ export default function CategoryPage() {
           <div key={cate.id} className="p-4 border bg-[#f8f9fa] rounded-sm flex justify-between">
             <div className="flex gap-4">
               <div className="w-[150px] h-[122px] border p-1 hover:scale-[0.95] duration-300 cursor-pointer">
-                <img className="w-full h-full rounded-sm" src={`${cate.cate_thumbnail}`} alt="" />
+                <img className="w-full h-full rounded-sm" src={`${(cate.cate_thumbnail) ? cate.cate_thumbnail : '/image/no-image.png'}`} alt="" />
               </div>
               <div>
                 <p className="text-red-500">[{cate.id}]</p>

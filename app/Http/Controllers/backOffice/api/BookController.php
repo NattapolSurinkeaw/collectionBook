@@ -10,8 +10,8 @@ use Illuminate\Http\Request;
 use App\Models\Book;
 use App\Models\BookCategory;
 use App\Models\Illustrator;
+use App\Models\Author;
 use App\Models\Publisher;
-use App\Models\Writer;
 use App\Models\BookVolume;
 
 use Illuminate\Support\Facades\DB;
@@ -30,9 +30,65 @@ class BookController extends Controller
         return  $this->responseData($illust);
     }
 
-    public function getWriterAll() {
-        $writer = Writer::all();
-        return $this->responseData($writer);
+    public function createIllustrator(Request $request) {
+        $illust = Illustrator::create([
+            'illust_name' => $request->input('title'),
+            'another_name' => $request->input('another')
+        ]);
+
+        return $this->responseData($illust);
+    }
+
+    public function editIllustrator(Request $request, $id) {
+        $illust = Illustrator::find($id);
+        $illust->illust_name = $request->input('title');
+        $illust->another_name = $request->input('anothor');
+        $illust->save();
+
+        return $this->responseData($illust);
+    } 
+
+    public function deleteIllustrator($id) {
+        $illust = Illustrator::find($id);
+        $illust->delete();
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Category deleted successfully'
+        ], 202);
+    }
+
+    public function getAuthorAll() {
+        $author = Author::all();
+        return $this->responseData($author);
+    }
+
+    public function createAuthor(Request $request) {
+        $params = $request->all();
+        $author = Author::create([
+            'author_name' => $params['title'],
+            'another_name' => $params['anothor']
+        ]);
+        return $this->responseData($author);
+    }
+
+    public function editAuthor(Request $request, $id) {
+        $author = Author::find($id);
+        $author->author_name = $request->input('title');
+        $author->another_name = $request->input('anothor');
+        $author->save();
+
+        return $this->responseData($author);
+    }
+
+    public function deleteAuthor($id) {
+        $author = Author::find($id);
+        $author->delete();
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Category deleted successfully'
+        ], 202);
     }
 
     public function getPublisherAll() {
@@ -129,6 +185,7 @@ class BookController extends Controller
             ->get();
         return $this->responseData($books);
     }
+
 }
 
 

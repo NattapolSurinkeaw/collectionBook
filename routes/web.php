@@ -43,6 +43,9 @@ Route::prefix('/backoffice')->middleware(['auth', 'verified'])->group(function (
     Route::get('/role', [BackOfficePagesController::class, 'manageRole']);
     Route::get('/webcontent', [BackOfficePagesController::class, 'webcontent']);
     Route::get('/book', [BackOfficePagesController::class, 'bookPage']);
+    Route::get('/author', [BackOfficePagesController::class, 'authorPage']);
+    Route::get('/illust', [BackOfficePagesController::class, 'illustPage']);
+    Route::get('/publisher', [BackOfficePagesController::class, 'publisherPage']);
     Route::get('/bookdetail/{id}', [BackOfficePagesController::class, 'bookDetailPage']);
     Route::get('/bill', [BackOfficePagesController::class, 'billPage']);
     Route::get('/billdetail/{id}', [BackOfficePagesController::class, 'billDetailPage']);
@@ -73,8 +76,17 @@ Route::prefix('/api')->middleware('auth')->group(function () {
 
     Route::get('/bookall', [BookController::class, 'getBookAll']);
     Route::get('/get-bookandvolume', [BookController::class, 'getBookAndVolume']);
-    Route::get('/writers', [BookController::class, 'getWriterAll']);
+
+    Route::get('/authors', [BookController::class, 'getAuthorAll']);
+    Route::post('/create-author', [BookController::class, 'createAuthor']);
+    Route::post('/edit-author/{id}', [BookController::class, 'editAuthor']);
+    Route::delete('/delete-author/{id}', [BookController::class, 'deleteAuthor']);
+
     Route::get('/illustrators', [BookController::class, 'getIllustAll']);
+    Route::post('/illustrator', [BookController::class, 'createIllustrator']);
+    Route::post('/illust/{id}', [BookController::class, 'editIllustrator']);
+    Route::delete('/illustrator/{id}', [BookController::class, 'deleteIllustrator']);
+
     Route::get('/categories-book', [BookController::class, 'getCategoryAll']);
     Route::get('/publishers', [BookController::class, 'getPublisherAll']);
     Route::post('/volume-book', [BookController::class, 'getVolumeBook']);
