@@ -41,18 +41,19 @@ class BillController extends Controller
         foreach ($decodeVolId as $vol) {
             $dataInsertBillItems[] = [
                 'bill_id' => $bill->id,
-                'book_vol_id' => $vol,
+                'book_vol_id' => $vol->vol_id,
                 'quantity' => 1,
-                'price_per_unit' => 111,
-                'discount_per_unit' => 0,
+                'price_per_unit' => ($vol->price) ?? 0,
+                'discount_per_unit' => ($vol->discount) ?? 0,
             ];
 
             $dataInsertUserBooks[] = [
                 'user_id' => $user->id,
-                'book_vol_id' => $vol
+                'book_vol_id' => $vol->vol_id
             ];
 
         }
+        
         BillItem::insert($dataInsertBillItems);
         
         foreach ($dataInsertUserBooks as $data) {

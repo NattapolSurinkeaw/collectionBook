@@ -102,10 +102,10 @@ export default function ModalAddBill({open, handleClose, dataBookAll, setBillDat
     formData.append("parcel_number", parcelNumber)
     formData.append("vol_ids", JSON.stringify(filteredValues));
 
-    formData.forEach((value, key) => {
-      console.log(key, " : ", value);
-    });
-    return false;
+    // formData.forEach((value, key) => {
+    //   console.log(key, " : ", value);
+    // });
+    // return false;
 
     svCreateBill(formData).then((res) => {
       if(res.status === "success") {

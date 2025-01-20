@@ -44,8 +44,9 @@ export default function CategoryPage() {
       <h1 className="mb-4">Category {fillter}</h1>
       <div className="border-b-2 flex justify-between">
         <ul className="flex">
-          <li className="bg-gray-200 p-2 rounded-tl-md" onClick={() => setFillter(1)}>menu</li>
-          <li className="bg-gray-200 p-2 rounded-tr-md" onClick={() => setFillter(2)}>menu</li>
+          <li className="bg-white p-2 border-t-2 border-x-2 rounded-tl-md" onClick={() => setFillter(1)}>ทั้งหมด</li>
+          <li className="bg-white p-2 border-t-2 border-x-2" onClick={() => setFillter(2)}>เมนูย่อย</li>
+          <li className="bg-white p-2 border-t-2 border-x-2 rounded-tr-md" onClick={() => setFillter(3)}>ปิดใช้งาน</li>
         </ul>
         <button className="p-2 bg-blue-500 text-white rounded-md" onClick={() => setOpen(!open)}>create</button>
       </div>

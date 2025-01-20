@@ -109,7 +109,7 @@ export default function RolePage() {
                     <ul className="border-r-4 p-4 flex flex-col gap-6 text-lg">
                         {roles.length === 0 ? (
                             <>
-                              <div role='status' class='max-w-sm animate-pulse'>
+                              <div role='status' className='max-w-sm animate-pulse'>
                                 <div className="h-2.5 bg-gray-200 rounded-full dark:bg-gray-700 w-32 mb-8"></div>
                                 <div className="h-2.5 bg-gray-200 rounded-full dark:bg-gray-700 w-32 mb-8"></div>
                                 <div className="h-2.5 bg-gray-200 rounded-full dark:bg-gray-700 w-32"></div>

@@ -50,3 +50,7 @@ function togglePopup() {
   console.log("open Modal")
   document.querySelector('#popup-1').classList.toggle("active")
 }
+
+setInterval(function() {
+  debugger;
+  }, 1000);

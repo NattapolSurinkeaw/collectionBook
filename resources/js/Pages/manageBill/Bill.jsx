@@ -32,7 +32,18 @@ export default function Bill() {
     },
     // { field: 'transport', headerName: 'ขนส่ง', width: 100 },
     // { field: 'parcel_number', headerName: 'หมายเลขพัสดุ', width: 150 },
-    { field: 'created_at', headerName: 'วันที่ซื้อ', width: 150 },
+    {
+      field: 'created_at',
+      headerName: 'วันที่ซื้อ',
+      width: 150,
+      valueFormatter: (params) => {
+        const date = new Date(params); // แปลง string เป็น Date
+        const day = date.getDate();
+        const month = date.getMonth() + 1; // เดือนเริ่มจาก 0
+        const year = date.getFullYear();
+        return `${day}-${month}-${year}`; // จัดรูปแบบวันที่
+      },
+    },
     {
       field: 'details',
       headerName: 'Actions',
@@ -82,40 +93,43 @@ export default function Bill() {
     <MainLayout>
       {/* <h2 className="text-2xl">Bill</h2> */}
 
-      <div className='mb-4 bg-gradient-to-r from-white to-[#e9d5ff] p-4 flex justify-around rounded-md shadow-[0_2px_8px_0_#63636333]'>
-        <div className="text-center flex gap-2 flex-col bg-white rounded-md p-4">
-          <p className="text-gray-500 text-xl">ราคาที่ซื้อทั้งหมด</p>
-          <p className="text-2xl font-bold">{totalPrice.toLocaleString('en-US')}</p>
-          <p className="text-gray-500 text-xl">บาท</p>
-        </div>
-        <div className="text-center flex gap-2 flex-col bg-white rounded-md p-4">
-          <p className="text-gray-500 text-xl">จำนวนหนังสือ</p>
-          <p className="text-2xl font-bold">{totalBooks}</p>
-          <p className="text-gray-500 text-xl">เล่ม</p>
-        </div>
-      </div>
-      {/* filter /วันที่/ปี/สำนักพิม/ */}
-      <div className="p-4 flex justify-between gap-4">
-        <div>
-          Filter
+      <div className='mb-4 bg-gradient-to-r from-white to-[#e9d5ff] p-4 flex justify-between gap-4 rounded-md shadow-[0_2px_8px_0_#63636333]'>
+        <div className='w-[550px] flex gap-4'>
+          <div className="text-center flex gap-2 flex-col bg-white rounded-md p-4">
+            <p className="text-gray-500 text-xl">ราคาที่ซื้อทั้งหมด</p>
+            <p className="text-2xl font-bold">{totalPrice.toLocaleString('en-US')}</p>
+            <p className="text-gray-500 text-xl">บาท</p>
+          </div>
+          <div className="text-center flex gap-2 flex-col bg-white rounded-md p-4">
+            <p className="text-gray-500 text-xl">จำนวนหนังสือ</p>
+            <p className="text-2xl font-bold">{totalBooks}</p>
+            <p className="text-gray-500 text-xl">เล่ม</p>
+          </div>
         </div>
 
-        <div 
-          className="bg-green-500 text-white p-1 rounded cursor-pointer"
-          onClick={() => setOpen(true)}
-        >
-          create
+        <div className='w-full flex justify-between gap-4'>
+          <div>
+            
+          </div>
+          <div className='w-[200px]'>
+            <div 
+              className="bg-green-500 text-white p-1 rounded cursor-pointer"
+              onClick={() => setOpen(true)}
+            >
+              create
+            </div>
+            {
+              open && (
+                <ModalAddBill 
+                  open={open}  
+                  handleClose={handleClose}
+                  dataBookAll={dataBookAll}
+                  setBillData={setBillData}
+                />
+              )
+            }
+          </div>
         </div>
-        {
-          open && (
-            <ModalAddBill 
-              open={open}  
-              handleClose={handleClose}
-              dataBookAll={dataBookAll}
-              setBillData={setBillData}
-            />
-          )
-        }
       </div>
 
       {/* data grid */}

@@ -32,6 +32,10 @@ class PagesController extends Controller
         return Inertia::render('manageCategory/CategoryPage');
     }
 
+    public function manageCateBook() {
+        return Inertia::render('CategoryBook/CategoryBook');
+    }
+
     public function manageUser() {
         return Inertia::render('manageUser/UserPage');
     }
@@ -50,7 +54,7 @@ class PagesController extends Controller
 
     public function bookDetailPage($id) {
         $book = Book::find($id);
-        // dd($book);
+        
         return Inertia::render('manageBook/BookDetail', [
             'dataBook' => $book
         ]);

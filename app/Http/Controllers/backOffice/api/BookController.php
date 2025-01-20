@@ -96,15 +96,86 @@ class BookController extends Controller
         return $this->responseData($publisher);
     }
 
+    public function createPublisher(Request $request) {
+        $params = $request->all();
+        $newFolder = "upload/" . date('Y') . "/" . date('m') . "/" . date('d') . "/";
+        $thumbnail = (isset($params['thumbnail'])) ? $this->uploadImage($newFolder, $params['thumbnail'], "", "", 'front_'.time()) : "";
+        $publisher = Publisher::create([
+            'name_TH' => $params['name_TH'],
+            'name_EN' => $params['name_EN'],
+            'thumbnail' => $thumbnail,
+        ]);
+
+        return $this->responseData($publisher);
+    }
+
+    public function editPublisher(Request $request, $id) {
+        $publisher = Publisher::find($id);
+
+        $params = $request->all();
+        $files = $request->allFiles();
+        $newFolder = "upload/" . date('Y') . "/" . date('m') . "/" . date('d') . "/";
+        $thumbnail = (isset($files['thumbnail'])) ? $this->uploadImage($newFolder, $files['thumbnail'], "", "", 'front_'.time()) : $publisher->thumbnail;
+        $publisher->update([
+            'name_TH' => $params['name_TH'],
+            'name_EN' => $params['name_EN'],
+            'thumbnail' => $thumbnail,
+        ]);
+
+        return $this->responseData($publisher);
+    }
+
+    public function deletePublisher($id) {
+        $publish = Publisher::find($id);
+        $publish->delete();
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'delete publisher data successfully'
+        ], 200);
+    }
+
     public function getCategoryAll() {
         $categories = BookCategory::all();
         return $this->responseData($categories);
     }
 
-    public function addNewBook(Request $request) {
-        // dd($request->all());
+    public function createCategoryBook(Request $request) {
         $params = $request->all();
-        // dd($params['slcCategories']);
+        $catebook = BookCategory::create([
+            'title_cate' => $params['title_cate'],
+            'description_cate' => $params['description_cate'],
+            'priority' => 1,
+            'status_display' => 1,
+        ]);
+
+        return $this->responseData($catebook);
+    }
+
+    public function editCategoryBook(Request $request, $id) {
+        $catebook = BookCategory::find($id);
+        $params = $request->all();
+
+        $catebook->update([
+            'title_cate' => $params['title_cate'],
+            'description_cate' => $params['description_cate'],
+        ]);
+
+        return $this->responseData($catebook);
+    }
+
+    public function deleteCategoryBook($id) {
+        $catebook = BookCategory::find($id);
+        $catebook->delete();
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'category deleted successfully'
+        ], 200);
+    }
+
+    public function addNewBook(Request $request) {
+        $params = $request->all();
         $book = Book::create([
             'title_TH' => $params['nameTH'],
             'title_EN' => $params['nameEN'],
@@ -112,7 +183,7 @@ class BookController extends Controller
             'description' => $params['description'],
             'lc_release_date' => $params['lcDate'],
             'cate_id' => $params['slcCategories'],
-            'writer_id' => $params['slcWriter'],
+            'author_id' => $params['slcWriter'],
             'ilust_id' => $params['slcIllust'],
             'publish_id' => $params['slcPublish'],
         ]);
@@ -129,10 +200,10 @@ class BookController extends Controller
     }
 
     public function addNewVolume(Request $request) {
-        // dd($request->all());
         $params = $request->all();
+        $files = $request->allFiles();
         $book = Book::find($params['book_id']);
-        // dd($book);
+     
         if(!$book) {
             return response()->json([
                 'status' => 'error',
@@ -144,17 +215,10 @@ class BookController extends Controller
         $backCover = "";
         $spineBook = "";
         $newFolder = "upload/" . date('Y') . "/" . date('m') . "/" . date('d') . "/";
-        // dd($params);
-        // if(isset($params['frontImage']) && $params['frontImage']) {
-            $frontCover = (isset($params['frontImage'])) ? $this->uploadImage($newFolder, $params['frontImage'], "", "", 'front_'.time()) : "";
-        // }
-        // if(isset($params['backImage']) && $params['backImage']) {
-            $backCover = (isset($params['backImage'])) ? $this->uploadImage($newFolder, $params['backImage'], "", "", 'back_'.time()) : "";
-        // }
-        // if(isset($params['spineImage']) && $params['spineImage']) {
-            $spineBook = (isset($params['spineImage'])) ? $this->uploadImage($newFolder, $params['spineImage'], "", "", 'spine_'.time()) : "";
-        // }
-        // dd($frontCover, $backCover, $spineBook);
+        $frontCover = (isset($files['frontImage'])) ? $this->uploadImage($newFolder, $files['frontImage'], "", "", 'front_'.time()) : "";
+        $backCover = (isset($files['backImage'])) ? $this->uploadImage($newFolder, $files['backImage'], "", "", 'back_'.time()) : "";
+        $spineBook = (isset($files['spineImage'])) ? $this->uploadImage($newFolder, $files['spineImage'], "", "", 'spine_'.time()) : "";
+
         $bookVol = BookVolume::create([
             'book_id' => $params['book_id'],
             'title_volumes' => $params['title_volumes'],

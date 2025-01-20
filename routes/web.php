@@ -39,6 +39,7 @@ Route::prefix('/backoffice')->middleware(['auth', 'verified'])->group(function (
     Route::get('/home', [BackOfficePagesController::class, 'home']);
     Route::get('/profile', [BackOfficePagesController::class, 'manageProfile']);
     Route::get('/category', [BackOfficePagesController::class, 'manageCategory']);
+    Route::get('/catebook', [BackOfficePagesController::class, 'manageCateBook']);
     Route::get('/user', [BackOfficePagesController::class, 'manageUser']);
     Route::get('/role', [BackOfficePagesController::class, 'manageRole']);
     Route::get('/webcontent', [BackOfficePagesController::class, 'webcontent']);
@@ -70,6 +71,7 @@ Route::prefix('/api')->middleware('auth')->group(function () {
     
     Route::get('/getuser', [UserController::class, 'getUserAll']);
     Route::post('/updateuser', [UserController::class, 'updateuser']);
+    
     Route::post('/createnewcate', [RoleController::class, 'createNewcate']);
     Route::get('/getcatebackoffice', [UserController::class, 'getcatebackoffice']);
     Route::post('/savechangecate', [UserController::class, 'savechangecate']);
@@ -88,7 +90,15 @@ Route::prefix('/api')->middleware('auth')->group(function () {
     Route::delete('/illustrator/{id}', [BookController::class, 'deleteIllustrator']);
 
     Route::get('/categories-book', [BookController::class, 'getCategoryAll']);
+    Route::post('/category-book', [BookController::class, 'createCategoryBook']);
+    Route::post('/category-book/{id}', [BookController::class, 'editCategoryBook']);
+    Route::delete('/category-book/{id}', [BookController::class, 'deleteCategoryBook']);
+
     Route::get('/publishers', [BookController::class, 'getPublisherAll']);
+    Route::post('/publish', [BookController::class, 'createPublisher']);
+    Route::post('/publish/{id}', [BookController::class, 'editPublisher']);
+    Route::delete('/publish/{id}', [BookController::class, 'deletePublisher']);
+
     Route::post('/volume-book', [BookController::class, 'getVolumeBook']);
     Route::get('/bill', [BillController::class, 'getBillAll']);
     Route::post('/createBill', [BillController::class, 'createBill']);

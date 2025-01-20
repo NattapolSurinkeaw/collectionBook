@@ -7,13 +7,10 @@ export const svGetBookAll = () => {
   .catch((err) => err)
 }
 
-export const svGetCategories = () => {
-  return axios.get('/api/categories-book').then((res) => res).catch((err) => err)
-}
-
-
 export const svAddNewBook = (params) => {
-  return axios.post('/api/addnewbook', params).then((res) => res).catch((err) => err)
+  return axios.post('/api/addnewbook', params).then((res) => {
+    return {status: res.data.status, book: res.data.data}
+  }).catch((err) => err)
 }
 
 export const svGetVolumeBook = (params) => {

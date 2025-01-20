@@ -19,7 +19,7 @@ const style = {
   borderRadius: 1,
 };
 
-export default function ModalAddBook({open, handleClose, dataAuthor, dataIllustrator, dataPublisher, dataCategory}) {
+export default function ModalAddBook({open, handleClose, dataAuthor, dataIllustrator, dataPublisher, dataCategory, setDataBook}) {
   const [nameTH, setNameTH] = useState("");
   const [nameEN, setNameEN] = useState("");
   const [nameAT, setNameAT] = useState("");
@@ -61,7 +61,8 @@ export default function ModalAddBook({open, handleClose, dataAuthor, dataIllustr
     });
     svAddNewBook(formData).then((res) => {
       console.log(res)
-      if(res.data.status == "success") {
+      if(res.status == "success") {
+        setDataBook(preDataBook => [...preDataBook,  res.book ])
         handleClose()
       }
     })

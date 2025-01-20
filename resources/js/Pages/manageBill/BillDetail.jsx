@@ -32,7 +32,13 @@ export default function BillDetail(data) {
                   <div>
                     <div className="flex gap-4">
                       <p>วันที่ซื้อ</p>
-                      <p>{bill.created_at}</p>
+                      <p>
+                        {new Date(bill.created_at).toLocaleDateString('th-TH', {
+                          day: 'numeric',
+                          month: 'numeric',
+                          year: 'numeric',
+                        })}
+                      </p>
                     </div>
                     <div className="flex gap-4">
                       <p>ผู้ขาย</p>
