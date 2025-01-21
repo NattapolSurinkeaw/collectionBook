@@ -15,7 +15,18 @@ export default function Bill() {
   const columns = [
     { field: 'id', headerName: 'ID', width: 90 },
     { field: 'store_sell', headerName: 'ผู้ขาย', width: 150 },
-    { field: 'price', headerName: 'ราคา', width: 100 },
+    { 
+      field: 'price', 
+      headerName: 'ราคา', 
+      width: 100,
+      renderCell: (params) => {
+        const formattedPrice = Number(params.value)?.toLocaleString('en-US', {
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2,
+        });
+        return <p>{formattedPrice}</p>;
+      }
+    },
     { field: 'quantity', headerName: 'จำนวน', width: 100 },
     { field: 'image_slip', 
       headerName: 'รูปสลิปการโอน', 
@@ -30,8 +41,6 @@ export default function Bill() {
         </div>
       )
     },
-    // { field: 'transport', headerName: 'ขนส่ง', width: 100 },
-    // { field: 'parcel_number', headerName: 'หมายเลขพัสดุ', width: 150 },
     {
       field: 'created_at',
       headerName: 'วันที่ซื้อ',

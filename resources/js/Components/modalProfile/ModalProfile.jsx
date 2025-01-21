@@ -8,7 +8,7 @@ export default function ModalProfile({modalProfile, auth}) {
   }
   return (
     <>
-      <div className={`bg-white absolute top-[50px] right-0 w-[250px] h-auto border rounded-md p-4 ${modalProfile ? 'scale-1' : 'scale-0'} duration-300`}>
+      <div className={`bg-white absolute top-[50px] right-0 w-[250px] h-auto border rounded-md z-10 p-4 ${modalProfile ? 'scale-1' : 'scale-0'} duration-300`}>
         <p>emale : {auth?.user.name}</p>
         
         <p className="w-24 p-1 bg-blue-500 text-white text-center rounded-md">{auth?.user.role_name}</p>

@@ -37,7 +37,7 @@ export default function PublisherPage() {
   return (
     <MainLayout>
       <div className="flex justify-between">
-        <h1 className="text-xl mb-4">PublisherPage</h1>
+        <h1 className="text-xl mb-4">Publisher Page</h1>
         <button className="p-2 bg-blue-500 text-white rounded-md" onClick={() => setOpenAddModal(!openAddModal)}>create</button>
       </div>
 

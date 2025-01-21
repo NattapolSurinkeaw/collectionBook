@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
 import MainLayout from '@/Layouts/MainLayout'
-// import { Inertia } from '@inertiajs/inertia';
 import { Link } from '@inertiajs/react';
 import { svGetBookAll } from '@/services/book/book.services';
 import { svGetCategories } from '@/services/author_publisher_illust/categorybook.service';
@@ -43,12 +42,13 @@ export default function Book() {
   //   console.log(dataBook)
   // }, [dataBook])
 
-  const filterBook = dataBook.filter((book) => {
-    console.log(book.title_TH)
-    return book.title_TH == inputSearch
-  })
-
-  // console.log(filterBook)
+  const filteredBooks = dataBook.filter(
+    (book) =>
+      (book.title_TH?.toLowerCase() || "").includes(inputSearch.toLowerCase()) ||
+      (book.title_EN?.toLowerCase() || "").includes(inputSearch.toLowerCase()) ||
+      (book.title_Another?.toLowerCase() || "").includes(inputSearch.toLowerCase())
+  );
+  
   return (
     <MainLayout>
       <div className="flex items-center justify-between mb-2">
@@ -103,7 +103,7 @@ export default function Book() {
       </div>
       <hr />
       <div id="box-container" className="py-4 flex flex-wrap gap-4">
-        { filterBook.map((book) => (
+        { filteredBooks.map((book) => (
           <Link href={`/backoffice/bookdetail/${book.id}`}
             key={book.id} 
             className="p-2 w-[270px] rounded-lg border shadow-md cursor-pointer"

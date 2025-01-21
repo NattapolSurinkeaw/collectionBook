@@ -8,6 +8,7 @@ use Inertia\Inertia;
 use App\Models\Book;
 use App\Models\BillBookPurchaseReceipt;
 use App\Models\BillItem;
+use App\Models\UserBookVolume;
 
 class PagesController extends Controller
 {
@@ -52,11 +53,14 @@ class PagesController extends Controller
         return Inertia::render('manageBook/Book');
     }
 
-    public function bookDetailPage($id) {
+    public function bookDetailPage(Request $request, $id) {
+        $user = $request->user();
+        $userVolume = UserBookVolume::select('book_vol_id', 'quantity')->where('user_id', $user->id)->get();
         $book = Book::find($id);
         
         return Inertia::render('manageBook/BookDetail', [
-            'dataBook' => $book
+            'dataBook' => $book, 
+            'userVolume' => $userVolume
         ]);
     }
 
@@ -88,8 +92,8 @@ class PagesController extends Controller
         ]);
     }
 
-    public function toBuyPage() {
-        return Inertia::render('manageBook/Book');
+    public function favoritePage() {
+        return Inertia::render('favorite/FavoritePage');
     }
 
     // ตั้งค่า

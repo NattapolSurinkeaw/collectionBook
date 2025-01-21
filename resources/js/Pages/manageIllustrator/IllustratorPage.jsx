@@ -36,7 +36,7 @@ export default function IllustratorPage() {
   return (
     <MainLayout>
       <div className="flex justify-between">
-        <h1 className="text-xl mb-4">AuthorPage</h1>
+        <h1 className="text-xl mb-4">Illustrator Page</h1>
         <button className="p-2 bg-blue-500 text-white rounded-md" onClick={() => setOpenAddModal(!openAddModal)}>create</button>
       </div>
 

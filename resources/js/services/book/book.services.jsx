@@ -14,7 +14,12 @@ export const svAddNewBook = (params) => {
 }
 
 export const svGetVolumeBook = (params) => {
-  return axios.post(`/api/volume-book`, params).then((res) => res).catch((err) => err)
+  return axios.post(`/api/volume-book`, params).then((res) => {
+    return { status: res.data.status, 
+              book: res.data.data, 
+              volumes : res.data.data.volumes 
+            }
+  }).catch((err) => err)
 }
 
 export const svAddNewVolume = (params) => {

@@ -42,7 +42,6 @@ Route::prefix('/backoffice')->middleware(['auth', 'verified'])->group(function (
     Route::get('/catebook', [BackOfficePagesController::class, 'manageCateBook']);
     Route::get('/user', [BackOfficePagesController::class, 'manageUser']);
     Route::get('/role', [BackOfficePagesController::class, 'manageRole']);
-    Route::get('/webcontent', [BackOfficePagesController::class, 'webcontent']);
     Route::get('/book', [BackOfficePagesController::class, 'bookPage']);
     Route::get('/author', [BackOfficePagesController::class, 'authorPage']);
     Route::get('/illust', [BackOfficePagesController::class, 'illustPage']);
@@ -50,7 +49,7 @@ Route::prefix('/backoffice')->middleware(['auth', 'verified'])->group(function (
     Route::get('/bookdetail/{id}', [BackOfficePagesController::class, 'bookDetailPage']);
     Route::get('/bill', [BackOfficePagesController::class, 'billPage']);
     Route::get('/billdetail/{id}', [BackOfficePagesController::class, 'billDetailPage']);
-    Route::get('/tobuy', [BackOfficePagesController::class, 'toBuyPage']);
+    Route::get('/favorite', [BackOfficePagesController::class, 'favoritePage']);
 });
 
 Route::middleware('auth')->group(function () {
