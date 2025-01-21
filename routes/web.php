@@ -77,6 +77,7 @@ Route::prefix('/api')->middleware('auth')->group(function () {
 
     Route::get('/bookall', [BookController::class, 'getBookAll']);
     Route::get('/get-bookandvolume', [BookController::class, 'getBookAndVolume']);
+    Route::get('/get-favorites', [BookController::class, 'getFavorites']);
 
     Route::get('/authors', [BookController::class, 'getAuthorAll']);
     Route::post('/create-author', [BookController::class, 'createAuthor']);

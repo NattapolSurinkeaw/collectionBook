@@ -32,3 +32,10 @@ export const svGetBookAndVol = (param) => {
     return { status: res.status, book: res.data.data}
   })
 }
+
+
+export const svGetFavoriteBook = () => {
+  return axios.get('/api/get-favorites').then((res) => {
+    return { status: res.data.status, favorites: res.data.data}
+  }).catch((err) => err)
+}

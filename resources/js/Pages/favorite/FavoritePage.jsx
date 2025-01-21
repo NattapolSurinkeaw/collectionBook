@@ -4,18 +4,24 @@ import { Input } from '@mui/material';
 import PrimaryButton from '@/Components/PrimaryButton';
 import ModalAddBook from '../manageBook/components/ModalAddBook';
 import { Link } from '@inertiajs/react';
-
-
+import { svGetFavoriteBook } from '@/services/book/book.services';
 
 export default function FavoritePage() {
   const [open, setOpen] = useState(false);
   const [inputSearch, setInputSearch] = useState("");
+  const [favorite, setFavorite] = useState([]);
 
   const handleClose = () => setOpen(false);
+  
+  useEffect(() => {
+    svGetFavoriteBook().then((res) => {
+      setFavorite(res.favorites)
+    })
+  }, [])
   return (
     <MainLayout>
       <div className="flex items-center justify-between mb-2">
-        <h1 className="text-xl">Book</h1>
+        <h1 className="text-xl">Favorite Book</h1>
         
         <div>
           <Input
@@ -66,19 +72,23 @@ export default function FavoritePage() {
       </div>
       <hr />
       <div id="box-container" className="py-4 flex flex-wrap gap-4">
-          <Link href={`/backoffice/bookdetail/1`}
-            // key="1"
+        {
+          favorite.map((fav) => (
+            <Link href={`/backoffice/bookdetail/1`}
+            key={fav.id}
             className="p-2 w-[270px] rounded-lg border shadow-md cursor-pointer"
             >
-            <div className="w-[250px] h-[350px] mx-auto bg-red-300">
-              <img className="w-full h-full" src={`/image/no-image.png`} alt="" />
-            </div>
-            <div>
-              <p>nameTH : tess</p>
-              <p>nameEN : tess</p>
-              <p>nameAT : tess</p>
-            </div>
-          </Link>
+              <div className="w-[250px] h-[350px] mx-auto bg-red-300">
+                <img className="w-full h-full" src={`/${(fav.front_cover) ? fav.front_cover : "image/no-image.png"}`} alt="" />
+              </div>
+              <div>
+                <p>nameTH : {fav.book.title_TH || fav.book.title_EN}</p>
+                <p>volume : {fav.title_volumes}</p>
+              </div>
+            </Link>
+          ))
+        }
+          
       </div>
     </MainLayout>
   )

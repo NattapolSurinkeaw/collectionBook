@@ -69,7 +69,7 @@ export default function BookDetail({dataBook, userVolume}) {
           />
           <div className="flex justify-center gap-2">
             <img
-              className="w-[50px] h-[65px]"
+              className="w-[50px] h-[65px] cursor-pointer"
               src={
                 slcVolume?.front_cover
                   ? `/${slcVolume.front_cover}`
@@ -84,7 +84,7 @@ export default function BookDetail({dataBook, userVolume}) {
               }
             />
             <img
-              className="w-[50px] h-[65px]"
+              className="w-[50px] h-[65px] cursor-pointer"
               src={
                 slcVolume?.book_spine
                   ? `/${slcVolume.book_spine}`
@@ -99,7 +99,7 @@ export default function BookDetail({dataBook, userVolume}) {
               }
             />
             <img
-              className="w-[50px] h-[65px]"
+              className="w-[50px] h-[65px] cursor-pointer"
               src={
                 slcVolume?.back_cover
                   ? `/${slcVolume.back_cover}`

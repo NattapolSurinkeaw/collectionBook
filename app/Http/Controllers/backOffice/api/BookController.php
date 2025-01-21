@@ -250,6 +250,13 @@ class BookController extends Controller
         return $this->responseData($books);
     }
 
+    public function getFavorites() {
+        $favorite = BookVolume::where('favorite', true)
+            ->with('book')
+            ->get();
+        return $this->responseData($favorite);
+    }
+
 }
 
 
