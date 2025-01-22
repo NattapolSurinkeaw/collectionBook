@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\BillBookPurchaseReceipt;
 use App\Models\BillItem;
+use App\Models\UserFavorite;
 use Illuminate\Support\Facades\DB;
 
 class BillController extends Controller
@@ -75,6 +76,10 @@ class BillController extends Controller
                     'quantity' => 1,
                 ]);
             }
+
+            UserFavorite::where('user_id', $data['user_id'])
+                    ->where('book_vol_id', $data['book_vol_id'])
+                    ->delete();
         }
 
 

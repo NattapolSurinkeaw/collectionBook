@@ -13,6 +13,7 @@ use App\Models\Illustrator;
 use App\Models\Author;
 use App\Models\Publisher;
 use App\Models\BookVolume;
+use App\Models\UserFavorite;
 
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -200,10 +201,11 @@ class BookController extends Controller
     }
 
     public function addNewVolume(Request $request) {
+        $user = $request->user();
         $params = $request->all();
         $files = $request->allFiles();
         $book = Book::find($params['book_id']);
-     
+        
         if(!$book) {
             return response()->json([
                 'status' => 'error',
@@ -229,11 +231,19 @@ class BookController extends Controller
             'book_spine' => $spineBook,
             'price' => $params['price'],
             'link_product' => $params['link_product'],
-            'release_date' => $params['release_date'],
+            'release_date' => $params['release_date']
         ]);
         $book->update([
             'thumbnail' => $frontCover
         ]);
+
+        if($params['favorite'] == 'true') {
+            UserFavorite::create([
+                'user_id' => $user->id,
+                'book_vol_id' => $bookVol->id
+            ]);
+        }
+
         return $this->responseData($bookVol);
     }
     
@@ -250,10 +260,21 @@ class BookController extends Controller
         return $this->responseData($books);
     }
 
-    public function getFavorites() {
-        $favorite = BookVolume::where('favorite', true)
-            ->with('book')
-            ->get();
+    public function getFavorites(Request $request) {
+        $user = $request->user();
+        $favorite = UserFavorite::select(
+            'book_volumes.book_id as book_id', 
+            'book_volumes.id as vol_id', 
+            'book_volumes.title_volumes as title_volumes',
+            'book_volumes.front_cover as thumbnail',
+            'book_volumes.price as price',
+
+            'books.title_TH as title_book',
+        )
+        ->where('user_id', $user->id)
+        ->join('book_volumes', 'book_volumes.id', '=', 'user_favorites.book_vol_id')
+        ->join('books', 'books.id', '=', 'book_volumes.book_id')
+        ->get();
         return $this->responseData($favorite);
     }
 

@@ -75,14 +75,14 @@ export default function FavoritePage() {
         {
           favorite.map((fav) => (
             <Link href={`/backoffice/bookdetail/1`}
-            key={fav.id}
+            key={fav.book_id}
             className="p-2 w-[270px] rounded-lg border shadow-md cursor-pointer"
             >
               <div className="w-[250px] h-[350px] mx-auto bg-red-300">
-                <img className="w-full h-full" src={`/${(fav.front_cover) ? fav.front_cover : "image/no-image.png"}`} alt="" />
+                <img className="w-full h-full" src={`/${(fav.thumbnail) ? fav.thumbnail : "image/no-image.png"}`} alt="" />
               </div>
               <div>
-                <p>nameTH : {fav.book.title_TH || fav.book.title_EN}</p>
+                <p>nameTH : {fav.title_book}</p>
                 <p>volume : {fav.title_volumes}</p>
               </div>
             </Link>

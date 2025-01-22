@@ -23,7 +23,6 @@ return new class extends Migration
             $table->decimal('price', 8, 2);
             $table->string('link_product')->nullable();
             $table->date('release_date');
-            $table->boolean('favorite')->default(false);
             $table->timestamps();
         });
     }

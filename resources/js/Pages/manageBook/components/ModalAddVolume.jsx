@@ -4,6 +4,8 @@ import Box from '@mui/material/Box';
 import { useState } from 'react';
 import TextInput from '@/Components/TextInput';
 import { svAddNewVolume } from '@/services/book/book.services';
+import Switch from '@mui/material/Switch';
+
 
 const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
 const style = {
@@ -28,6 +30,7 @@ export default function ModalAddVolume({open, handleClose, dataBook, setDataVolu
   const [linkProduct, setLinkProduct] = useState("");
   const [price, setPrice] = useState(0);
   const [releaseDate, setReleaseDate] = useState(null);
+  const [favorite, setFavorite] = useState(false);
 
   const handleFileChange = (event, setImage) => {
     const file = event.target.files[0];
@@ -39,13 +42,14 @@ export default function ModalAddVolume({open, handleClose, dataBook, setDataVolu
   // console.log(dataBook)
   const handleSubmit = () => {
     const formData = new FormData();
-    formData.append('book_id', dataBook.id)
-    formData.append('title_volumes', titleVol)
-    formData.append('description', description)
-    formData.append('isbn_code', isbnCode)
-    formData.append('price', price)
-    formData.append('link_product', linkProduct)
-    formData.append('release_date', releaseDate)
+    formData.append('book_id', dataBook.id);
+    formData.append('title_volumes', titleVol);
+    formData.append('description', description);
+    formData.append('isbn_code', isbnCode);
+    formData.append('price', price);
+    formData.append('link_product', linkProduct);
+    formData.append('release_date', releaseDate);
+    formData.append('favorite', favorite);
 
     const frontFile = document.getElementById('input-front').files[0];
     const spineFile = document.getElementById('spine-book').files[0];
@@ -58,6 +62,7 @@ export default function ModalAddVolume({open, handleClose, dataBook, setDataVolu
     // formData.forEach((value, key) => {
     //   console.log(key, " : ", value);
     // });
+    // return false;
     svAddNewVolume(formData).then((res) => {
       if(res.data.status == 'success') {
         console.log(res.data.data)
@@ -133,7 +138,7 @@ export default function ModalAddVolume({open, handleClose, dataBook, setDataVolu
                 onChange={(e) => setDescription(e.target.value)}
               ></textarea>
             </div>
-            <div className="flex  gap-4 mb-4">
+            <div className="flex gap-4 mb-4">
               <label htmlFor="" className="w-[120px]">Link product</label>
               <TextInput 
                 className="w-full" 
@@ -142,20 +147,28 @@ export default function ModalAddVolume({open, handleClose, dataBook, setDataVolu
               />
             </div>
             <div className="flex gap-4">
-              <div className="flex  gap-4 mb-4">
+              <div className="flex gap-2 mb-4">
                 <label htmlFor="">price*</label>
                 <TextInput 
                   value={price}
                   onChange={(e) => setPrice(e.target.value)}
                 />
               </div>
-              <div className="flex  gap-4 mb-4">
+              <div className="flex gap-2 mb-4">
                 <label htmlFor="">Release Date*</label>
                 <input 
                   type="date" name="" id="" 
                   className="border-gray-300 rounded" 
                   value={releaseDate}
                   onChange={(e) => setReleaseDate(e.target.value)}
+                />
+              </div>
+
+              <div className="flex gap-2 mb-4">
+                <label htmlFor="">Add To Favorite</label>
+                <Switch {...label} 
+                  checked={favorite}
+                  onChange={(e) => setFavorite(e.target.checked)}
                 />
               </div>
             </div>
